@@ -7,12 +7,14 @@ import SignInPage from "./pages/SignInPage";
 import UserPage from "./pages/UserPage";
 import MessagePage from "./pages/MessagePage";
 import AboutPage from "./pages/AboutPage";
+import ErrorPage from "./pages/ErrorPage";
 
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage/>,
     children: [
       {
         index: true,
