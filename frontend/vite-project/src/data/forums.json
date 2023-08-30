@@ -2,6 +2,9 @@
     {
         "id" : 1,
         "title": "Gym",
+        "up": 8,
+        "down": 2,
+        "date_created": "2023-08-29",
         "posts": [
             {
                 "id": 1,
@@ -11,7 +14,8 @@
                 "edited": false,
                 "date_created": "2023-08-29",
                 "title": "Chest Day",
-                "reaction": [["thumbs up", 8, ["thumbs down", 2]]],
+                "up": 8,
+                "down": 2,
                 "comments": [
                     {
                         "id": 1,
@@ -20,7 +24,8 @@
                         "post_id": 1,
                         "edited": true,
                         "date_created": "2023-08-29",
-                        "reaction": [["thumbs up", 5], ["thumbs down", 1]]
+                        "up": 8,
+                        "down": 2
                     }
                 ]
             }
@@ -29,6 +34,9 @@
     {
         "id" : 2,
         "title": "Food",
+        "up": 8,
+        "down": 2,
+        "date_created": "2023-08-29",
         "posts": [
             {
                 "id": 2,
@@ -38,10 +46,8 @@
                 "edited": false,
                 "date_created": "2023-08-29",
                 "title": "Tacos",
-                "reaction": {
-                    "up" : 8,
-                    "down": 2
-                },
+                "up": 8,
+                "down": 2,
                 "comments": [
                     {
                         "id": 2,
@@ -50,7 +56,73 @@
                         "post_id": 2,
                         "edited": true,
                         "date_created": "2023-08-29",
-                        "reaction": [["thumbs up", 5], ["thumbs down", 1]]
+                        "up": 8,
+                        "down": 2
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id" : 3,
+        "title": "Motorcycles",
+        "up": 8,
+        "down": 2,
+        "date_created": "2023-08-29",
+        "posts": [
+            {
+                "id": 3,
+                "content": "This is the third post",
+                "created_by": 5,
+                "topic_id": 2,
+                "edited": false,
+                "date_created": "2023-08-29",
+                "title": "Kawasaki",
+                "up": 8,
+                "down": 2,
+                "comments": [
+                    {
+                        "id": 3,
+                        "content": "I love bikes",
+                        "created_by": 2,
+                        "post_id": 2,
+                        "edited": true,
+                        "date_created": "2023-08-29",
+                        "up": 8,
+                        "down": 2
+                    }
+                ]
+            }
+        ]
+    },
+
+    {
+        "id" : 4,
+        "title": "Rock Climbing",
+        "up": 8,
+        "down": 2,
+        "date_created": "2023-08-29",
+        "posts": [
+            {
+                "id": 4,
+                "content": "This is the fourth post",
+                "created_by": 5,
+                "topic_id": 2,
+                "edited": false,
+                "date_created": "2023-08-29",
+                "title": "Rocks",
+                "up": 8,
+                "down": 2,
+                "comments": [
+                    {
+                        "id": 4,
+                        "content": "I love rocks",
+                        "created_by": 2,
+                        "post_id": 2,
+                        "edited": true,
+                        "date_created": "2023-08-29",
+                        "up": 8,
+                        "down": 2
                     }
                 ]
             }
