@@ -10,6 +10,8 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth.hashers import make_password
 from rest_framework import status
+from .serializers import UserProfileSerializer
+
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -76,3 +78,34 @@ def register_user(request):
         message = {'detail': 'User already exists'}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
+class UserProfileRetrieveUpdateView(generics.RetrieveUpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserProfileSerializer
+    lookup_field = 'pk'
+
+    def update(self, request, *args, **kwargs):
+        user = self.get_object()
+        user.display_name = request.data.get('display_name', user.display_name)
+        user.profile_picture = request.data.get('profile_picture', user.profile_picture)
+        friends = request.data.get('friends')
+        if friends:
+            for friend_id in friends:
+                try:
+                    friend = User.objects.get(pk=friend_id)
+                    user.friends.add(friend)
+                except User.DoesNotExist:
+                    pass
+        user.save()
+        serializer = UserProfileSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    '''
+    
+
+ The `UserProfileRetrieveUpdateView` is a view that allows retrieving and updating specific fields (i.e., `display_name`, `profile_picture`, and `friends`) of a `User` object based on its primary key (`pk`).
+ In the `update` method, the `User`'s details are updated from the provided data; if a list of `friends` is provided, the system tries to add each friend to the user's friends list by their IDs.
+ After updating, the `User`'s modified profile is serialized using the `UserProfileSerializer` and sent back as a response with a `200 OK` status.
+    
+    
+    
+    '''
