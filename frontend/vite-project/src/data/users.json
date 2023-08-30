@@ -3,7 +3,7 @@
     "id" : 1,
     "email": "user1@email.com",
     "password": "password1",
-    "profile_picture": "https://example.com/user_profile.jpg",
+    "profile_picture": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-sIJT_2n4FeLGlOL2rqMQR70lmc-JI7Marg&usqp=CAU",
     "friends_list": [2, 3, 4, 5]
     },
 
