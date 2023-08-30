@@ -10,5 +10,6 @@ class Posts(models.Model):
     edited = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
     title = models.CharField() 
-    reaction = models.CharField() 
+    up = models.IntegerField(default=0)
+    down = models.IntegerField(default=0) 
 

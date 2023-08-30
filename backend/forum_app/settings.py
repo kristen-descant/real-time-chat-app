@@ -134,7 +134,7 @@ CHANNEL_LAYERS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'forum',
+        'NAME': 'chat_db',
     }
 }
 
