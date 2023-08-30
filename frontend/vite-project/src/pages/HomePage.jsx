@@ -1,10 +1,14 @@
 import FriendsList from "../components/FriendsList";
+import ForumsList from "../components/ForumList";
 
 export default function HomePage() {
     return (
       <div className="h-screen w-full">
          <h2>This is the Home page</h2>
-         <FriendsList/>
+         <div className="flex flex-row justify-around">
+          <ForumsList/>
+          <FriendsList/>
+         </div>
       </div>
    
     );
