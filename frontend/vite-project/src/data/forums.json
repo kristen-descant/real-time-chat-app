@@ -1,0 +1,56 @@
+[
+    {
+        "id" : 1,
+        "title": "Gym",
+        "posts": [
+            {
+                "id": 1,
+                "content": "This is the first post",
+                "created_by": 1,
+                "topic_id": 1,
+                "edited": false,
+                "date_created": "2023-08-29",
+                "title": "Chest Day",
+                "reaction": [["thumbs up", 8, ["thumbs down", 2]]],
+                "comments": [
+                    {
+                        "id": 1,
+                        "content": "I love chest day",
+                        "created_by": 2,
+                        "post_id": 1,
+                        "edited": true,
+                        "date_created": "2023-08-29",
+                        "reaction": [["thumbs up", 5], ["thumbs down", 1]]
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id" : 2,
+        "title": "Food",
+        "posts": [
+            {
+                "id": 2,
+                "content": "This is the second post",
+                "created_by": 5,
+                "topic_id": 2,
+                "edited": false,
+                "date_created": "2023-08-29",
+                "title": "Tacos",
+                "reaction": [["thumbs up", 9, ["thumbs down", 1]]],
+                "comments": [
+                    {
+                        "id": 2,
+                        "content": "I love tacos",
+                        "created_by": 2,
+                        "post_id": 2,
+                        "edited": true,
+                        "date_created": "2023-08-29",
+                        "reaction": [["thumbs up", 5], ["thumbs down", 1]]
+                    }
+                ]
+            }
+        ]
+    }
+]
