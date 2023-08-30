@@ -38,7 +38,10 @@
                 "edited": false,
                 "date_created": "2023-08-29",
                 "title": "Tacos",
-                "reaction": [["thumbs up", 9, ["thumbs down", 1]]],
+                "reaction": {
+                    "up" : 8,
+                    "down": 2
+                },
                 "comments": [
                     {
                         "id": 2,
