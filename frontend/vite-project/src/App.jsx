@@ -2,6 +2,10 @@ import { Outlet } from "react-router-dom";
 import Navbar from "./components/Navbar";
 
 
+
+
+
+
 function App() {
   
 
@@ -9,6 +13,8 @@ function App() {
 
     <div className="h-screen w-screen bg-color_palette_3">
       <Navbar/>
+     
+
       <Outlet />
     </div>
   );
