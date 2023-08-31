@@ -14,6 +14,8 @@ export default function Navbar() {
             </div>
             <div className="pr-3">
                 <Link to='#'><img className="rounded-full h-full w-[3vw]" src={image} alt="spongebob" /></Link>
+
+                
             </div>
         </nav>
     )

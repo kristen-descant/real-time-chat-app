@@ -1,35 +1,25 @@
-
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework import serializers
+from rest_framework.authtoken.models import Token
 from .models import User
-from .serializers import UserSerializer
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'first_name'] 
-    
+        fields = [
+            'id', 'email', 'first_name', 'display_name', 'profile_name', 'profile_picture', 
+            'friends', 'last_login', 'date_joined', 'is_active', 'is_staff'
+        ]
 
-class UserSerializerWithToken(UserSerializer):
+class UserSerializerWithToken(serializers.ModelSerializer):
     token = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'first_name', 'token']  
-    def get_token(self, obj):
-        token = RefreshToken.for_user(obj)
-        return str(token.access_token)
+        fields = [
+            'id', 'email', 'first_name', 'display_name', 'profile_name', 'profile_picture', 
+            'friends', 'last_login', 'date_joined', 'is_active', 'is_staff', 'token'
+        ]
 
-@api_view(['GET'])
-def get_user_by_id(request, user_id):
-    """
-    Retrieve a user's data based on their ID
-    """
-    try:
-        user = User.objects.get(id=user_id)
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
-    except User.DoesNotExist:
-        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+    def get_token(self, obj):
+        token, created = Token.objects.get_or_create(user=obj)
+        return token.key
