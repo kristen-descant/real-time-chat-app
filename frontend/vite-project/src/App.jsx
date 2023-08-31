@@ -8,7 +8,7 @@ function App() {
   
   const [allUserData] = useState(userData);
   const [user, setUser] = useState(null);
-  const [userToMessageId, setUsertoMessageId] = useState(null);
+  const [userToMessage, setUsertoMessage] = useState(null);
 
   const setUsers = () => {
     const user1 = allUserData.find((user) => (
@@ -19,7 +19,7 @@ function App() {
     ));
 
     setUser(user1);
-    setUsertoMessageId(user2.id);
+    setUsertoMessage(user2);
   }
 
   useEffect(() => {
@@ -28,15 +28,15 @@ function App() {
 
   return (
 
-    <div className="h-screen w-screen bg-color_palette_3">
+    <div className="min-h-screen w-screen bg-color_palette_3">
       <Navbar/>
       <Outlet 
       context={{
         allUserData,
         user,
         setUser,
-        userToMessageId,
-        setUsertoMessageId
+        userToMessage,
+        setUsertoMessage
       }}
       />
     </div>
