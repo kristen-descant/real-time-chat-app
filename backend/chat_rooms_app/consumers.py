@@ -63,7 +63,7 @@ class ChatConsumer(WebsocketConsumer):
             if created:
                 self.accept()
             else:
-                self.updated_message_db()
+                # self.updated_message_db()
                 self.accept()
         
         except User.DoesNotExist:
