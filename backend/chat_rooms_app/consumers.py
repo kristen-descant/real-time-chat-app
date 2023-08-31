@@ -17,6 +17,7 @@ class ChatConsumer(WebsocketConsumer):
         #if a message id is provided, it will grab the last 50 from that point.
         if oldest_message_id==0:
             oldest_message_id = ChatRoom.objects.get(id=self.chat_room_id).messages.all().order_by('-id').first()     #this sets it to the most recent message.       
+        
         retrieved_messages = ChatRoom.objects.get(id=self.chat_room_id).messages.filter(date__lt=Message.objects.get(oldest_message_id).date).order_by('-date')[:50]
         self.send(text_data=json.dumps({"messages":retrieved_messages}))
 
@@ -74,7 +75,7 @@ class ChatConsumer(WebsocketConsumer):
         ###########TEXT_DATA.user expects a json key value pair of "user":"user.id"###############
         user.messages.add(message)
         ##########################################################################################
-        Message.create(content=message, chat_room=self.chat_room_id)        
+        Message.create(content=message, chat_room=self.chat_room_id, sender=user)        
 
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
@@ -93,3 +94,6 @@ class ChatConsumer(WebsocketConsumer):
 
 #########################################
 # chat_message function will send the message (echo) it receives
+
+#user1: message
+#user2: message
