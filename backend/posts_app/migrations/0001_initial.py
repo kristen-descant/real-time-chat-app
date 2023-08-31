@@ -5,12 +5,15 @@ from django.db import migrations, models
 import django.db.models.deletion
 
 
+
 class Migration(migrations.Migration):
 
     initial = True
 
     dependencies = [
+
         ('forum_topics_app', '0001_initial'),
+
     ]
 
     operations = [
@@ -24,6 +27,7 @@ class Migration(migrations.Migration):
                 ('title', models.CharField()),
                 ('reaction', models.CharField()),
                 ('topic_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='posts', to='forum_topics_app.forumtopics')),
+
             ],
         ),
     ]
