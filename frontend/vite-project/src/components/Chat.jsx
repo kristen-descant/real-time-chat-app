@@ -1,94 +1,96 @@
-import React, { Component } from 'react';
-import { w3cwebsocket as W3CWebSocket } from "websocket";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Container from "@material-ui/core/Container";
-import Card from "@material-ui/core/Card";
-import CardHeader from "@material-ui/core/CardHeader";
-import Paper from "@material-ui/core/Paper";
-import { withStyles } from "@material-ui/core/styles";
-const useStyles = (theme) => ({
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-});
+import React, { useState, useEffect } from 'react';
+import { useOutletContext } from 'react-router-dom';
+import { w3cwebsocket as W3CWebSocket } from 'websocket';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Container from '@material-ui/core/Container';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
 
-class Chat extends Component {
-    state = {
-      filledForm: false,
-      messages: [],
+
+function Chat() {
+
+    // const {user, userToMessageId} = useOutletContext();
+
+  const [state, setState] = useState({
+    filledForm: false,
+    messages: [],
+    value: '',
+    name: '',
+    // room: `user${user.id}user${userToMessageId}`
+    room: 'chat',
+  });
+
+  const client = new W3CWebSocket(
+    'ws://127.0.0.1:8000/ws/' + state.room + '/' + 'test/'
+  );
+
+  const onButtonClicked = (e) => {
+    client.send(
+      JSON.stringify({
+        message: state.value,
+      })
+    );
+    setState((prevState) => ({
+      ...prevState,
       value: '',
-      name: '',
-      room: 'chat',
-    }
-    client = new W3CWebSocket('ws://127.0.0.1:8000/ws/' + this.state.room + '/' + 'test/'); //gets room_name from the state and connects to the backend server 
-    
-    onButtonClicked = (e) => {
-        this.client.send(
-          JSON.stringify({
-            // type: "message",
-            message: this.state.value,
-            // sender: this.state.name,
-          })
-        );
-        this.state.value = "";
-        e.preventDefault();
-      };
+    }));
+    e.preventDefault();
+  };
 
-    componentDidMount() {
-        this.client.onopen = () => {
-          console.log("WebSocket Client Connected");
-        };
-        this.client.onmessage = (message) => {
-          const dataFromServer = JSON.parse(message.data);
-          if (dataFromServer) {
-            this.setState((state) => ({
-              messages: [
-                ...state.messages,
-                {
-                  msg: dataFromServer.message,
-                //   name: dataFromServer.sender,
-                },
-              ],
-            }));
-          }
-        };
+  useEffect(() => {
+    client.onopen = () => {
+      console.log('WebSocket Client Connected');
+    };
+    client.onmessage = (message) => {
+      const dataFromServer = JSON.parse(message.data);
+      if (dataFromServer) {
+        setState((prevState) => ({
+          ...prevState,
+          messages: [
+            ...prevState.messages,
+            {
+              msg: dataFromServer.message,
+            },
+          ],
+        }));
       }
-    render() {
-        const { classes } = this.props;
-    return (
-      <Container component="main" maxWidth="xs">
-        {this.state.filledForm ? (
-          <div style={{ marginTop: 50 }}>
-            Room Name: {this.state.room}
-            <Paper
-              style={{height: 500, maxHeight: 500, overflow: "auto", boxShadow: "none", }}
-            >
-              {this.state.messages.map((message) => (
-                <>
-                  <Card className={classes.root}>
-                    <CardHeader title={message.name} subheader={message.msg} />
-                  </Card>
-                </>
+    };
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <Container maxWidth="xs">
+        {state.filledForm ? (
+          <div className="mt-8">
+            <div className="mb-4">Room Name: {state.room}</div>
+            <div className="h-80 max-h-80 overflow-auto shadow-none">
+              {state.messages.map((message, index) => (
+                <Card key={index} className="mb-4">
+                  <CardHeader title={message.name} subheader={message.msg} />
+                </Card>
               ))}
-            </Paper>
-            <form
-              className={classes.form}
-              noValidate
-              onSubmit={this.onButtonClicked}
-            >
-              <TextField id="outlined-helperText" label="Write text" defaultValue="Default Value"
+            </div>
+            <form onSubmit={onButtonClicked}>
+              <TextField
+                label="Write text"
                 variant="outlined"
-                value={this.state.value}
+                value={state.value}
                 fullWidth
-                onChange={(e) => {
-                  this.setState({ value: e.target.value });
-                  this.value = this.state.value;
-                }}
+                onChange={(e) =>
+                  setState((prevState) => ({
+                    ...prevState,
+                    value: e.target.value,
+                  }))
+                }
+                className="mt-4"
               />
-              <Button type="submit" fullWidth variant="contained" color="primary"
-                className={classes.submit}
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                className="mt-4"
               >
                 Send Message
               </Button>
@@ -96,33 +98,45 @@ class Chat extends Component {
           </div>
         ) : (
           <div>
-            <CssBaseline />
-            <div className={classes.paper}>
+            <div>
               <form
-                className={classes.form}
-                noValidate
-                onSubmit={(value) => this.setState({ filledForm: true })}
+                onSubmit={(e) =>
+                  setState((prevState) => ({
+                    ...prevState,
+                    filledForm: true,
+                  }))
+                }
+                className="mt-8"
               >
-                <TextField variant="outlined" margin="normal" required fullWidth label="Room name"
-                  name="Room name"
+                <TextField
+                  label="Room name"
                   autoFocus
-                  value={this.state.room}
-                  onChange={(e) => {
-                    this.setState({ room: e.target.value });
-                    this.value = this.state.room;
-                  }}
+                  value={state.room}
+                  onChange={(e) =>
+                    setState((prevState) => ({
+                      ...prevState,
+                      room: e.target.value,
+                    }))
+                  }
+                  className="mb-4"
                 />
-                <TextField variant="outlined" margin="normal" required fullWidth name="sender" label="sender"
-                  type="sender"
-                  id="sender"
-                  value={this.state.name}
-                  onChange={(e) => {
-                    this.setState({ name: e.target.value });
-                    this.value = this.state.name;
-                  }}
+                <TextField
+                  label="Sender"
+                  type="text"
+                  value={state.name}
+                  onChange={(e) =>
+                    setState((prevState) => ({
+                      ...prevState,
+                      name: e.target.value,
+                    }))
+                  }
+                  className="mb-4"
                 />
-                <Button type="submit" fullWidth variant="contained" color="primary"
-                  className={classes.submit}
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
                 >
                   Submit
                 </Button>
@@ -131,8 +145,8 @@ class Chat extends Component {
           </div>
         )}
       </Container>
-    );
-  }
+    </div>
+  );
 }
 
-export default withStyles(useStyles)(Chat);
+export default Chat;
