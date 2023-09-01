@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useOutletContext } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import { useState, useEffect } from "react";
 import userData from './data/users.json'
@@ -11,20 +11,22 @@ function App() {
   const [user, setUser] = useState(null);
   const [userToMessage, setUsertoMessage] = useState(null);
   const navigate = useNavigate();
+  const [loggedIn, setLoggedIn] = useState(false)
 
   const whoAmI = async() => {
     let token = localStorage.getItem("token")
     if (token) {
       axios.defaults.headers.common["Authorization"] = `Token ${token}`
-      let respone = await axios.get('http://127.0.0.1:8000/users/info/')
+      let response = await axios.get('http://127.0.0.1:8000/users/info/')
       // console.log(respone.data)
-      setUser(respone.data)
-      navigate('/')
-    } else {
-      setUser(null)
-      navigate("/signin")
-    }
+      if (response.data.email) {
+        setUser(response.data);
+      }else {
+        navigate('/signin')
+      }
+      console.log(response)
   }
+}
   useEffect(()=>{
     whoAmI()
   }, [])
@@ -32,14 +34,16 @@ function App() {
   console.log(user)
   return (
     <div className="h-full w-full bg-color_palette_3 overflow-x-hidden">
-      <Navbar/>
+      {loggedIn  &&
+      <Navbar setUser={setUser} setLoggedIn={setLoggedIn}/>}
       <Outlet 
       context={{
         allUserData,
         user,
         setUser,
         userToMessage,
-        setUsertoMessage
+        setUsertoMessage,
+        setLoggedIn
       }}
       />
     </div>

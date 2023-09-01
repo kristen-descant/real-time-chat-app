@@ -1,16 +1,18 @@
 
 import React from "react";
 import image from '../media/pngwing.com (1).png'
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-export default function Navbar() {
+export default function Navbar(props) {
 
     const navigate = useNavigate();
+    const { setUser, setLoggedIn } = props;
 
     const handleLogOut = () => {
         localStorage.removeItem("token")
         setUser(null)
+        setLoggedIn(false)
         navigate('/register')
     }
 

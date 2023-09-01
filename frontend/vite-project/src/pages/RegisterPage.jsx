@@ -13,6 +13,7 @@ export default function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [displayName, setDisplayName] = useState(''); 
   const navigate = useNavigate();
+  
 
   const register = async (e) => {
     e.preventDefault();
