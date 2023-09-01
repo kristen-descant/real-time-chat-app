@@ -2,10 +2,7 @@ import axios from "axios";
 import React, { useState } from 'react';
 import { Button, Alert } from 'react-bootstrap';
 import { useNavigate, useOutletContext } from 'react-router-dom';
-
-const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000/' 
-});
+import { api } from './utility';
 
 export default function SignInPage() {
   const [email, setEmail] = useState('');

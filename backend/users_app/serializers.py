@@ -2,20 +2,27 @@ from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 from .models import User
 
-class UserSerializer(serializers.ModelSerializer):
-    friends = serializers.SerializerMethodField()
+class FriendSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
         fields = [
-            'id', 'email', 'first_name', 'display_name', 'profile_name', 'profile_picture', 
-            'friends', 'last_login', 'date_joined', 'is_active', 'is_staff'
+            'id', 'email', 'display_name', 'profile_picture', 
+             'last_login', 'date_joined', 'is_active', 'is_staff'
         ]
 
-    def get_friends(self, obj):
-        # Assuming you have a related name 'friends' on the User model
-        friends = obj.friends.all()
-        return UserSerializer(friends, many=True).data
+
+    
+class UserSerializer(serializers.ModelSerializer):
+    friends = FriendSerializer(many=True)
+
+    class Meta:
+        model = User
+        fields = [
+            'id', 'email', 'display_name', 'profile_picture', 
+            'friends', 'last_login', 'date_joined', 'is_active', 'is_staff'
+        ]
+    
 
 class UserSerializerWithToken(serializers.ModelSerializer):
     token = serializers.SerializerMethodField(read_only=True)
@@ -23,7 +30,7 @@ class UserSerializerWithToken(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
-            'id', 'email', 'first_name', 'display_name', 'profile_name', 'profile_picture', 
+            'id', 'email', 'display_name', 'profile_picture', 
             'friends', 'last_login', 'date_joined', 'is_active', 'is_staff', 'token'
         ]
 

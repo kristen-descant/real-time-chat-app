@@ -1,4 +1,5 @@
 import { useOutletContext, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function AboutPage() {
 
@@ -13,7 +14,7 @@ export default function AboutPage() {
     };
 
     verifyUser();
-  }, [user, navigate]); 
+  }, [user]); 
 
     return (
     <h2>This is where users can come and learn about the site</h2>

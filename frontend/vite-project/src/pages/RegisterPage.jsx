@@ -2,10 +2,8 @@ import axios from "axios";
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Link, useNavigate, useOutletContext } from 'react-router-dom';
+import { api } from './utility';
 
-const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000/'
-});
 
 export default function RegisterPage() {
   const [email, setEmail] = useState('');
@@ -14,7 +12,6 @@ export default function RegisterPage() {
   const [displayName, setDisplayName] = useState(''); 
   const navigate = useNavigate();
   const {setLoggedIn, setUser} = useOutletContext();
-  
 
   const register = async (e) => {
     e.preventDefault();

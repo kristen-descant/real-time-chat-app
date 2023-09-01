@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED, HTTP_404_NOT_FOUND, HTTP_204_NO_CONTENT, HTTP_200_OK, HTTP_400_BAD_REQUEST
@@ -73,6 +73,7 @@ def register_user(request):
 
 
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def get_user_profile(request):
     user = request.user
