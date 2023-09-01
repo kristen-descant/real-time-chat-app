@@ -8,7 +8,7 @@ from users_app.models import User
 from messages_app.models import Message
 
 class ChatConsumer(WebsocketConsumer):
-    user_id = ""
+    user_ids = ""
     chat_room_id = "" 
 
     #grab the most recent message index from the list of messages, grab the previous (50) or whatever. 
@@ -26,8 +26,8 @@ class ChatConsumer(WebsocketConsumer):
         # self.users_id = self.scope.get("headers", {}).get(b'users', b"").decode("utf-8")
         # user = User.objects.get(id=user_id)
 
-        user1 = self.users_id.filter('user1')
-        user2 = self.users_id.filter('user2')
+        user1 = self.user_ids.filter('user1')
+        user2 = self.user_ids.filter('user2')
         roomid = f"user{user1.id}user{user2.id}"
         roomid2 = f"user{user2.id}user{user1.id}"
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
