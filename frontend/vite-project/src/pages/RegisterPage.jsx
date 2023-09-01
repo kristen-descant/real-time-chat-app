@@ -1,16 +1,17 @@
 import axios from "axios";
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
-import {Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api/'
+  baseURL: 'http://127.0.0.1:8000/'
 });
 
 export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [displayName, setDisplayName] = useState(''); 
   const navigate = useNavigate();
 
   const register = async (e) => {
@@ -25,6 +26,7 @@ export default function RegisterPage() {
       let response = await api.post("users/register/", {
         email: email,
         password: password,
+        display_name: displayName,  
       });
 
       console.log(response);
@@ -41,6 +43,14 @@ export default function RegisterPage() {
   return (
     <div>
       <h2>Register</h2>
+      <div>
+        <input
+          type="text"
+          value={displayName}
+          onChange={(e) => setDisplayName(e.target.value)}
+          placeholder="Display Name"  
+        />
+      </div>
       <div>
         <input
           type="email"
@@ -72,3 +82,4 @@ export default function RegisterPage() {
     </div>
   );
 };
+

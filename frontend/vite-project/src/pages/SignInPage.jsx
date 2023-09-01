@@ -1,43 +1,51 @@
 import axios from "axios";
 import React, { useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
-
 const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000/api/' 
+  baseURL: 'http://127.0.0.1:8000/' 
 });
 
 export default function SignInPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  
   const navigate = useNavigate();
 
   const logIn = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError(null);
+    
     try {
       let response = await api.post("users/login/", {
         email: email,
         password: password,
       });
-      console.log(response);
+      
       if (response.status === 200 && response.data.token) {
         let token = response.data.token;
-        let user = response.data.user;
         localStorage.setItem("token", token);
         api.defaults.headers.common["Authorization"] = `Token ${token}`;
-        console.log(user);
         navigate("/home");
       }
     } catch (error) {
       console.error("Login error", error);
-     
+      setError("Failed to log in. Please check your credentials.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div>
-      <Button onClick={logIn} type="button" className="btn btn-success">Signin</Button>
+      {error && <Alert variant="danger">{error}</Alert>}
+      <Button onClick={logIn} disabled={loading} type="button" className="btn btn-success">
+        {loading ? "Signing in..." : "Signin"}
+      </Button>
       <div>
         <input
           type="email"
@@ -56,4 +64,5 @@ export default function SignInPage() {
       </div>
     </div>
   );
-}
+};
+
