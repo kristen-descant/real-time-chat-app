@@ -49,20 +49,29 @@ class Info(APIView):
     def get(self, request):
         return Response({"email": request.user.email})
 
+
+
 @api_view(['POST'])
 def register_user(request):
     data = request.data
     try:
+       
+        if not all(field in data for field in ['email', 'password', 'display_name']):
+            raise ValueError("Required fields are missing")
+
         user = User.objects.create_user(
-            email=data['email'],password=make_password(data['password']),
-            first_name=data['first_name'],
-            display_name=data['display_name'],
-            profile_name=data['profile_name'])
+            email=data['email'],
+            password=make_password(data['password']),
+            display_name=data['display_name']
+        )
+
         serializer = UserSerializerWithToken(user, many=False)
         return Response(serializer.data, status=HTTP_201_CREATED)
+
     except Exception as e:
         message = {'detail': str(e)}
         return Response(message, status=HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
