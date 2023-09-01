@@ -4,8 +4,8 @@ import { w3cwebsocket as W3CWebSocket } from 'websocket';
 // import Button from '@material-ui/core/Button';
 import TextField from '@mui/material/TextField';
 // import Container from '@mui/material/Container';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
+// import Card from '@mui/material/Card';
+// import CardHeader from '@mui/material/CardHeader';
 // import { TextField } from '@mui/material/core';
 
 
@@ -64,26 +64,28 @@ function Chat() {
         };
     }, []);
 
-    // console.log(state.messages)
+    console.log(state.messages)
     
     // console.log(user.id)
 
     return (
-        <div className="h-screen bg-gray-100 flex justify-center">
-        <div className='w-full flex justify-center relative'>
-            {state.filledForm ? (
-            <div className="mt-8 flex flex-col justify-between h-[80%] w-[50%]">
-                <div>
-                    <div className="mb-4 flex flex-row items-center"> <img className='h-5 md:h-8 rounded-full mr-2' src={userToMessage.profile_picture} /> {userToMessage.display_name}</div>
-                    <div className="h-80 max-h-80 overflow-auto shadow-none  ">
+        <div className="h-screen bg-gray-100 flex justify-center overflow-hidden">
+        <div className='w-full flex justify-center relative h-[95%]'>
+             
+            <div className="mt-8 h-[80%] w-[50%] flex flex-col items-center">
+                <div className="mb-4 flex flex-row items-center"> <img className='h-5 md:h-8 rounded-full mr-2' src={userToMessage.profile_picture} /> {userToMessage.display_name}</div>
+                <div className='h-[80%] w-full'>
+                    <div className="h-[85%] overflow-x-hidden overflow-y-auto shadow-none w-full flex flex-col items-center">
                     {state.messages.map((message, index) => (
-                    <Card key={index} className='mb-4 mr-4 text-[white] w-full md:w-1/2' >
-                        <CardHeader  className={` text-[white] ${message.user === user.id ? 'bg-color_palette_1' : ''}`} title={message.name} subheader={message.message} />
-                    </Card>
+                    <div key={index} className='mb-4 mr-4 w-fit md:w-3/4 ' >
+                        <div  className={`  p-1 whitespace-normal overflow-x-hidden  rounded ${message.user === user.id ? 'bg-color_palette_1' : ''}`} >
+                        {message.message}
+                        </div>
+                    </div>
                     ))}
                     </div>
                 </div>
-                <form className='flex flex-row items-center w-ful md:w-1/2 absolute left-[30%] bottom-[20%]' onSubmit={onButtonClicked}>
+                <form className='flex flex-row items-center w-full md:w-3/4 h-[10%] ' onSubmit={onButtonClicked}>
                 <textarea
                    
                     rows={3}
@@ -106,52 +108,7 @@ function Chat() {
                 </button>
                 </form>
             </div>
-            ) : (
-            <div>
-                <div>
-                <form
-                    onSubmit={(e) =>
-                    setState((prevState) => ({
-                        ...prevState,
-                        filledForm: true,
-                    }))
-                    }
-                    className="mt-8"
-                >
-                    <TextField
-                    label="Room name"
-                    autoFocus
-                    value={state.room}
-                    onChange={(e) =>
-                        setState((prevState) => ({
-                        ...prevState,
-                        room: e.target.value,
-                        }))
-                    }
-                    className="mb-4"
-                    />
-                    <TextField
-                    label="Sender"
-                    type="text"
-                    value={state.name}
-                    onChange={(e) =>
-                        setState((prevState) => ({
-                        ...prevState,
-                        name: e.target.value,
-                        }))
-                    }
-                    className="mb-4"
-                    />
-                    <button
-                    type="submit"
-                    className='border border-[black] rounded p-2'
-                    >
-                    Submit
-                    </button>
-                </form>
-                </div>
-            </div>
-            )}
+            
         </div>
         </div>
     );
