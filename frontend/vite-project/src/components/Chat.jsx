@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 // import Button from '@material-ui/core/Button';
-// import TextField from '@material-ui/core/TextField';
-import Container from '@material-ui/core/Container';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import { TextField } from '@material-ui/core';
+import TextField from '@mui/material/TextField';
+// import Container from '@mui/material/Container';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+// import { TextField } from '@mui/material/core';
 
 
 function Chat() {
@@ -19,13 +19,9 @@ function Chat() {
         messages: [],
         value: '',
         name: '',
-        // room: `user${user.id}user${userToMessage.id}`
-        room: 'chat',
+        room: `user${user.id}user${userToMessage.id}`
+        // room: 'chat',
     });
-
-    useEffect(() => {
-        setUserId(toString(user.id))
-    }, []);
 
     console.log(userId)
 
@@ -68,9 +64,9 @@ function Chat() {
         };
     }, []);
 
-    console.log(state.messages)
+    // console.log(state.messages)
     
-    console.log(user.id)
+    // console.log(user.id)
 
     return (
         <div className="h-screen bg-gray-100 flex justify-center">
