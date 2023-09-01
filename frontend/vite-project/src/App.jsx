@@ -23,7 +23,7 @@ function App() {
     ));
 
     setUser(user1);
-    setUsertoMessage(user2);
+    setUsertoMessage(null);
   }
 
   useEffect(() => {

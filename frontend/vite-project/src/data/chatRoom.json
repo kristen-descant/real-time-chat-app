@@ -1,0 +1,23 @@
+[
+    {
+        "id": "user1user2",
+        "created": "2023-09-01",
+        "users": ["user2"],
+        "messages": [
+            {
+                "id": 1,
+                "date": "2023-09-01",
+                "sender": 1,
+                "chat_room": "user1user2",
+                "content": "The first message"
+            },
+            {
+                "id": 2,
+                "date": "2023-09-01",
+                "sender": 2,
+                "chat_room": "user1user2",
+                "content": "The second message"
+            }
+        ]
+    }
+]
