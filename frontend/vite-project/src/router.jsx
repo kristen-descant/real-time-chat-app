@@ -25,7 +25,7 @@ const router = createBrowserRouter([
         element: <ForumPage/>
       },
       {
-        path: 'post/:post_id',
+        path: 'forum/:forum_id/post/:post_id',
         element: <PostPage/>
       },
       {

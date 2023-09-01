@@ -3,12 +3,11 @@ import users from "../data/users.json";
 
 export default function UserPage() {
   // const {user} = useOutletContext()
-  const {user_id} = useParams()
-  let user = users[user_id-1];
+  const { user_id } = useParams();
+  let user = users[user_id - 1];
   const isCurrentUser = parseInt(user_id) === user.id;
-  
+
   const isFriend = user.friends_list.includes(parseInt(user_id));
-  
 
   return (
     <div className="flex h-screen items-center justify-center">
