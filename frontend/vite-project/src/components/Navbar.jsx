@@ -17,6 +17,13 @@ export default function Navbar() {
 
                 
             </div>
+            <div>
+            <Link to="/signin">Sign In</Link>
+            </div>
+            <div>
+            <Link to="/register">Register</Link>
+
+            </div>
         </nav>
     )
 }

@@ -8,6 +8,7 @@ import UserPage from "./pages/UserPage";
 import MessagePage from "./pages/MessagePage";
 import AboutPage from "./pages/AboutPage";
 import ErrorPage from "./pages/ErrorPage";
+import RegisterPage from "./pages/RegisterPage";
 
 
 const router = createBrowserRouter([
@@ -43,7 +44,12 @@ const router = createBrowserRouter([
       {
         path: 'about',
         element: <AboutPage/>
+      },
+      {
+        path: 'register',
+        element: <RegisterPage/>
       }
+      
     ],
   },
 ]);
