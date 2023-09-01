@@ -8,7 +8,7 @@ from users_app.models import User
 from messages_app.models import Message
 
 class ChatConsumer(WebsocketConsumer):
-    user_ids = ""
+    user_ids = {}
     chat_room_id = "" 
 
     #grab the most recent message index from the list of messages, grab the previous (50) or whatever. 
@@ -23,27 +23,37 @@ class ChatConsumer(WebsocketConsumer):
 
     def connect(self):
         
-        # self.users_id = self.scope.get("headers", {}).get(b'users', b"").decode("utf-8")
+        # self.user_ids = self.scope.get("headers", {}).get(b'users', b"").decode("utf-8")
         # user = User.objects.get(id=user_id)
-
-        user1 = self.user_ids.filter('user1')
-        user2 = self.user_ids.filter('user2')
-        roomid = f"user{user1.id}user{user2.id}"
-        roomid2 = f"user{user2.id}user{user1.id}"
+        
+        #############################################
+        # user1 = self.user_ids['user1']
+        # user2 = self.user_ids['user2']
+        # roomid = f"user{user1.id}user{user2.id}"
+        # roomid2 = f"user{user2.id}user{user1.id}"
+        ##############################################
+        
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
         self.room_group_name = f"chat_{self.room_name}"
-
-        if ChatRoom.objects.get(id=roomid):
-            chat_room, created = ChatRoom.objects.create()
-            self.chat_room_id = chat_room.id 
-        elif ChatRoom.objects.get(id=roomid2):
-            chat_room, created = ChatRoom.objects.create()
-            self.chat_room_id = chat_room.id 
-        else:
-            # Fetch or create a ChatRoom instance
-            chat_room, created = ChatRoom.objects.get_or_create()
-            self.chat_room_id = chat_room.id 
-
+        
+        ###############################
+        # FOR TESTING PURPOSES        #
+        chat_room, created = ChatRoom.objects.get_or_create()
+        self.chat_room_id = chat_room.id 
+        
+        ###############################
+        # COMMENTED OUT FOR TESTING PURPOSES ##################################
+        # if ChatRoom.objects.get(id=roomid):
+        #     chat_room, created = ChatRoom.objects.create()
+        #     self.chat_room_id = chat_room.id 
+        # elif ChatRoom.objects.get(id=roomid2):
+        #     chat_room, created = ChatRoom.objects.create()
+        #     self.chat_room_id = chat_room.id 
+        # else:
+        #     # Fetch or create a ChatRoom instance
+        #     chat_room, created = ChatRoom.objects.get_or_create()
+        #     self.chat_room_id = chat_room.id 
+        ######################################################################
         try:         
             # user.chat_rooms.add(chat_room)  # Add the chat_room to the user's chat_rooms field
             # Join room group
