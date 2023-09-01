@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 
 const api = axios.create({
   baseURL: 'http://127.0.0.1:8000/'
