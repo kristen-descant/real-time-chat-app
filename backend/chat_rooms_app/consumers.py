@@ -28,7 +28,7 @@ class ChatConsumer(WebsocketConsumer):
         self.users = self.room_name.split("user") #[user1, user2]
         ############################################
         user1 = self.users[0]
-        user2 = self.users[1]
+        user2 = self.users[1] #errors when assuming two users are passed and only one is passed.
         self.user_ids={"user1":user1,"user2":user2}
         roomid = f"user{user1.id}user{user2.id}"
         roomid2 = f"user{user2.id}user{user1.id}"
