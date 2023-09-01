@@ -38,13 +38,13 @@ class ChatConsumer(WebsocketConsumer):
         
         ###############################
         # FOR TESTING PURPOSES        #
-        chat_room, created = ChatRoom.objects.get_or_create()
+        chat_room, created = ChatRoom.objects.get_or_create(room_id=self.room_name)
         self.chat_room_id = chat_room.id 
         
         ###############################
         # COMMENTED OUT FOR TESTING PURPOSES ##################################
         # if ChatRoom.objects.get(id=roomid):
-        #     chat_room, created = ChatRoom.objects.create()
+        #     chat_room, created = ChatRoom.objects.create(id=chat_room.id)
         #     self.chat_room_id = chat_room.id 
         # elif ChatRoom.objects.get(id=roomid2):
         #     chat_room, created = ChatRoom.objects.create()
@@ -91,7 +91,7 @@ class ChatConsumer(WebsocketConsumer):
         async_to_sync(self.channel_layer.group_send)(
             ############################################## "message":f"{username}:{message}" to make it more of a chat room. 
             # This edits the message itself, so in the chat_message function below it will be message = message, displaying as message : {username}:{message}.
-            self.room_group_name, {"type": "chat.message", "message": f"{self.user.display_name}: {message}"} 
+            self.room_group_name, {"type": "chat.message", "message": message} 
         )
 
     # Receive message from room group
