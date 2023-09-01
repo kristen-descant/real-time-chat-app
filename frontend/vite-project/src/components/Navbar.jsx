@@ -1,9 +1,21 @@
 
 import React from "react";
 import image from '../media/pngwing.com (1).png'
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export default function Navbar() {
+export default function Navbar(props) {
+
+    const navigate = useNavigate();
+    const { setUser, setLoggedIn } = props;
+
+    const handleLogOut = () => {
+        localStorage.removeItem("token")
+        setUser(null)
+        setLoggedIn(false)
+        navigate('/register')
+    }
+
     return (
         <nav className="flex flex-row justify-between items-center bg-color_palette_2">
             <div className="pl-3"><Link to="/about">About</Link></div>
@@ -18,12 +30,9 @@ export default function Navbar() {
                 
             </div>
             <div>
-            <Link to="/signin">Sign In</Link>
+            <button onClick={handleLogOut}>Logout</button>
             </div>
-            <div>
-            <Link to="/register">Register</Link>
-
-            </div>
+            
         </nav>
     )
 }
