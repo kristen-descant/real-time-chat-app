@@ -32,7 +32,7 @@ function App() {
 
   return (
 
-    <div className="min-h-screen w-screen bg-color_palette_3">
+    <div className="h-full w-full bg-color_palette_3 overflow-x-hidden">
       <Navbar/>
       <Outlet 
       context={{

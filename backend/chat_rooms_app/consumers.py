@@ -85,16 +85,17 @@ class ChatConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
-        user = User.objects.get(text_data_json["user"])
+        # user = User.objects.get(text_data_json["user"])
         ###########TEXT_DATA.user expects a json key value pair of "user":"user.id"###############
-        user.messages.add(message)
+        # user.messages.add(message)
         ##########################################################################################
-        Message.create(content=message, chat_room=self.chat_room_id, sender=user)        
+        # Message.create(content=message, chat_room=self.chat_room_id, sender=user)        
 
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
             ############################################## "message":f"{username}:{message}" to make it more of a chat room. 
             # This edits the message itself, so in the chat_message function below it will be message = message, displaying as message : {username}:{message}.
+
             self.room_group_name, {"type": "chat.message", "message": message} 
         )
 
