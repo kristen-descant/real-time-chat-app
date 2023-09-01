@@ -1,5 +1,9 @@
+import Post from "../components/Post"
+
+
+
 export default function PostPage() {
     return (
-    <h2>This is the Post Page</h2>
+    <Post />
     );
   }
