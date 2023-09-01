@@ -26,7 +26,7 @@ function Chat() {
     console.log(userId)
 
     const client = new W3CWebSocket(
-        'ws://127.0.0.1:8000/ws/' + state.room + '/' + 'test/'
+        'ws://127.0.0.1:8000/ws/' + state.room + '/'
     );
 
     const onButtonClicked = (e) => {
