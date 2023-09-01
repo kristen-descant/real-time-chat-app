@@ -22,38 +22,43 @@ class ChatConsumer(WebsocketConsumer):
         self.send(text_data=json.dumps({"messages":retrieved_messages}))
 
     def connect(self):
-        
+        self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
         # self.user_ids = self.scope.get("headers", {}).get(b'users', b"").decode("utf-8")
         # user = User.objects.get(id=user_id)
-        
+        self.users = self.room_name.split("user") #[user1, user2]
+        ############################################
+        user1 = self.users[0]
+        user2 = self.users[1]
+        self.user_ids={"user1":user1,"user2":user2}
+        roomid = f"user{user1.id}user{user2.id}"
+        roomid2 = f"user{user2.id}user{user1.id}"
         #############################################
-        # user1 = self.user_ids['user1']
-        # user2 = self.user_ids['user2']
-        # roomid = f"user{user1.id}user{user2.id}"
-        # roomid2 = f"user{user2.id}user{user1.id}"
-        ##############################################
         
-        self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
-        self.room_group_name = f"chat_{self.room_name}"
+        # chat_room, created = ChatRoom.objects.create(room_id=roomid)
+        # chat_room.user.add(User.objects.get(user1))
+        # chat_room.user.add(User.objects.get(user1))
+        # self.chat_room_id = chat_room.room_id 
         
         ###############################
         # FOR TESTING PURPOSES        #
-        chat_room, created = ChatRoom.objects.get_or_create(room_id=self.room_name)
-        self.chat_room_id = chat_room.id 
+        # chat_room, created = ChatRoom.objects.get_or_create(room_id=self.room_name)
+        # self.chat_room_id = chat_room.id 
         
         ###############################
         # COMMENTED OUT FOR TESTING PURPOSES ##################################
-        # if ChatRoom.objects.get(id=roomid):
-        #     chat_room, created = ChatRoom.objects.create(id=chat_room.id)
-        #     self.chat_room_id = chat_room.id 
-        # elif ChatRoom.objects.get(id=roomid2):
-        #     chat_room, created = ChatRoom.objects.create()
-        #     self.chat_room_id = chat_room.id 
-        # else:
-        #     # Fetch or create a ChatRoom instance
-        #     chat_room, created = ChatRoom.objects.get_or_create()
-        #     self.chat_room_id = chat_room.id 
-        ######################################################################
+        if ChatRoom.objects.get(room_id=roomid):
+            self.room_group_name = f"chat_{roomid}"
+
+        elif ChatRoom.objects.get(room_id=roomid2):
+            self.room_group_name = f"chat_{roomid2}"
+
+        else:
+            # Fetch or create a ChatRoom instance
+            chat_room, created = ChatRoom.objects.create(room_id=roomid)
+            chat_room.user.add(User.objects.get(user1))
+            chat_room.user.add(User.objects.get(user2))
+            self.room_group_name = f"chat_{roomid}"
+        #####################################################################
         try:         
             # user.chat_rooms.add(chat_room)  # Add the chat_room to the user's chat_rooms field
             # Join room group
@@ -78,7 +83,6 @@ class ChatConsumer(WebsocketConsumer):
 
     # Receive message from WebSocket
     def receive(self, text_data):
-        # user = User.objects.get(id=user_id)
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
         user = User.objects.get(text_data_json["user"])
