@@ -17,7 +17,7 @@ export default function MessagePage() {
     };
 
     verifyUser();
-  }, [user, navigate]); 
+  }, [user]); 
 
   return (
     <>

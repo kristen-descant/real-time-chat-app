@@ -16,7 +16,7 @@ export default function UserPage() {
     };
 
     verifyUser();
-  }, [user, navigate]); 
+  }, [user]); 
   
   const { user_id } = useParams();
   // const isCurrentUser = parseInt(user_id) === user.id;

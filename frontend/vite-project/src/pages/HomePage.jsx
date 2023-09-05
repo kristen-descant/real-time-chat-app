@@ -16,7 +16,7 @@ export default function HomePage() {
     };
 
     verifyUser();
-  }, [user, navigate]); 
+  }, [user]); 
     
   return (
     <div className=" w-full">

@@ -15,7 +15,7 @@ export default function PostPage() {
     };
 
     verifyUser();
-  }, [user, navigate]); 
+  }, [user]); 
 
   return (
     <Post />

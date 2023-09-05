@@ -15,7 +15,7 @@ export default function ForumPage() {
     };
 
     verifyUser();
-  }, [user, navigate]); 
+  }, [user]); 
 
   return (
     <div className="flex flex-col items-center mt-2">
