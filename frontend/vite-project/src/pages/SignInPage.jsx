@@ -12,7 +12,7 @@ export default function SignInPage() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const {setLoggedIn} = useOutletContext();
+  const {setLoggedIn, setUser} = useOutletContext();
   
   const navigate = useNavigate();
 
@@ -22,6 +22,7 @@ export default function SignInPage() {
     setError(null);
     
     try {
+     
       let response = await api.post("users/login/", {
         email: email,
         password: password,
@@ -31,7 +32,9 @@ export default function SignInPage() {
         let token = response.data.token;
         localStorage.setItem("token", token);
         api.defaults.headers.common["Authorization"] = `Token ${token}`;
-        setLoggedIn(true)
+        setLoggedIn(true);
+        setUser(response.data)
+        console.log("Navigating to home...");
         navigate("/");
       }
     } catch (error) {

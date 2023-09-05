@@ -31,7 +31,7 @@ function App() {
     whoAmI()
   }, [])
   
-  console.log(user)
+
   return (
     <div className="h-full w-full bg-color_palette_3 overflow-x-hidden">
       {loggedIn  &&

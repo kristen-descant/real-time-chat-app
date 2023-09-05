@@ -13,6 +13,7 @@ export default function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [displayName, setDisplayName] = useState(''); 
   const navigate = useNavigate();
+  const {setLoggedIn, setUser} = useOutletContext();
   
 
   const register = async (e) => {
@@ -34,7 +35,9 @@ export default function RegisterPage() {
       
       if (response.status === 201) {
         console.log("Registration successful!");
-        navigate("/signin");
+        setLoggedIn(true);
+        setUser(response.data)
+        navigate("/");
       }
     } catch (error) {
       console.error("Registration error", error);
