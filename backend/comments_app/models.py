@@ -10,4 +10,5 @@ class Comments(models.Model):
     post_id = models.ForeignKey(Posts, on_delete=models.CASCADE, related_name="comments")
     edited = models.BooleanField(default=False)
     date_created = models.DateField(default=date.today)
-    reaction = models.CharField(max_length=255 ,blank=True) 
+    up = models.IntegerField(default=0)
+    down = models.IntegerField(default=0)

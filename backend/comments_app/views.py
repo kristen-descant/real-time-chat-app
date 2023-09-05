@@ -41,13 +41,28 @@ class A_comment(APIView):
             comment.full_clean()
             comment.save()
             return Response("Comment Updated", HTTP_200_OK)
-        if "reaction" in request.data:
-            new_reaction = request.data.get("reaction")
-            if new_reaction != comment.reaction:
-                comment.reaction = new_reaction
-            comment.full_clean()
-            comment.save()
-            return Response("Reaction has been updated", status=HTTP_200_OK)
+        if "up" in request.data:
+            if request.data.get("up") == "add":
+                comment.up += 1
+                comment.full_clean()
+                comment.save()
+                return Response("Up Votes has been updated")
+            if request.data.get("up") == "sub":
+                comment.up -= 1
+                comment.full_clean()
+                comment.save()
+                return Response("Up Votes has been updated")
+        if "down" in request.data:
+            if request.data.get("down") == "add":
+                comment.down += 1
+                comment.full_clean()
+                comment.save()
+                return Response("Reaction has been updated", status=HTTP_200_OK)
+            if request.data.get("down") == "sub":
+                comment.down -= 1
+                comment.full_clean()
+                comment.save()
+                return Response("Reaction has been updated", status=HTTP_200_OK)
 
     def delete(self,request,comment_id):
         comment = get_object_or_404(Comments, id=comment_id)
