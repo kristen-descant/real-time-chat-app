@@ -3,12 +3,19 @@ from rest_framework.authtoken.models import Token
 from .models import User
 
 class UserSerializer(serializers.ModelSerializer):
+    friends = serializers.SerializerMethodField()
+
     class Meta:
         model = User
         fields = [
             'id', 'email', 'first_name', 'display_name', 'profile_name', 'profile_picture', 
             'friends', 'last_login', 'date_joined', 'is_active', 'is_staff'
         ]
+
+    def get_friends(self, obj):
+        # Assuming you have a related name 'friends' on the User model
+        friends = obj.friends.all()
+        return UserSerializer(friends, many=True).data
 
 class UserSerializerWithToken(serializers.ModelSerializer):
     token = serializers.SerializerMethodField(read_only=True)
