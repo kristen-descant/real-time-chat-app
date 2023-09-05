@@ -1,70 +1,84 @@
-import axios from "axios";
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Alert } from 'react-bootstrap';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000/' 
+  baseURL: 'http://127.0.0.1:8000/',
 });
 
-export default function SignInPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const {setLoggedIn} = useOutletContext();
-  
+export default function SignInPage({ showForm, setShowForm, setShowRegisterForm }) {
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState(null);
   const navigate = useNavigate();
 
   const logIn = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    
+
     try {
-      let response = await api.post("users/login/", {
-        email: email,
-        password: password,
+      const response = await api.post('users/login/', {
+        email,
+        password,
       });
-      
+
       if (response.status === 200 && response.data.token) {
-        let token = response.data.token;
-        localStorage.setItem("token", token);
-        api.defaults.headers.common["Authorization"] = `Token ${token}`;
-        setLoggedIn(true)
-        navigate("/");
+        const token = response.data.token;
+        localStorage.setItem('token', token);
+        api.defaults.headers.common['Authorization'] = `Token ${token}`;
+        navigate('/');
       }
-    } catch (error) {
-      console.error("Login error", error);
-      setError("Failed to log in. Please check your credentials.");
+    } catch (err) {
+      setError('Failed to log in. Please check your credentials.');
     } finally {
       setLoading(false);
     }
   };
 
+  const toggleRegisterForm = () => {
+    setShowForm(false);
+    setShowRegisterForm(true);
+  };
+
   return (
     <div>
-      {error && <Alert variant="danger">{error}</Alert>}
-      <Button onClick={logIn} disabled={loading} type="button" className="btn btn-success">
-        {loading ? "Signing in..." : "Signin"}
-      </Button>
-      <div>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-        />
-      </div>
-      <div>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-        />
-      </div>
+      {showForm && (
+        <>
+          {error && <Alert variant="danger">{error}</Alert>}
+          <div>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
+            />
+          </div>
+          <div>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+            />
+          </div>
+          <Button onClick={logIn} disabled={loading} type="button" className="btn btn-success">
+            {loading ? "Signing in..." : "Sign in"}
+          </Button>
+          <h4 onClick={toggleRegisterForm}>Need an Account? Register</h4>
+        </>
+      )}
     </div>
   );
-};
+}
+
+
+
+
+
+
+
+
 

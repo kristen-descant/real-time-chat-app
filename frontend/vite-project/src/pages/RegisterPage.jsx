@@ -1,86 +1,79 @@
-import axios from "axios";
-import React, { useState } from 'react';
-import { Button } from 'react-bootstrap';
-import { Link, useNavigate, useOutletContext } from 'react-router-dom';
+import React from 'react';
+import { Button, Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000/'
+  baseURL: 'http://127.0.0.1:8000/',
 });
 
-export default function RegisterPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [displayName, setDisplayName] = useState(''); 
+export default function RegisterPage({ showForm, setShowForm, setShowSignInForm }) {
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [confirmPassword, setConfirmPassword] = React.useState('');
+  const [displayName, setDisplayName] = React.useState('');
   const navigate = useNavigate();
-  
 
   const register = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      console.error("Passwords do not match!");
+      console.error('Passwords do not match!');
       return;
     }
 
     try {
-      let response = await api.post("users/register/", {
-        email: email,
-        password: password,
-        display_name: displayName,  
+      const response = await api.post('users/signup/', {
+        email,
+        password,
+        display_name: displayName,
       });
 
-      console.log(response);
-      
       if (response.status === 201) {
-        console.log("Registration successful!");
-        navigate("/signin");
+        navigate('/signin');
       }
-    } catch (error) {
-      console.error("Registration error", error);
+    } catch (err) {
+      console.error('Registration error', err);
     }
+  };
+
+  const toggleSignInForm = () => {
+    setShowForm(false);
+    setShowSignInForm(true);
   };
 
   return (
     <div>
-      <h2>Register</h2>
-      <div>
-        <input
-          type="text"
-          value={displayName}
-          onChange={(e) => setDisplayName(e.target.value)}
-          placeholder="Display Name"  
-        />
-      </div>
-      <div>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-        />
-      </div>
-      <div>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-        />
-      </div>
-      <div>
-        <input
-          type="password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          placeholder="Confirm Password"
-        />
-      </div>
-      <Button onClick={register} type="button" className="btn btn-primary">Register</Button>
-      <div>
-        Already have an account? <Link to="/signin">Sign In</Link>
-      </div>
+      {showForm && (
+        <Form onSubmit={register}>
+          <Form.Group controlId="displayName">
+            <Form.Control type="text" value={displayName} onChange={(e) => setDisplayName(e.target.value)} placeholder="Display Name" />
+          </Form.Group>
+          <Form.Group controlId="email">
+            <Form.Control type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+          </Form.Group>
+          <Form.Group controlId="password">
+            <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+          </Form.Group>
+          <Form.Group controlId="confirmPassword">
+            <Form.Control type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm Password" />
+          </Form.Group>
+          <Button type="submit" className="btn btn-primary">Register</Button>
+          <h4 onClick={toggleSignInForm}>Already have an Account? Sign in</h4>
+        </Form>
+      )}
     </div>
   );
-};
+}
+
+
+
+
+
+
+
+
+
+
+
 
