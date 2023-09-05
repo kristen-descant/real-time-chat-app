@@ -21,17 +21,29 @@ class ChatConsumer(WebsocketConsumer):
         retrieved_messages = ChatRoom.objects.get(id=self.chat_room_id).messages.filter(date__lt=Message.objects.get(oldest_message_id).date).order_by('-date')[:50]
         self.send(text_data=json.dumps({"messages":retrieved_messages}))
 
+    # def createRoom(self,user1,user2):
+    #         user1 = self.users[0]
+    #         user2 = self.users[1] #errors when assuming two users are passed and only one is passed.
+    #         self.user_ids={"user1":user1,"user2":user2}
+    #         roomid = f"user{user1.id}user{user2.id}"
+    #         roomid2 = f"user{user2.id}user{user1.id}"
+
     def connect(self):
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
+        print("roomname:",self.room_name)
         # self.user_ids = self.scope.get("headers", {}).get(b'users', b"").decode("utf-8")
         # user = User.objects.get(id=user_id)
         self.users = self.room_name.split("user") #[user1, user2]
+        print("self.users:",self.users)
         ############################################
-        user1 = self.users[0]
-        user2 = self.users[1] #errors when assuming two users are passed and only one is passed.
+        user1 = self.users[1]
+        user2 = self.users[2] #errors when assuming two users are passed and only one is passed.
         self.user_ids={"user1":user1,"user2":user2}
-        roomid = f"user{user1.id}user{user2.id}"
-        roomid2 = f"user{user2.id}user{user1.id}"
+        
+        roomid = f"user{user1}user{user2}"
+        roomid2 = f"user{user2}user{user1}"
+        print("roomid:",roomid,"roomid2",roomid2)
+
         #############################################
         
         # chat_room, created = ChatRoom.objects.create(room_id=roomid)
@@ -43,19 +55,16 @@ class ChatConsumer(WebsocketConsumer):
         # FOR TESTING PURPOSES        #
         # chat_room, created = ChatRoom.objects.get_or_create(room_id=self.room_name)
         # self.chat_room_id = chat_room.id 
-        
         ###############################
-        # COMMENTED OUT FOR TESTING PURPOSES ##################################
-        if ChatRoom.objects.get(room_id=roomid):
-            self.room_group_name = f"chat_{roomid}"
 
-        elif ChatRoom.objects.get(room_id=roomid2):
-            self.room_group_name = f"chat_{roomid2}"
-
-        else:
+        from django.db.models import Q
+        try:
+            chat_room = ChatRoom.objects.get(Q(room_id=roomid) | Q(room_id=roomid2))
+            self.room_group_name = f"chat_{chat_room.room_id}"
+        except ChatRoom.DoesNotExist:
             # Fetch or create a ChatRoom instance
-            chat_room, created = ChatRoom.objects.create(room_id=roomid)
-            chat_room.user.add(User.objects.get(user1))
+            chat_room = ChatRoom.objects.create(room_id=roomid,users=User.objects.get(id=1))
+            # chat_room.user.add(User.objects.get(user1))
             chat_room.user.add(User.objects.get(user2))
             self.room_group_name = f"chat_{roomid}"
         #####################################################################
@@ -65,11 +74,12 @@ class ChatConsumer(WebsocketConsumer):
             async_to_sync(self.channel_layer.group_add)(
                 self.room_group_name, self.channel_name
             )
-            if created:
-                self.accept()
-            else:
+            #dont need to do if
+            # if created:
+            self.accept()
+            # else:
                 # self.updated_message_db()
-                self.accept()
+                # self.accept()
         
         except User.DoesNotExist:
             # Handle user not found error
