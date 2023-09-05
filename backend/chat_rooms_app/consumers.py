@@ -76,6 +76,7 @@ class ChatConsumer(WebsocketConsumer):
             )
             #dont need to do if
             # if created:
+            self.updated_message_db()
             self.accept()
             # else:
                 # self.updated_message_db()
