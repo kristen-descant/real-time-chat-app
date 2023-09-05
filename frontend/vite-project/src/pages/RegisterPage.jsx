@@ -1,22 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const api = axios.create({
   baseURL: 'http://127.0.0.1:8000/',
 });
 
-export default function RegisterPage({ showForm, setShowForm, setShowSignInForm }) {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [confirmPassword, setConfirmPassword] = React.useState('');
-  const [displayName, setDisplayName] = React.useState('');
+export default function RegisterPage() {
+  const [showForm, setShowForm] = useState(true);  // Set to true to show the form by default
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [displayName, setDisplayName] = useState('');
   const navigate = useNavigate();
 
   const register = async (e) => {
     e.preventDefault();
-
     if (password !== confirmPassword) {
       console.error('Passwords do not match!');
       return;
@@ -37,13 +37,12 @@ export default function RegisterPage({ showForm, setShowForm, setShowSignInForm 
     }
   };
 
-  const toggleSignInForm = () => {
-    setShowForm(false);
-    setShowSignInForm(true);
-  };
-
   return (
     <div>
+      <Button onClick={() => setShowForm(!showForm)} type="button" className="btn btn-primary">
+        {showForm ? 'Hide' : 'New User? Start Here'}
+      </Button>
+      <h4>Already have an account? <Link to="/signin">Sign In</Link></h4>
       {showForm && (
         <Form onSubmit={register}>
           <Form.Group controlId="displayName">
@@ -59,12 +58,16 @@ export default function RegisterPage({ showForm, setShowForm, setShowSignInForm 
             <Form.Control type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm Password" />
           </Form.Group>
           <Button type="submit" className="btn btn-primary">Register</Button>
-          <h4 onClick={toggleSignInForm}>Already have an Account? Sign in</h4>
         </Form>
       )}
     </div>
   );
 }
+
+
+
+
+
 
 
 

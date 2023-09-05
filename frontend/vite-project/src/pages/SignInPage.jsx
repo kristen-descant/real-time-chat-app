@@ -1,13 +1,14 @@
+
 import React from 'react';
 import { Button, Alert } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
 const api = axios.create({
   baseURL: 'http://127.0.0.1:8000/',
 });
 
-export default function SignInPage({ showForm, setShowForm, setShowRegisterForm }) {
+export default function SignInPage() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [loading, setLoading] = React.useState(false);
@@ -38,38 +39,34 @@ export default function SignInPage({ showForm, setShowForm, setShowRegisterForm 
     }
   };
 
-  const toggleRegisterForm = () => {
-    setShowForm(false);
-    setShowRegisterForm(true);
-  };
-
   return (
     <div>
-      {showForm && (
-        <>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <div>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email"
-            />
-          </div>
-          <div>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
-            />
-          </div>
-          <Button onClick={logIn} disabled={loading} type="button" className="btn btn-success">
-            {loading ? "Signing in..." : "Sign in"}
-          </Button>
-          <h4 onClick={toggleRegisterForm}>Need an Account? Register</h4>
-        </>
-      )}
+      <Link to="/">Go back to Home</Link>
+      <div>
+        {error && <Alert variant="danger">{error}</Alert>}
+        <div>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+          />
+        </div>
+        <div>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+          />
+        </div>
+        <Button onClick={logIn} disabled={loading} type="button" className="btn btn-success">
+          {loading ? "Signing in..." : "Sign in"}
+        </Button>
+        <h4>
+          <Link to="/register">Need an Account?</Link>
+        </h4>
+      </div>
     </div>
   );
 }
