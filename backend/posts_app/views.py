@@ -22,8 +22,8 @@ class All_posts(APIView):
         return Response(posts.data, status=HTTP_200_OK)
     
     def post(self, request, forum_id):
-        forum = get_object_or_404(ForumTopics, id=forum_id, posts=request.user)
-        posts = Posts(**request.data, topic_id=forum)
+        forum = get_object_or_404(ForumTopics, id=forum_id)
+        posts = Posts(**request.data, topic_id=forum, created_by_id=request.user.id)
         posts.save()  
         posts = PostsSerializer(posts)
         return Response(posts.data, status=HTTP_201_CREATED)
@@ -38,7 +38,7 @@ class Select_posts(APIView):
         return Response(select_post.data, status=HTTP_200_OK)
     
     def put(self, request, forum_id, post_id):
-        post = get_object_or_404(Posts, id=post_id, topic_id=forum_id, posts=request.user)
+        post = get_object_or_404(Posts, id=post_id, topic_id=forum_id, created_by=request.user.id)
         if 'content' in request.data:
             post.content = request.data.get('content')        
         if 'edited' in request.data:
@@ -53,6 +53,6 @@ class Select_posts(APIView):
         return Response("Post was updated.", HTTP_201_CREATED)
     
     def delete(self, request, forum_id, post_id):
-        post = get_object_or_404(Posts, id=post_id, topic_id=forum_id, posts=request.user)
+        post = get_object_or_404(Posts, id=post_id, topic_id=forum_id, created_by=request.user.id)
         post.delete() 
         return Response(status=HTTP_204_NO_CONTENT)
