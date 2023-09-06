@@ -1,6 +1,7 @@
 import Forum from "../components/Forum";
 import PostList from "../components/PostList";
 import { useNavigate, useOutletContext } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function ForumPage() {
 
@@ -20,7 +21,7 @@ export default function ForumPage() {
   return (
     <div className="flex flex-col items-center mt-2">
       <Forum/>
-      <PostList/>
+      <PostList/> 
     </div>
   );
 }

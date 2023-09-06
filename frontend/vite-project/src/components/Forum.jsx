@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import forumsListData from '../data/forums.json'
 import thumbsUp from '../media/pngwing.com (2).png'
 import thumbsDown from '../media/pngwing.com (4).png'
+import {api} from '../pages/utility.jsx'
 
 
 
@@ -11,16 +12,26 @@ export default function Forum({forum}) {
     const { forum_id } = useParams();
     const navigate = useNavigate();
     // console.log(forum_id)
-    const [forumsList, setForumsList] = useState(forumsListData);
+    const [forumsList, setForumsList] = useState([]);
     // console.log(forumsList)
     const [currentForum, setCurrentForum] = useState({})
 
 
-    useEffect(() => {
-        if (forum_id > 0) {
-            // console.log(forumsList[forum_id - 1])
-            setCurrentForum(forumsList[forum_id - 1]);
-            }
+    // useEffect(() => {
+    //     if (forum_id > 0) {
+    //         // console.log(forumsList[forum_id - 1])
+    //         setCurrentForum(forumsList[forum_id - 1]);
+    //         }
+    // }, [])
+
+    useEffect(()=>{
+      const getAllForums = async() => {
+        let response = await api.get('forum/')
+        let forumData = response.data 
+        let new_id = forumData[forum_id-1]
+        setCurrentForum(new_id)
+      }
+      getAllForums()
     }, [])
     
    
@@ -36,11 +47,11 @@ export default function Forum({forum}) {
       <div className="text-xl md:text-2xl" >{forum.title}</div>
       <div className="flex flex-row justify-around w-1/3 mt-2">
         <div className="flex flex-row">
-          <span className="mr-2 text-[green]">{forum.up}</span>
+          <span className="mr-2 text-[green]">{forum.reaction}</span>
           <img className="h-3 md:h-5" src={thumbsUp} alt="thumbs up" />
         </div>
         <div className="flex flex-row">
-          <span className="mr-2 text-[red]">{forum.down}</span>
+          <span className="mr-2 text-[red]">{forum.reaction}</span>
           <img className="h-3 md:h-5" src={thumbsDown} alt="thumbs down" />
         </div>
       </div>
@@ -50,11 +61,11 @@ export default function Forum({forum}) {
           <div className="text-xl md:text-2xl" >{currentForum.title}</div>
           <div className="flex flex-row justify-around w-1/3 mt-2">
             <div className="flex flex-row">
-              <span className="mr-2 text-[green]">{currentForum.up}</span>
+              <span className="mr-2 text-[green]">{currentForum.reaction}</span>
               <img className="h-3 md:h-5" src={thumbsUp} alt="thumbs up" />
             </div>
             <div className="flex flex-row">
-              <span className="mr-2 text-[red]">{currentForum.down}</span>
+              <span className="mr-2 text-[red]">{currentForum.reaction}</span>
               <img className="h-3 md:h-5" src={thumbsDown} alt="thumbs down" />
             </div>
           </div>
