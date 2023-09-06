@@ -9,10 +9,15 @@ export default function FriendsList() {
 
     
     const navigate = useNavigate();
-    const {userInfo, user, friendList} = useOutletContext();
+    const {userInfo, user, friendList, setUsertoMessage} = useOutletContext();
 
     const handleOnClick = (friendId) => {
         navigate(`/user/${friendId}`)
+    }
+    
+    const messageOnClick = (friend) => {
+        setUsertoMessage(friend)
+        navigate('/message')
     }
 
     return (
@@ -22,9 +27,10 @@ export default function FriendsList() {
             {friendList && 
             <div className="h-full w-full border border-[black] flex flex-col overflow-y-scroll mt-2 rounded">
                 {friendList.map((friend) => (
-                    <div onClick={() => handleOnClick(friend.id)} key={friend.id} className='h-[10vh] border-b-[black] border flex flex-row justify-between bg-color_palette_3 hover:bg-color_palette_1 '>
-                        <img className='h-full border border-[black] rounded-full' src={friend.profile_picture} alt="" />
+                    <div  key={friend.id} className='h-[10vh] border-b-[black] border flex flex-row justify-between bg-color_palette_3 hover:bg-color_palette_1 '>
+                        <img className='h-full border border-[black] rounded-full' onClick={() => handleOnClick(friend.id)} src={friend.profile_picture} alt="" />
                         <div className='w-[50%]'>{friend.display_name}</div>
+                        <button onClick={() => messageOnClick(friend)}>Message</button>
                     </div>
                 ))}            
             </div> }

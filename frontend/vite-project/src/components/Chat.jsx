@@ -12,9 +12,12 @@ function Chat() {
         messages: [],
         value: '',
         name: '',
-        room: `user${userInfo.id}user${userToMessage.id}`
+
+        room: `user${userInfo.data.id}user${userToMessage.id}`
         // room: 'chat',
     });
+
+    console.log(userInfo)
 
 
     const client = new W3CWebSocket(
@@ -25,6 +28,7 @@ function Chat() {
         client.send(
         JSON.stringify({
             message: state.value,
+            user: userInfo.data.id
         })
         );
         setState((prevState) => ({
@@ -48,7 +52,10 @@ function Chat() {
                 ...prevState.messages,
                 {
                 message: dataFromServer.message,
-                user: userInfo.id
+
+                user: dataFromServer.user
+
+//                 user: userInfo.id
                 },
             ],
             }));
@@ -58,7 +65,8 @@ function Chat() {
 
     console.log(state.messages)
     
-    // console.log(user.id)
+    console.log(userInfo.data.id)
+    
 
     return (
         <div className="h-screen bg-gray-100 flex justify-center overflow-hidden">
@@ -70,7 +78,7 @@ function Chat() {
                     <div className="h-[85%] overflow-x-hidden overflow-y-auto shadow-none w-full flex flex-col items-center">
                     {state.messages.map((message, index) => (
                     <div key={index} className='mb-4 mr-4 w-fit md:w-3/4 ' >
-                        <div  className={`  p-1 whitespace-normal overflow-x-hidden  rounded ${message.user === user.id ? 'bg-color_palette_1' : ''}`} >
+                        <div  className={`  p-1 whitespace-normal overflow-x-hidden  rounded ${message.user === userInfo.data.id ? 'bg-color_palette_1' : 'bg-[white]'}`} >
                         {message.message}
                         </div>
                     </div>
