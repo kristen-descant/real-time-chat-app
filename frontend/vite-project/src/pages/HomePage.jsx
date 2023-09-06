@@ -7,17 +7,7 @@ export default function HomePage() {
   
   const {user} = useOutletContext();
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   const verifyUser = async () => {
-  //     if (!user) {
-  //       navigate('/signin');
-  //     }
-  //   };
-
-  //   verifyUser();
-  // }, [user]); 
-    
+  
   return (
     <div className=" w-full">
         <h2>This is the Home page</h2>

@@ -1,9 +1,10 @@
 
 import React, { useEffect } from "react";
 import image from '../media/pngwing.com (1).png'
-import { Link, useOutletContext } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { api } from "../pages/utility";
 
 export default function Navbar(props) {
 
@@ -12,6 +13,7 @@ export default function Navbar(props) {
     const [userId, setUserId] = useState(null)
     const [userSearch, setUserSearch] = useState(true);
     const [forumSearch, setForumSearch] = useState(false);
+    const [searchCriteria, setSearchCriteria] = useState(null);
 
     const handleLogOut = () => {
         localStorage.removeItem("token")
@@ -40,6 +42,24 @@ export default function Navbar(props) {
         setForumSearch(true);
     };
 
+    const handleSearch = async() => {
+        if (userSearch) {
+            try {
+                const response = await api.get(``)
+            } catch(error) {
+                console.log(error)
+            }
+        } else if (forumSearch) {
+            try {
+                const response = await api.get(``)
+            } catch(error) {
+                console.log(error)
+            }
+        };
+    }
+
+    console.log(searchCriteria)
+
     return (
         <nav className="pl-3 pr-3 flex flex-row justify-between items-center bg-color_palette_2">
             <div className="p-1 hover:bg-color_palette_1 rounded"><Link to="/">Home</Link></div>
@@ -50,8 +70,15 @@ export default function Navbar(props) {
                     <button onClick={handleUserSearchToggle}  className={`h-3 md:h-auto overflow-hidden text-xs md:text-auto p-1 mr-1 rounded ${userSearch ? 'bg-[grey]' : 'bg-[white]'}`}>User</button>
                     <button onClick={handleForumSearchToggle}  className={`h-3 md:h-auto text-xs md:text-auto overflow-hidden p-1 rounded ${forumSearch ? 'bg-[grey]' : 'bg-[white]'}`}>Forum</button>
                 </div>
-                <input type="text" placeholder="Search" />
-                <button className="ml-2 pl-1 pr-1 border rounded bg-color_palette_3">Submit</button>
+                <input
+                onChange={(e) => setSearchCriteria(e.target.value)}
+                value={searchCriteria}
+                type="text"
+                placeholder="Search"
+                />
+                <button 
+                onClick={handleSearch}
+                className="ml-2 pl-1 pr-1 border rounded bg-color_palette_3">Submit</button>
             </div>
             <div className="p-1">
                 <Link to={`/user/${userId}`}><img className="rounded-full h-full w-[3vw]" src={image} alt="spongebob" /></Link>

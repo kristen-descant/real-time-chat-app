@@ -14,19 +14,6 @@ export default function UserPage() {
   const [isCurrentUser, setIsCurrentUser] = useState();
   const [isFriend, setIsFriend] = useState();
   const [userToView, setUserToView] = useState(null);
-
-  // useEffect(() => {
-  //   const verifyUser = async () => {
-  //     if (!user) {
-  //       navigate('/signin');
-  //       return
-  //     }
-  //     console.log(userInfo)
-      
-  //   };
-
-  //   verifyUser();
-  // }, [user]); 
   
   const getUserToView = async() => {
     const response = await api.get(`users/profile/${user_id}`)
