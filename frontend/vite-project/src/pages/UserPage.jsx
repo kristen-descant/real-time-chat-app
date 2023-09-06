@@ -4,6 +4,7 @@ import users from "../data/users.json";
 import { api } from "./utility";
 import image from '../media/pngwing.com (1).png'
 
+
 // This page needs to be refactored with data from API
 
 export default function UserPage() {
@@ -21,12 +22,7 @@ export default function UserPage() {
         return
       }
       console.log(userInfo)
-      setIsCurrentUser(Number(user_id) === userInfo.data.id);
-      // Use the find method with a callback function to search for a matching id
-      const foundFriend = friendList.find((friend) => friend.id === Number(user_id));
-
-      // Check if a friend with the specified id was found
-      setIsFriend(!!foundFriend);
+      
     };
 
     verifyUser();
@@ -40,24 +36,53 @@ export default function UserPage() {
 
   useEffect(() => {
     getUserToView();
-  }, [user])
+  }, [user, user_id])
 
   useEffect(() => {
+    setIsCurrentUser(Number(user_id) === userInfo.data.id);
+      // Use the find method with a callback function to search for a matching id
+    const foundFriend = friendList.find((friend) => friend.id === Number(user_id));
+
+    // Check if a friend with the specified id was found
+    setIsFriend(!!foundFriend);
     console.log(isFriend);
-    console.log(isCurrentUser);
+    console.log(isCurrentUser)
+    console.log(userInfo.data.id);
+    console.log(Number(user_id))
   }, [userToView])
+
+  const handleAddFriend = async() => {
+    try {
+      const response = await api.post(`/users/users/add/${user_id}`)
+      setIsFriend(true)
+    } catch(error) {
+      console.log(error)
+    }
+  };
+
+  const handleRemoveFriend = async() => {
+    try {
+      const response = await api.post(`/users/users/remove/${user_id}`)
+      setIsFriend(false)
+    } catch(error) {
+      console.log(error)
+    }
+  };
 
   return (
     <div className="flex h-screen items-center justify-center">
       {userToView && 
       <div className="bg-color_palette_1 border-2 border-color_palette_5 w-1/2 h-fit relative">
-        {!isCurrentUser && !isFriend && (
-          <button className="absolute top-1 left-1 p-2 border-2 rounded bg-color_palette_4 hover:bg-color_palette_2 active:bg-color_palette_3">
+        {!isCurrentUser && (!isFriend ? (
+          <button onClick={handleAddFriend}  className="absolute top-1 left-1 p-2 border-2 rounded bg-color_palette_4 hover:bg-color_palette_2 active:bg-color_palette_3">
             Add Friend
-          </button>
+          </button>) :
+          (<button onClick={handleRemoveFriend}  className="absolute top-1 left-1 p-2 border-2 rounded bg-color_palette_4 hover:bg-color_palette_2 active:bg-color_palette_3">
+            Remove Friend
+          </button>)
         )}
-        {!isFriend && isCurrentUser && (
-          <button className="absolute top-1 right-1 p-2 border-2 rounded bg-color_palette_4 hover:bg-color_palette_2 active:bg-color_palette_3">
+        {!isCurrentUser && (
+          <button  className="absolute top-1 right-1 p-2 border-2 rounded bg-color_palette_4 hover:bg-color_palette_2 active:bg-color_palette_3">
             Message
           </button>
         )}

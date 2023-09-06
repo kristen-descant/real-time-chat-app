@@ -12,12 +12,13 @@ function Chat() {
         messages: [],
         value: '',
         name: '',
+
         room: `user${userInfo.data.id}user${userToMessage.id}`
         // room: 'chat',
     });
 
     console.log(userInfo)
-    
+
 
     const client = new W3CWebSocket(
         'ws://127.0.0.1:8000/ws/' + state.room + '/'
@@ -51,7 +52,10 @@ function Chat() {
                 ...prevState.messages,
                 {
                 message: dataFromServer.message,
+
                 user: dataFromServer.user
+
+//                 user: userInfo.id
                 },
             ],
             }));
