@@ -15,9 +15,13 @@ class ChatConsumer(WebsocketConsumer):
     def updated_message_db(self, oldest_message_id=0):
         #this function retrieves the last 50 messages if no message id is provided.
         #if a message id is provided, it will grab the last 50 from that point.
-        if oldest_message_id==0:
-            oldest_message_id = ChatRoom.objects.get(id=self.chat_room_id).messages.all().order_by('-id').first()     #this sets it to the most recent message.       
-        
+        oldest_message = ChatRoom.objects.get(id=self.chat_room_id).messages.all().order_by('-id').first()
+        if oldest_message:
+            oldest_message_id = oldest_message.id
+        else:
+            # Handle the case where no messages exist in the chat room.
+            oldest_message_id = 0
+
         retrieved_messages = ChatRoom.objects.get(id=self.chat_room_id).messages.filter(date__lt=Message.objects.get(oldest_message_id).date).order_by('-date')[:50]
         self.send(text_data=json.dumps({"messages":retrieved_messages}))
 
