@@ -13,16 +13,6 @@ export default function SignInPage() {
   
   const navigate = useNavigate();
 
-  const checkIfUser = () => {
-    if (user) {
-      navigate('/')
-    }
-  }
-
-  useEffect(() => {
-    checkIfUser();
-  }, [])
-
   const logIn = async (e) => {
     e.preventDefault();
     setLoading(true);
