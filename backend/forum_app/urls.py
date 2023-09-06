@@ -20,6 +20,7 @@ from django.urls import path, include
 urlpatterns = [
     path("chat/", include("chat_rooms_app.urls")),
     path('forum/', include("forum_topics_app.urls")), 
-    path('forum/', include("posts_app.urls")),
+    path('posts/', include("posts_app.urls")),
+    path('comments/', include("comments_app.urls")),
     path('users/', include("users_app.urls")),
 ]
