@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Alert } from 'react-bootstrap';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { api } from './utility';
@@ -9,7 +9,7 @@ export default function SignInPage() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const {setLoggedIn, setUser} = useOutletContext();
+  const {setLoggedIn, setUser, user} = useOutletContext();
   
   const navigate = useNavigate();
 
@@ -43,17 +43,19 @@ export default function SignInPage() {
   };
 
   return (
-    <div>
+    <div className="min-h-screen flex justify-center items-center">
+      <div className="flex flex-col items-center">
       {error && <Alert variant="danger">{error}</Alert>}
-      <Button onClick={logIn} disabled={loading} type="button" className="btn btn-success">
-        {loading ? "Signing in..." : "Signin"}
-      </Button>
+      <button onClick={logIn} disabled={loading} type="button" className="border hover:bg-color_palette_4 border-[white] text-[white] p-1 rounded mb-2 ">
+        {loading ? "Signing in..." : "Sign In"}
+      </button>
       <div>
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
+          className="mb-1"
         />
       </div>
       <div>
@@ -63,6 +65,7 @@ export default function SignInPage() {
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
         />
+      </div>
       </div>
     </div>
   );

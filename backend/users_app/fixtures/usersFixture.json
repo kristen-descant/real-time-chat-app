@@ -138,5 +138,36 @@
             "is_staff": false,
             "friends": [1,2,3,4,5,6,7,8,9]
         }
+    },
+    {
+        "model": "users_app.user",
+        "pk": 11,
+        "fields": {
+            "email": "test4@test4.com",
+            "display_name": "test4",
+            "password":"pbkdf2_sha256$600000$1kwEw6wBVFMFH2Lu3er9oD$FCXoF7QiDFb6FR6sJrERldmOO0jgH3o7l3sWeLQLAbw=",
+            "profile_picture": null,
+            "last_login": "2023-08-30T00:00:00Z",
+            "date_joined": "2023-08-30T00:00:00Z",
+            "is_active": true,
+            "is_staff": false,
+            "friends": [12,2,3,4,5,6,7,8,9]
+        }
+    },
+    {
+        "model": "users_app.user",
+        "pk": 12,
+        "fields": {
+            "email": "test1@test1.com",
+            "display_name": "test1",
+            "password":"pbkdf2_sha256$600000$1kwEw6wBVFMFH2Lu3er9oD$FCXoF7QiDFb6FR6sJrERldmOO0jgH3o7l3sWeLQLAbw=",
+            "profile_picture": null,
+            "last_login": "2023-08-30T00:00:00Z",
+            "date_joined": "2023-08-30T00:00:00Z",
+            "is_active": true,
+            "is_staff": false,
+            "friends": [11,2,3,4,5,6,7,8,9]
+        }
     }
 ]
+
