@@ -76,7 +76,7 @@ class ChatConsumer(WebsocketConsumer):
             )
             #dont need to do if
             # if created:
-            self.updated_message_db()
+            # self.updated_message_db()
             self.accept()
             # else:
                 # self.updated_message_db()
@@ -94,6 +94,7 @@ class ChatConsumer(WebsocketConsumer):
 
     # Receive message from WebSocket
     def receive(self, text_data):
+        print("TEXT DATA:", text_data)
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
         # user = User.objects.get(text_data_json["user"])
@@ -104,7 +105,7 @@ class ChatConsumer(WebsocketConsumer):
 
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
-            ############################################## "message":f"{username}:{message}" to make it more of a chat room. 
+            ###################################### "message":f"{username}:{message}" to make it more of a chat room. 
             # This edits the message itself, so in the chat_message function below it will be message = message, displaying as message : {username}:{message}.
 
             self.room_group_name, {"type": "chat.message", "message": message} 
