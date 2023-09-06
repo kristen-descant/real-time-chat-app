@@ -5,7 +5,15 @@ import { w3cwebsocket as W3CWebSocket } from 'websocket';
 function Chat() {
 
     const {user, userToMessage, userInfo} = useOutletContext();
+    const [thisUserId, setThisUserId] = useState(null);
     console.log(user)
+    const setUserId = () => {
+        setThisUserId(userInfo.data.id)
+    }
+
+    useEffect(() => {
+        setUserId()
+    }, [userInfo])
     // const [userId, setUserId] = useState('');
     const [state, setState] = useState({
         filledForm: false,
@@ -27,13 +35,14 @@ function Chat() {
     const onButtonClicked = (e) => {
         client.send(
         JSON.stringify({
-            message: state.value,
+            message: [state.value, thisUserId],
             user: userInfo.data.id
         })
         );
         setState((prevState) => ({
         ...prevState,
         value: '',
+        
         }));
         e.preventDefault();
     };
@@ -46,6 +55,7 @@ function Chat() {
         
         const dataFromServer = JSON.parse(message.data);
         if (dataFromServer) {
+            console.log(dataFromServer)
             setState((prevState) => ({
             ...prevState,
             messages: [
@@ -63,7 +73,7 @@ function Chat() {
         };
     }, []);
 
-    console.log(state)
+    console.log(state.messages)
     
     console.log(userInfo.data.id)
     
@@ -78,7 +88,7 @@ function Chat() {
                     <div className="h-[85%] overflow-x-hidden overflow-y-auto shadow-none w-full flex flex-col items-center">
                     {state.messages.map((message, index) => (
                     <div key={index} className='mb-4 mr-4 w-fit md:w-3/4 ' >
-                        <div  className={`  p-1 whitespace-normal overflow-x-hidden  rounded ${message.user === userInfo.data.id ? 'bg-color_palette_1' : 'bg-[white]'}`} >
+                        <div  className={`  p-1 whitespace-normal overflow-x-hidden  rounded ${message.message[1] === userInfo.data.id ? 'bg-color_palette_2' : 'bg-[white]'}`} >
                         {message.message}
                         </div>
                     </div>
