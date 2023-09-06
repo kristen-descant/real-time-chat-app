@@ -21,12 +21,7 @@ export default function UserPage() {
         return
       }
       console.log(userInfo)
-      setIsCurrentUser(Number(user_id) === userInfo.data.id);
-      // Use the find method with a callback function to search for a matching id
-      const foundFriend = friendList.find((friend) => friend.id === Number(user_id));
-
-      // Check if a friend with the specified id was found
-      setIsFriend(!!foundFriend);
+      
     };
 
     verifyUser();
@@ -40,11 +35,19 @@ export default function UserPage() {
 
   useEffect(() => {
     getUserToView();
-  }, [user])
+  }, [user, user_id])
 
   useEffect(() => {
+    setIsCurrentUser(Number(user_id) === userInfo.data.id);
+      // Use the find method with a callback function to search for a matching id
+    const foundFriend = friendList.find((friend) => friend.id === Number(user_id));
+
+    // Check if a friend with the specified id was found
+    setIsFriend(!!foundFriend);
     console.log(isFriend);
-    console.log(isCurrentUser);
+    console.log(isCurrentUser)
+    console.log(userInfo.data.id);
+    console.log(Number(user_id))
   }, [userToView])
 
   return (
@@ -56,7 +59,7 @@ export default function UserPage() {
             Add Friend
           </button>
         )}
-        {!isFriend && isCurrentUser && (
+        {!isCurrentUser && (
           <button className="absolute top-1 right-1 p-2 border-2 rounded bg-color_palette_4 hover:bg-color_palette_2 active:bg-color_palette_3">
             Message
           </button>

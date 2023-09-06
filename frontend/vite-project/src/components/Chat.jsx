@@ -4,19 +4,18 @@ import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
 function Chat() {
 
-    const {user, userToMessage} = useOutletContext();
+    const {user, userToMessage, userInfo} = useOutletContext();
     console.log(user)
-    const [userId, setUserId] = useState('');
+    // const [userId, setUserId] = useState('');
     const [state, setState] = useState({
         filledForm: false,
         messages: [],
         value: '',
         name: '',
-        room: `user${user.id}user${userToMessage.id}`
+        room: `user${userInfo.id}user${userToMessage.id}`
         // room: 'chat',
     });
 
-    console.log(userId)
 
     const client = new W3CWebSocket(
         'ws://127.0.0.1:8000/ws/' + state.room + '/'
@@ -49,7 +48,7 @@ function Chat() {
                 ...prevState.messages,
                 {
                 message: dataFromServer.message,
-                user: user.id
+                user: userInfo.id
                 },
             ],
             }));
