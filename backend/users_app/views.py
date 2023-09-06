@@ -71,11 +71,33 @@ def register_user(request):
         message = {'detail': str(e)}
         return Response(message, status=HTTP_400_BAD_REQUEST)
 
+@api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def add_friend(request,id):
+    # Get the current user
+    current_user = request.user
+
+    # Extract friend_id from the request data (assuming it's sent in the request body)
+    friend_id = id
+
+    try:
+        # Get the user to be added as a friend
+        friend = User.objects.get(id=friend_id)
+
+        # Add the friend to the current user's friends list
+        current_user.friends.add(friend)
+
+        return Response(status=HTTP_200_OK)
+    except User.DoesNotExist:
+        # Handle the case where the specified friend_id does not exist
+        return Response({'error': 'User not found'}, status=HTTP_404_NOT_FOUND)
+
 
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def get_user_profile(request):
+def get_user_profile(request):  
     user = request.user
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data, status=HTTP_200_OK)
