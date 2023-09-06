@@ -74,12 +74,12 @@ def register_user(request):
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def add_friend(request):
+def add_friend(request,id):
     # Get the current user
     current_user = request.user
 
     # Extract friend_id from the request data (assuming it's sent in the request body)
-    friend_id = request.data.get('friend_id')
+    friend_id = id
 
     try:
         # Get the user to be added as a friend
@@ -97,7 +97,7 @@ def add_friend(request):
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def get_user_profile(request):
+def get_user_profile(request):  
     user = request.user
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data, status=HTTP_200_OK)
