@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import image from '../media/pngwing.com (1).png'
 import { Link, useOutletContext } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ export default function Navbar(props) {
 
     const navigate = useNavigate();
     const { setUser, setLoggedIn, userInfo } = props;
-    const [userid, setUserId] = useState(userInfo.data.id)
+    const [userId, setUserId] = useState(null)
 
     const handleLogOut = () => {
         localStorage.removeItem("token")
@@ -18,9 +18,16 @@ export default function Navbar(props) {
         navigate('/register')
     }
 
-    // const getUserId = () => {
-    //     const 
-    // }
+    
+    useEffect(() => {
+        if (userInfo) {
+            const getUserId = () => {
+                setUserId(userInfo.data.id);
+            }
+            getUserId()
+        }
+    }, [userInfo])
+
 
     return (
         <nav className="flex flex-row justify-between items-center bg-color_palette_2">
