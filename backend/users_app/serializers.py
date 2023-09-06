@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 from .models import User
 
+
 class FriendSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -11,8 +12,6 @@ class FriendSerializer(serializers.ModelSerializer):
              'last_login', 'date_joined', 'is_active', 'is_staff'
         ]
 
-
-    
 class UserSerializer(serializers.ModelSerializer):
     friends = FriendSerializer(many=True)
 

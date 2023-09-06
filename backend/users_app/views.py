@@ -80,6 +80,14 @@ def get_user_profile(request):
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data, status=HTTP_200_OK)
 
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_user_profile_by_id(request,id):
+    user = request.user
+    serializer = UserSerializer(user, many=False)
+    return Response(serializer.data, status=HTTP_200_OK)
+
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def update_user_profile(request):
