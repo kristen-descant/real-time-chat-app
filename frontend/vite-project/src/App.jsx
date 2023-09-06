@@ -29,17 +29,17 @@ function App() {
       }else {
         navigate('/signin')
       }
-      console.log(response)
+      // console.log(response)
   }
 }
 
   const getUserInfo = async()  => {
     let thisUser = await api.get('users/profile/')
     setUserInfo(thisUser);
-    console.log(thisUser)
+    // console.log(thisUser)
     let listOfFriends = thisUser.data.friends
     setFriendsList(listOfFriends)
-    console.log(listOfFriends)
+    // console.log(listOfFriends)
   }
 
   useEffect(()=>{
