@@ -12,31 +12,22 @@ class ChatConsumer(WebsocketConsumer):
     chat_room_id = "" 
 
     #grab the most recent message index from the list of messages, grab the previous (50) or whatever. 
-    def updated_message_db(self, oldest_message_id=0):
-        #this function retrieves the last 50 messages if no message id is provided.
-        #if a message id is provided, it will grab the last 50 from that point.
-        oldest_message = ChatRoom.objects.get(id=self.chat_room_id).messages.all().order_by('-id').first()
-        if oldest_message:
-            oldest_message_id = oldest_message.id
-        else:
-            # Handle the case where no messages exist in the chat room.
-            oldest_message_id = 0
+    # def updated_message_db(self, oldest_message_id=0):
+    #     #this function retrieves the last 50 messages if no message id is provided.
+    #     #if a message id is provided, it will grab the last 50 from that point.
+    #     oldest_message = ChatRoom.objects.get(id=self.chat_room_id).messages.all().order_by('-id').first()
+    #     if oldest_message:
+    #         oldest_message_id = oldest_message.id
+    #     else:
+    #         # Handle the case where no messages exist in the chat room.
+    #         oldest_message_id = 0
 
-        retrieved_messages = ChatRoom.objects.get(id=self.chat_room_id).messages.filter(date__lt=Message.objects.get(oldest_message_id).date).order_by('-date')[:50]
-        self.send(text_data=json.dumps({"messages":retrieved_messages}))
-
-    # def createRoom(self,user1,user2):
-    #         user1 = self.users[0]
-    #         user2 = self.users[1] #errors when assuming two users are passed and only one is passed.
-    #         self.user_ids={"user1":user1,"user2":user2}
-    #         roomid = f"user{user1.id}user{user2.id}"
-    #         roomid2 = f"user{user2.id}user{user1.id}"
+    #     retrieved_messages = ChatRoom.objects.get(id=self.chat_room_id).messages.filter(date__lt=Message.objects.get(oldest_message_id).date).order_by('-date')[:50]
+    #     self.send(text_data=json.dumps({"messages":retrieved_messages}))
 
     def connect(self):
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
         print("roomname:",self.room_name)
-        # self.user_ids = self.scope.get("headers", {}).get(b'users', b"").decode("utf-8")
-        # user = User.objects.get(id=user_id)
         self.users = self.room_name.split("user") #[user1, user2]
         print("self.users:",self.users)
         ############################################
@@ -48,19 +39,6 @@ class ChatConsumer(WebsocketConsumer):
         roomid2 = f"user{user2}user{user1}"
         print("roomid:",roomid,"roomid2",roomid2)
 
-        #############################################
-        
-        # chat_room, created = ChatRoom.objects.create(room_id=roomid)
-        # chat_room.user.add(User.objects.get(user1))
-        # chat_room.user.add(User.objects.get(user1))
-        # self.chat_room_id = chat_room.room_id 
-        
-        ###############################
-        # FOR TESTING PURPOSES        #
-        # chat_room, created = ChatRoom.objects.get_or_create(room_id=self.room_name)
-        # self.chat_room_id = chat_room.id 
-        ###############################
-
         from django.db.models import Q
         try:
             chat_room = ChatRoom.objects.get(Q(room_id=roomid) | Q(room_id=roomid2))
@@ -69,8 +47,10 @@ class ChatConsumer(WebsocketConsumer):
             # Fetch or create a ChatRoom instance
             chat_room = ChatRoom.objects.create(room_id=roomid,users=User.objects.get(id=1))
             # chat_room.user.add(User.objects.get(user1))
-            chat_room.user.add(User.objects.get(user2))
+            chat_room.users.add(User.objects.get(user2))
             self.room_group_name = f"chat_{roomid}"
+        
+        self.chat_room_id = chat_room.room_id 
         #####################################################################
         try:         
             # user.chat_rooms.add(chat_room)  # Add the chat_room to the user's chat_rooms field
@@ -78,14 +58,8 @@ class ChatConsumer(WebsocketConsumer):
             async_to_sync(self.channel_layer.group_add)(
                 self.room_group_name, self.channel_name
             )
-            #dont need to do if
-            # if created:
-            # self.updated_message_db()
             self.accept()
-            # else:
-                # self.updated_message_db()
-                # self.accept()
-        
+
         except User.DoesNotExist:
             # Handle user not found error
             pass
@@ -101,30 +75,30 @@ class ChatConsumer(WebsocketConsumer):
         print("TEXT DATA:", text_data)
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
-        # user = User.objects.get(text_data_json["user"])
-        ###########TEXT_DATA.user expects a json key value pair of "user":"user.id"###############
-        # user.messages.add(message)
-        ##########################################################################################
-        # Message.create(content=message, chat_room=self.chat_room_id, sender=user)        
+        user_id = text_data_json.get("user")
+        if user_id:
+            try:
+                user = User.objects.get(id=user_id)
+                print(user)
+            except User.DoesNotExist:
+                print("no such user.")
+        # else:
+        #     # Handle the case where "user" is not provided or is an empty string
+
+        print(  f"""
+                CHAT ROOM ID
+                {self.chat_room_id}
+                """)
+        chat_room_object = ChatRoom.objects.get(room_id=self.chat_room_id)
+        print("message:",message,"chat_room:",chat_room_object,"sender",user)
+        Message.objects.create(content=message, chat_room= chat_room_object, sender=user)        
 
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
-            ###################################### "message":f"{username}:{message}" to make it more of a chat room. 
-            # This edits the message itself, so in the chat_message function below it will be message = message, displaying as message : {username}:{message}.
-
             self.room_group_name, {"type": "chat.message", "message": message} 
         )
 
     # Receive message from room group
     def chat_message(self, event):
         message = event["message"]
-
-        # Send message to WebSocket
-        # self.send(text_data=ChatRoom.objects.get(self.chat_room_id).messages.sort('ascending')[:1]) (sends most recent message)
         self.send(text_data=json.dumps({"message": message}))
-
-#########################################
-# chat_message function will send the message (echo) it receives
-
-#user1: message
-#user2: message
