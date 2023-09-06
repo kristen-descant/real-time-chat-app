@@ -8,6 +8,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.views import APIView
 
+
 from .models import User
 from .serializers import UserSerializer, UserSerializerWithToken  
 
@@ -106,7 +107,7 @@ def get_user_profile(request):
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def get_user_profile_by_id(request,id):
-    user = request.user
+    user = User.objects.get(id=id)
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data, status=HTTP_200_OK)
 
