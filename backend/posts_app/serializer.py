@@ -6,4 +6,4 @@ class PostsSerializer(serializers.ModelSerializer):
     comments = CommentsSerializer(many=True)
     class Meta:
         model = Posts 
-        fields = ['id', 'content', 'created_by', 'topic_id', 'edited', 'date_created', 'title', 'up', 'down' 'comments']
+        fields = ['id', 'content','created_by', 'topic_id', 'edited', 'date_created', 'title', 'up', 'down', 'comments']

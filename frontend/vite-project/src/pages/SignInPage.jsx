@@ -2,17 +2,14 @@ import axios from "axios";
 import React, { useState } from 'react';
 import { Button, Alert } from 'react-bootstrap';
 import { useNavigate, useOutletContext } from 'react-router-dom';
-
-const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000/' 
-});
+import { api } from './utility';
 
 export default function SignInPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const {setLoggedIn} = useOutletContext();
+  const {setLoggedIn, setUser} = useOutletContext();
   
   const navigate = useNavigate();
 
@@ -22,6 +19,7 @@ export default function SignInPage() {
     setError(null);
     
     try {
+     
       let response = await api.post("users/login/", {
         email: email,
         password: password,
@@ -31,7 +29,9 @@ export default function SignInPage() {
         let token = response.data.token;
         localStorage.setItem("token", token);
         api.defaults.headers.common["Authorization"] = `Token ${token}`;
-        setLoggedIn(true)
+        setLoggedIn(true);
+        setUser(response.data)
+        console.log("Navigating to home...");
         navigate("/");
       }
     } catch (error) {

@@ -14,27 +14,31 @@ from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 class All_posts(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self, request, forum_id):
         forum = get_object_or_404(ForumTopics, id=forum_id)
-        posts = PostsSerializer(Posts.objects.filter(topic_id=forum))
+        posts = PostsSerializer(Posts.objects.filter(topic_id=forum), many=True)
         return Response(posts.data, status=HTTP_200_OK)
     
     def post(self, request, forum_id):
         forum = get_object_or_404(ForumTopics, id=forum_id)
-        posts = Posts(**request.data, topic_id=forum)
-        posts.save 
+        posts = Posts(**request.data, topic_id=forum, created_by_id=request.user.id)
+        posts.save()  
         posts = PostsSerializer(posts)
         return Response(posts.data, status=HTTP_201_CREATED)
 
 #need add in user authorization for these 
 class Select_posts(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self, request, forum_id, post_id):
         select_post = get_object_or_404(Posts, id=post_id, topic_id=forum_id)
         select_post = PostsSerializer(select_post)
         return Response(select_post.data, status=HTTP_200_OK)
     
     def put(self, request, forum_id, post_id):
-        post = get_object_or_404(Posts, id=post_id, topic_id=forum_id)
+        post = get_object_or_404(Posts, id=post_id, topic_id=forum_id, created_by=request.user.id)
         if 'content' in request.data:
             post.content = request.data.get('content')        
         if 'edited' in request.data:
@@ -49,6 +53,6 @@ class Select_posts(APIView):
         return Response("Post was updated.", HTTP_201_CREATED)
     
     def delete(self, request, forum_id, post_id):
-        post = get_object_or_404(Posts, id=post_id, topic_id=forum_id)
+        post = get_object_or_404(Posts, id=post_id, topic_id=forum_id, created_by=request.user.id)
         post.delete() 
         return Response(status=HTTP_204_NO_CONTENT)

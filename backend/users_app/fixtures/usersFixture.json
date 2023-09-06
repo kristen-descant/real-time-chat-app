@@ -1,0 +1,142 @@
+[
+    {
+        "model": "users_app.user",
+        "pk": 1,
+        "fields": {
+            "email": "user1@example.com",
+            "display_name": "User 1",
+            "profile_picture": null,
+            "last_login": "2023-08-21T00:00:00Z",
+            "date_joined": "2023-08-21T00:00:00Z",
+            "is_active": true,
+            "is_staff": false,
+            "friends": [2, 3]
+        }
+    },
+    {
+        "model": "users_app.user",
+        "pk": 2,
+        "fields": {
+            "email": "user2@example.com",
+            "display_name": "User 2",
+            "profile_picture": null,
+            "last_login": "2023-08-22T00:00:00Z",
+            "date_joined": "2023-08-22T00:00:00Z",
+            "is_active": true,
+            "is_staff": false,
+            "friends": [1, 3]
+        }
+    },
+    {
+        "model": "users_app.user",
+        "pk": 3,
+        "fields": {
+            "email": "user3@example.com",
+            "display_name": "User 3",
+            "profile_picture": null,
+            "last_login": "2023-08-23T00:00:00Z",
+            "date_joined": "2023-08-23T00:00:00Z",
+            "is_active": true,
+            "is_staff": false,
+            "friends": [2, 1]
+        }
+    },
+    {
+        "model": "users_app.user",
+        "pk": 4,
+        "fields": {
+            "email": "user4@example.com",
+            "display_name": "User 4",
+            "profile_picture": null,
+            "last_login": "2023-08-24T00:00:00Z",
+            "date_joined": "2023-08-24T00:00:00Z",
+            "is_active": true,
+            "is_staff": false,
+            "friends": [5, 3, 1]
+        }
+    },
+    {
+        "model": "users_app.user",
+        "pk": 5,
+        "fields": {
+            "email": "user5@example.com",
+            "display_name": "User 5",
+            "profile_picture": null,
+            "last_login": "2023-08-25T00:00:00Z",
+            "date_joined": "2023-08-25T00:00:00Z",
+            "is_active": true,
+            "is_staff": false,
+            "friends": [2]
+        }
+    },
+    {
+        "model": "users_app.user",
+        "pk": 6,
+        "fields": {
+            "email": "user6@example.com",
+            "display_name": "User 6",
+            "profile_picture": null,
+            "last_login": "2023-08-26T00:00:00Z",
+            "date_joined": "2023-08-26T00:00:00Z",
+            "is_active": true,
+            "is_staff": false,
+            "friends": [7, 9, 1, 2, 3]
+        }
+    },
+    {
+        "model": "users_app.user",
+        "pk": 7,
+        "fields": {
+            "email": "user7@example.com",
+            "display_name": "User 7",
+            "profile_picture": null,
+            "last_login": "2023-08-27T00:00:00Z",
+            "date_joined": "2023-08-27T00:00:00Z",
+            "is_active": true,
+            "is_staff": false,
+            "friends": [1]
+        }
+    },
+    {
+        "model": "users_app.user",
+        "pk": 8,
+        "fields": {
+            "email": "user8@example.com",
+            "display_name": "User 8",
+            "profile_picture": null,
+            "last_login": "2023-08-28T00:00:00Z",
+            "date_joined": "2023-08-28T00:00:00Z",
+            "is_active": true,
+            "is_staff": false,
+            "friends": [3]
+        }
+    },
+    {
+        "model": "users_app.user",
+        "pk": 9,
+        "fields": {
+            "email": "user9@example.com",
+            "display_name": "User 9",
+            "profile_picture": null,
+            "last_login": "2023-08-29T00:00:00Z",
+            "date_joined": "2023-08-29T00:00:00Z",
+            "is_active": true,
+            "is_staff": false,
+            "friends": [10]
+        }
+    },
+    {
+        "model": "users_app.user",
+        "pk": 10,
+        "fields": {
+            "email": "user10@example.com",
+            "display_name": "User 10",
+            "profile_picture": null,
+            "last_login": "2023-08-30T00:00:00Z",
+            "date_joined": "2023-08-30T00:00:00Z",
+            "is_active": true,
+            "is_staff": false,
+            "friends": [1,2,3,4,5,6,7,8,9]
+        }
+    }
+]

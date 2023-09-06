@@ -1,11 +1,25 @@
-import { useOutletContext, useParams } from "react-router-dom";
+import { useOutletContext, useParams, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import users from "../data/users.json";
 
+// This page needs to be refactored with data from API
+
 export default function UserPage() {
-  // const {user} = useOutletContext()
+  const {user} = useOutletContext();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const verifyUser = async () => {
+      if (!user) {
+        navigate('/signin');
+      }
+    };
+
+    verifyUser();
+  }, [user]); 
+  
   const { user_id } = useParams();
-  let user = users[user_id - 1];
-  const isCurrentUser = parseInt(user_id) === user.id;
+  // const isCurrentUser = parseInt(user_id) === user.id;
 
   const isFriend = user.friends_list.includes(parseInt(user_id));
 
