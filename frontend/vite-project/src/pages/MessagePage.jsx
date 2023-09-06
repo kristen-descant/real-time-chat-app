@@ -9,16 +9,6 @@ export default function MessagePage() {
   const {userToMessage, user} = useOutletContext();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const verifyUser = async () => {
-  //     if (!user) {
-  //       navigate('/signin');
-  //     }
-  //   };
-
-  //   verifyUser();
-  // }, [user]); 
-
   return (
     <>
     {userToMessage ?

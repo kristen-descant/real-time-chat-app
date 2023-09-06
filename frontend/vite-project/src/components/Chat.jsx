@@ -63,7 +63,7 @@ function Chat() {
         };
     }, []);
 
-    console.log(state.messages)
+    console.log(state)
     
     console.log(userInfo.data.id)
     
