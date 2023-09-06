@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Alert } from 'react-bootstrap';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { api } from './utility';
@@ -9,9 +9,19 @@ export default function SignInPage() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const {setLoggedIn, setUser} = useOutletContext();
+  const {setLoggedIn, setUser, user} = useOutletContext();
   
   const navigate = useNavigate();
+
+  const checkIfUser = () => {
+    if (user) {
+      navigate('/')
+    }
+  }
+
+  useEffect(() => {
+    checkIfUser();
+  }, [])
 
   const logIn = async (e) => {
     e.preventDefault();

@@ -70,7 +70,7 @@ export default function UserPage() {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center">
+    <div className="flex h-screen items-center justify-center overflow-hidden">
       {userToView && 
       <div className="bg-color_palette_1 border-2 border-color_palette_5 w-1/2 h-fit relative">
         {!isCurrentUser && (!isFriend ? (
