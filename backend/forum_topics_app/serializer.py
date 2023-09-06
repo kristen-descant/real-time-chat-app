@@ -7,3 +7,7 @@ class ForumTopicsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ForumTopics
         fields = ["id", "title", 'rating', "posts"]
+        
+        
+        
+

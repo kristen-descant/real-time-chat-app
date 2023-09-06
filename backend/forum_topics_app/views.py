@@ -23,3 +23,18 @@ class All_forums(APIView):
         new_forum_topic.save()
         new_forum_topic = ForumTopicsSerializer(new_forum_topic)
         return Response(new_forum_topic.data, HTTP_201_CREATED)
+
+# New SearchForums class
+class SearchForums(APIView):
+
+
+    def get(self, request):
+        search_query = request.GET.get('search', '')
+
+        forums = ForumTopics.objects.filter(title__icontains=search_query)
+        
+        if not forums.exists():
+            return Response({"message": "No forums found"}, status=HTTP_404_NOT_FOUND)
+        
+        serializer = ForumTopicsSerializer(forums, many=True)
+        return Response(serializer.data, status=HTTP_200_OK)

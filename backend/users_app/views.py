@@ -7,7 +7,7 @@ from rest_framework.status import HTTP_201_CREATED, HTTP_404_NOT_FOUND, HTTP_204
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.views import APIView
-
+from django.db.models import Q  # Importing Q for complex queries
 from .models import User
 from .serializers import UserSerializer, UserSerializerWithToken  
 
@@ -50,26 +50,6 @@ class Info(APIView):
 
 
 
-@api_view(['POST'])
-def register_user(request):
-    data = request.data
-    try:
-       
-        if not all(field in data for field in ['email', 'password', 'display_name']):
-            raise ValueError("Required fields are missing")
-
-        user = User.objects.create_user(
-            email=data['email'],
-            password=make_password(data['password']),
-            display_name=data['display_name']
-        )
-
-        serializer = UserSerializerWithToken(user, many=False)
-        return Response(serializer.data, status=HTTP_201_CREATED)
-
-    except Exception as e:
-        message = {'detail': str(e)}
-        return Response(message, status=HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])
@@ -102,3 +82,19 @@ def get_users(request):
 
 
 
+
+class SearchUsers(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        search_query = request.GET.get('search', '')
+
+        # Searching users by either email or display_name
+        users = User.objects.filter(Q(email__icontains=search_query) | Q(display_name__icontains=search_query))
+
+        if not users.exists():
+            return Response({"message": "No users found"}, status=HTTP_404_NOT_FOUND)
+
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data, status=HTTP_200_OK)
