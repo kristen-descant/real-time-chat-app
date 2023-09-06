@@ -1,13 +1,13 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.status import HTTP_201_CREATED, HTTP_404_NOT_FOUND, HTTP_204_NO_CONTENT, HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.views import APIView
-from django.db.models import Q  # Importing Q for complex queries
+
 from .models import User
 from .serializers import UserSerializer, UserSerializerWithToken  
 
@@ -50,12 +50,41 @@ class Info(APIView):
 
 
 
+@api_view(['POST'])
+def register_user(request):
+    data = request.data
+    try:
+       
+        if not all(field in data for field in ['email', 'password', 'display_name']):
+            raise ValueError("Required fields are missing")
+
+        user = User.objects.create_user(
+            email=data['email'],
+            password=make_password(data['password']),
+            display_name=data['display_name']
+        )
+
+        serializer = UserSerializerWithToken(user, many=False)
+        return Response(serializer.data, status=HTTP_201_CREATED)
+
+    except Exception as e:
+        message = {'detail': str(e)}
+        return Response(message, status=HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])
+@authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def get_user_profile(request):
+def get_user_profile(request):  
     user = request.user
+    serializer = UserSerializer(user, many=False)
+    return Response(serializer.data, status=HTTP_200_OK)
+
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_user_profile_by_id(request,id):
+    user = User.objects.get(id=id)
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data, status=HTTP_200_OK)
 

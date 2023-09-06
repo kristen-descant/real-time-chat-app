@@ -2,10 +2,8 @@ import axios from "axios";
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Link, useNavigate, useOutletContext } from 'react-router-dom';
+import { api } from './utility';
 
-const api = axios.create({
-  baseURL: 'http://127.0.0.1:8000/'
-});
 
 export default function RegisterPage() {
   const [email, setEmail] = useState('');
@@ -13,7 +11,7 @@ export default function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [displayName, setDisplayName] = useState(''); 
   const navigate = useNavigate();
-  
+  const {setLoggedIn, setUser} = useOutletContext();
 
   const register = async (e) => {
     e.preventDefault();
@@ -34,7 +32,9 @@ export default function RegisterPage() {
       
       if (response.status === 201) {
         console.log("Registration successful!");
-        navigate("/signin");
+        setLoggedIn(true);
+        setUser(response.data)
+        navigate("/");
       }
     } catch (error) {
       console.error("Registration error", error);
@@ -42,9 +42,12 @@ export default function RegisterPage() {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <div>
+    <div className="min-h-screen flex justify-center items-center">
+      <div className="flex flex-col items-center">
+      <button onClick={register} type="button" className="border hover:bg-color_palette_4 border-[white] text-[white] p-1 rounded mb-2 ">
+        Register
+      </button>
+      <div className="mb-1">
         <input
           type="text"
           value={displayName}
@@ -52,7 +55,7 @@ export default function RegisterPage() {
           placeholder="Display Name"  
         />
       </div>
-      <div>
+      <div className="mb-1">
         <input
           type="email"
           value={email}
@@ -60,7 +63,7 @@ export default function RegisterPage() {
           placeholder="Email"
         />
       </div>
-      <div>
+      <div className="mb-1">
         <input
           type="password"
           value={password}
@@ -76,9 +79,9 @@ export default function RegisterPage() {
           placeholder="Confirm Password"
         />
       </div>
-      <Button onClick={register} type="button" className="btn btn-primary">Register</Button>
       <div>
         Already have an account? <Link to="/signin">Sign In</Link>
+      </div>
       </div>
     </div>
   );
