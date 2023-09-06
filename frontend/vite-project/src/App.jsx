@@ -54,7 +54,7 @@ function App() {
   return (
     <div className="h-full w-full bg-color_palette_3 overflow-x-hidden">
       {loggedIn  &&
-      <Navbar setUser={setUser} setLoggedIn={setLoggedIn}/>}
+      <Navbar setUser={setUser} setLoggedIn={setLoggedIn} userInfo={userInfo}/>}
       <Outlet 
       context={{
         token,
