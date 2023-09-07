@@ -42,7 +42,11 @@ function App() {
 
     } else {
       // If no token is found, navigate to the login page
+<<<<<<< HEAD
       navigate("/signin");
+=======
+      navigate("/signin/");
+>>>>>>> 28dff072ef837749ae115b77f30873f20def126a
     }
   };
 
