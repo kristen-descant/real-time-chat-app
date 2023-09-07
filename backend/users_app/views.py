@@ -88,7 +88,7 @@ def add_friend(request,id):
 
         # Add the friend to the current user's friends list
         current_user.friends.add(friend)
-
+        current_user.save()
         return Response(status=HTTP_200_OK)
     except User.DoesNotExist:
         # Handle the case where the specified friend_id does not exist
@@ -110,7 +110,9 @@ def remove_friend(request,id):
 
         # Add the friend to the current user's friends list
         current_user.friends.remove(friend)
-
+        current_user.save()
+        friend.friends.remove(current_user)
+        friend.save()
         return Response(status=HTTP_200_OK)
     except User.DoesNotExist:
         # Handle the case where the specified friend_id does not exist
