@@ -45,9 +45,12 @@ class ChatConsumer(WebsocketConsumer):
             self.room_group_name = f"chat_{chat_room.room_id}"
         except ChatRoom.DoesNotExist:
             # Fetch or create a ChatRoom instance
-            chat_room = ChatRoom.objects.create(room_id=roomid,users=User.objects.get(id=1))
+            chat_room = ChatRoom.objects.create(room_id=roomid)
+            user = User.objects.get(id=user1)
+            chat_room.users.add(user.id)
             # chat_room.user.add(User.objects.get(user1))
-            chat_room.users.add(User.objects.get(user2))
+            otherUser = User.objects.get(id=user2)
+            chat_room.users.add(otherUser.id)
             self.room_group_name = f"chat_{roomid}"
         
         self.chat_room_id = chat_room.room_id 

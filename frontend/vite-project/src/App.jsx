@@ -43,7 +43,6 @@ function App() {
       // If no token is found, navigate to the login page
 
       navigate("/register");
-
     }
   };
 
@@ -60,12 +59,14 @@ function App() {
     }, [location]);
 
   const getUserInfo = async()  => {
+    if (user ){
     let thisUser = await api.get('users/profile/')
     setUserInfo(thisUser);
     // console.log(thisUser)
     let listOfFriends = thisUser.data.friends
     setFriendsList(listOfFriends)
     // console.log(listOfFriends)
+    }
   }
 
   useEffect(()=>{
@@ -74,7 +75,7 @@ function App() {
 
   useEffect(() => {
     getUserInfo();
-  }, [])
+  }, [user])
   
 
   return (

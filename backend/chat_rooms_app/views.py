@@ -1,19 +1,22 @@
 # chat/views.py
 from django.shortcuts import render
 from .models import ChatRoom
+from users_app.models import User
 from messages_app.models import Message
+from rest_framework.views import APIView
 from messages_app.serializers import MessageSerializer
 from rest_framework.decorators import api_view, permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status 
 from rest_framework.authentication import TokenAuthentication
+from .serializer import ChatRoomSerializer
 
-def index(request):
-    return render(request, "chat/index.html")
+# def index(request):
+#     return render(request, "chat/index.html")
 
-def room(request, room_name):
-    return render(request, "chat/room.html", {"room_name": room_name})
+# def room(request, room_name):
+#     return render(request, "chat/room.html", {"room_name": room_name})
 
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
@@ -26,3 +29,13 @@ def updated_message_db(room_name, oldest_message_id=0):
     serializer = MessageSerializer(retrieved_messages)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def Get_Chat_Rooms(request):
+    
+    user = request.user
+    print(user)
+    chat_rooms = user.chat_room
+    serializer = ChatRoomSerializer(chat_rooms, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)

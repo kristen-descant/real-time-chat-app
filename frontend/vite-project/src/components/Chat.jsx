@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
 function Chat() {
 
-    const {user, userToMessage, userInfo} = useOutletContext();
+    const {user, userToMessage, userInfo, setUsertoMessage} = useOutletContext();
     const [thisUserId, setThisUserId] = useState(null);
+    const navigate = useNavigate();
     console.log(user)
     const setUserId = () => {
         setThisUserId(userInfo.data.id)
@@ -73,6 +74,10 @@ function Chat() {
         };
     }, []);
 
+    const handleGoBack = () => {
+        setUsertoMessage(null);
+    }
+
     console.log(state.messages)
     
     console.log(userInfo.data.id)
@@ -81,7 +86,9 @@ function Chat() {
     return (
         <div className="h-screen bg-gray-100 flex justify-center overflow-hidden">
         <div className='w-full flex justify-center relative h-[95%]'>
-             
+             <div>
+                <button onClick={handleGoBack}>Back</button>
+             </div>
             <div className="mt-8 h-[80%] w-[50%] flex flex-col items-center">
                 <div className="mb-4 flex flex-row items-center"> <img className='h-5 md:h-8 rounded-full mr-2' src={userToMessage.profile_picture} /> {userToMessage.display_name}</div>
                 <div className='h-[80%] w-full'>
@@ -89,7 +96,7 @@ function Chat() {
                     {state.messages.map((message, index) => (
                     <div key={index} className='mb-4 mr-4 w-fit md:w-3/4 ' >
                         <div  className={`  p-1 whitespace-normal overflow-x-hidden  rounded ${message.message[1] === userInfo.data.id ? 'bg-color_palette_2' : 'bg-[white]'}`} >
-                        {message.message}
+                        {message.message[0]}
                         </div>
                     </div>
                     ))}
