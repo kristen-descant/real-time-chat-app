@@ -97,7 +97,7 @@ def add_friend(request,id):
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def add_friend(request,id):
+def remove_friend(request,id):
     # Get the current user
     current_user = request.user
 
