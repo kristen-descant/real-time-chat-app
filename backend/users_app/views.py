@@ -8,16 +8,33 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.views import APIView
 from django.db.models import Q
-
+import requests
 from .models import User
 from .serializers import UserSerializer, UserSerializerWithToken  
 
+def pfp(username):
+    noparams_url = "https://api.multiavatar.com/" + username + ".png"
+    url = noparams_url
+    # params = {
+    #     "api_key": api_key
+    # }
+    print("URL: ",url)
+    response = requests.get(url) #params=params)
+    if response.status_code == 200:
+        print("response:",response, "imgURL:",noparams_url)
+        return noparams_url
+    else:
+        print("Request failed:", response.status_code)
+
+
 class Sign_up(APIView):
     def post(self, request):
+        request.data["profile_picture"] = pfp(request.data["display_name"])
         request.data["username"] = request.data["email"]
         user = User.objects.create_user(email=request.data["email"],
                                         password=request.data["password"],
                                         display_name=request.data["display_name"],
+                                        profile_picture=request.data["profile_picture"]
                                         )
         token = Token.objects.create(user=user)
         return Response({"user": user.email, "token": token.key}, status=HTTP_201_CREATED)
