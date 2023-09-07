@@ -1,6 +1,5 @@
 import { useOutletContext, useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import users from "../data/users.json";
 import { api } from "./utility";
 import image from '../media/pngwing.com (1).png'
 
@@ -14,19 +13,6 @@ export default function UserPage() {
   const [isCurrentUser, setIsCurrentUser] = useState();
   const [isFriend, setIsFriend] = useState();
   const [userToView, setUserToView] = useState(null);
-
-  // useEffect(() => {
-  //   const verifyUser = async () => {
-  //     if (!user) {
-  //       navigate('/signin');
-  //       return
-  //     }
-  //     console.log(userInfo)
-      
-  //   };
-
-  //   verifyUser();
-  // }, [user]); 
   
   const getUserToView = async() => {
     const response = await api.get(`users/profile/${user_id}`)
@@ -39,16 +25,15 @@ export default function UserPage() {
   }, [user, user_id])
 
   useEffect(() => {
+    if (userInfo) {
     setIsCurrentUser(Number(user_id) === userInfo.data.id);
       // Use the find method with a callback function to search for a matching id
     const foundFriend = friendList.find((friend) => friend.id === Number(user_id));
 
     // Check if a friend with the specified id was found
     setIsFriend(!!foundFriend);
-    console.log(isFriend);
-    console.log(isCurrentUser)
-    console.log(userInfo.data.id);
-    console.log(Number(user_id))
+
+    }
   }, [userToView])
 
   const handleAddFriend = async() => {

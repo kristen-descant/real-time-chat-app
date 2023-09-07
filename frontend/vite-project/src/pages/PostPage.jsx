@@ -7,8 +7,6 @@ export default function PostPage() {
   const {user} = useOutletContext();
   const navigate = useNavigate();
 
-
-
   return (
     <Post />
   );

@@ -17,7 +17,6 @@ function App() {
   const [friendList, setFriendsList] = useState(null);
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(false)
-  const [token, setToken] = useState(null);
   const lastVisited = useRef();
   const location = useLocation();
 
@@ -42,7 +41,9 @@ function App() {
 
     } else {
       // If no token is found, navigate to the login page
+
       navigate("/register");
+
     }
   };
 
@@ -73,7 +74,7 @@ function App() {
 
   useEffect(() => {
     getUserInfo();
-  }, [user])
+  }, [])
   
 
   return (
