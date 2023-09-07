@@ -17,7 +17,6 @@ function App() {
   const [friendList, setFriendsList] = useState(null);
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(false)
-  const [token, setToken] = useState(null);
   const lastVisited = useRef();
   const location = useLocation();
 
@@ -29,7 +28,7 @@ function App() {
       // If the token exists, set it in the API headers for authentication
       api.defaults.headers.common["Authorization"] = `Token ${token}`;
       // Fetch the user data from the server using the API
-      let response = await api.get("users/");
+      let response = await api.get("users/info");
       // Check if the response contains the user data (email field exists)
       if (response.data.email) {
         setUser(response.data);
