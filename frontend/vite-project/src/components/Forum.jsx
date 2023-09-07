@@ -43,7 +43,7 @@ export default function Forum({forum}) {
   return (
     <>
     {!forum_id ? (
-    <div onClick={() => {navigate(`/forum/${forum.id}`)}} className='flex flex-col border-2 border-[black] w-[50%] items-center'>
+    <div onClick={() => {navigate(`/forum/${forum.id}`)}} className='flex flex-col border-2 border-[black] w-[50%] items-center active:bg-color_palette_4 hover:bg-color_palette_2'>
       <div className="text-xl md:text-2xl" >{forum.title}</div>
       <div className="flex flex-row justify-around w-1/3 mt-2">
         <div className="flex flex-row">
