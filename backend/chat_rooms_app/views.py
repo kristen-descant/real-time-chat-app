@@ -39,3 +39,15 @@ def Get_Chat_Rooms(request):
     chat_rooms = user.chat_room
     serializer = ChatRoomSerializer(chat_rooms, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['DELETE'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def Delete_Chat_Room(request):
+    # user = request.user
+    chat_room_room_id = request.data.get("chat_room")
+    try:
+        chat_room = ChatRoom.objects.get(room_id=chat_room_room_id)
+        chat_room.delete()
+    except ChatRoom.DoesNotExist:
+        print("Chatroom does not exist, cannot delete.")
