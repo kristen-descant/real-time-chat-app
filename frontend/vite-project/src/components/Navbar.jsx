@@ -44,25 +44,27 @@ export default function Navbar(props) {
     };
 
     useEffect(() => {
-        const search = async () => {
-            if (searchCriteria === '') {
-                setSearchList(null);
-                return;
-            }
-            try {
-                let response;
-                if (userSearch) {
-                    response = await api.get(`users/search_users/${searchCriteria}`);
-                } else if (forumSearch) {
-                    response = await api.get(`forum/${searchCriteria}`);
+        const handleSearch = async() => {
+            if (userSearch) {
+                try {
+                    const response = await api.get(`users/search_users/${searchCriteria}`)
+                    console.log(response);
+                    setSearchList(response.data)
+                } catch(error) {
+                    console.log(error)
                 }
-                setSearchList(response.data);
-            } catch (error) {
-                console.log(error);
-            }
+            } else if (forumSearch) {
+                try {
+                    const response = await api.get(`forum/${searchCriteria}`)
+                    console.log(response);
+                    setSearchList(response.data)
+                } catch(error) {
+                    console.log(error)
+                }
+            };
         };
-        search();
-    }, [searchCriteria, userSearch, forumSearch]);
+        handleSearch();
+    }, [searchCriteria])
 
     const handleUserSearch = (id) => {
         setSearchList(null);
