@@ -7,7 +7,7 @@ from rest_framework.status import HTTP_201_CREATED, HTTP_404_NOT_FOUND, HTTP_204
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.views import APIView
-
+from django.db.models import Q
 
 from .models import User
 from .serializers import UserSerializer, UserSerializerWithToken  
@@ -154,5 +154,18 @@ def get_users(request):
     serializer = UserSerializer(users, many=True)
     return Response(serializer.data, status=HTTP_200_OK)
 
+class SearchUsers(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, search):
+        # Searching users by either email or display_name
+        users = User.objects.filter(Q(email__icontains=search) | Q(display_name__icontains=search))
+
+        if not users.exists():
+            return Response({"message": "No users found"}, status=HTTP_404_NOT_FOUND)
+
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data, status=HTTP_200_OK)
 
 

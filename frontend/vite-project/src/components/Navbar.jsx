@@ -45,20 +45,20 @@ export default function Navbar(props) {
     const handleSearch = async() => {
         if (userSearch) {
             try {
-                const response = await api.get(``)
+                const response = await api.get(`users/search_users/${searchCriteria}`)
+                console.log(response);
             } catch(error) {
                 console.log(error)
             }
         } else if (forumSearch) {
             try {
-                const response = await api.get(``)
+                const response = await api.get(`forum/${searchCriteria}`)
+                console.log(response);
             } catch(error) {
                 console.log(error)
             }
         };
     }
-
-    console.log(searchCriteria)
 
     return (
         <nav className="pl-3 pr-3 flex flex-row justify-between items-center bg-color_palette_2">
