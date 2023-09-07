@@ -41,7 +41,9 @@ function App() {
 
     } else {
       // If no token is found, navigate to the login page
-      navigate("/signin/");
+
+      navigate("/register");
+
     }
   };
 

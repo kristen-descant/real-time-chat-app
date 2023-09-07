@@ -45,14 +45,15 @@ export default function ForumsList() {
 
             {
                 textBox ? (
-                    <form onSubmit={(e) => addForum(e)}>
+                <form className="flex flex-col " onSubmit={(e) => addForum(e)}>
                 <input 
+                className='mb-2 text-center border-[black] border-2 rounded'
                 type='text'
                 placeholder = 'Forum name'
                 value={newForum}
                 onChange={(e) => setNewForum(e.target.value)}
                 />
-                <input type="submit" />
+                <input className="border border-b-color_palette_5 bg-color_palette_3 rounded pl-2 pr-1 hover:bg-color_palette_1 " type="submit" />
             </form>
 
                 )

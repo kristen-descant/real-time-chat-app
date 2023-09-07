@@ -45,8 +45,18 @@ class Select_posts(APIView):
             post.content = request.data.get('edited')
         if 'title' in request.data:
             post.title = request.data.get('title')
-        if 'reaction' in request.data:
-            post.reaction = request.data.get('reaction')
+        if 'up' in request.data:
+            # print(request.data.get('up'), post.up)
+            if not str(request.data.get('up')) in post.up:
+                # print("stop")
+                post.up.append(request.data.get('up'))
+            else:
+                post.up.remove(str(request.data.get('up')))
+        if 'down' in request.data:
+            if not str(request.data.get('down')) in post.down:
+                post.down.append(request.data.get('down'))
+            else:
+                post.down.remove(str(request.data.get('down')))
         post.full_clean() 
         post.save()
 
