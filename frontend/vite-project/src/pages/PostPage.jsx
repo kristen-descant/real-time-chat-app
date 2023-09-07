@@ -7,15 +7,7 @@ export default function PostPage() {
   const {user} = useOutletContext();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const verifyUser = async () => {
-  //     if (!user) {
-  //       navigate('/signin');
-  //     }
-  //   };
 
-  //   verifyUser();
-  // }, [user]); 
 
   return (
     <Post />

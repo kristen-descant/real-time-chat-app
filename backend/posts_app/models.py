@@ -2,6 +2,7 @@ from django.db import models
 from datetime import date
 from users_app.models import User
 from forum_topics_app.models import ForumTopics
+from django.contrib.postgres.fields import ArrayField
 # Create your models here.
 class Posts(models.Model):
     content = models.CharField(max_length=255)
@@ -10,6 +11,6 @@ class Posts(models.Model):
     edited = models.BooleanField(default=False)
     date_created = models.DateTimeField(auto_now_add=True)
     title = models.CharField() 
-    up = models.IntegerField(default=0)
-    down = models.IntegerField(default=0) 
+    up = ArrayField(models.TextField(), default=list, blank=True)
+    down = ArrayField(models.TextField(), default=list, blank=True)
 
