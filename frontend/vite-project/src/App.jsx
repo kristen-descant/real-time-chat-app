@@ -28,7 +28,7 @@ function App() {
       // If the token exists, set it in the API headers for authentication
       api.defaults.headers.common["Authorization"] = `Token ${token}`;
       // Fetch the user data from the server using the API
-      let response = await api.get("users/info");
+      let response = await api.get("users/info/");
       // Check if the response contains the user data (email field exists)
       if (response.data.email) {
         setUser(response.data);
@@ -72,7 +72,7 @@ function App() {
 
   useEffect(() => {
     getUserInfo();
-  }, [user])
+  }, [])
   
 
   return (
