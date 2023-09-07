@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from 'react';
 import { Button, Alert } from 'react-bootstrap';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate, useOutletContext, Link } from 'react-router-dom';
 import { api } from './utility';
 
 export default function SignInPage() {
@@ -45,10 +45,9 @@ export default function SignInPage() {
   return (
     <div className="min-h-screen flex justify-center items-center">
       <div className="flex flex-col items-center">
-      {error && <Alert variant="danger">{error}</Alert>}
-      <button onClick={logIn} disabled={loading} type="button" className="border hover:bg-color_palette_4 border-[white] text-[white] p-1 rounded mb-2 ">
-        {loading ? "Signing in..." : "Sign In"}
-      </button>
+      <div className="mb-2">
+        Need an account? <Link to="/register">Register</Link>
+      </div>
       <div>
         <input
           type="email"
@@ -66,6 +65,10 @@ export default function SignInPage() {
           placeholder="Password"
         />
       </div>
+      {error && <Alert variant="danger">{error}</Alert>}
+      <button onClick={logIn} disabled={loading} type="button" className="border mt-2 hover:bg-color_palette_4 border-[white] text-[white] p-1 rounded mb-2 ">
+        {loading ? "Signing in..." : "Sign In"}
+      </button>
       </div>
     </div>
   );

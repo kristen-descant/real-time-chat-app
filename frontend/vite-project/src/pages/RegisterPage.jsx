@@ -44,9 +44,9 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen flex justify-center items-center">
       <div className="flex flex-col items-center">
-      <button onClick={register} type="button" className="border hover:bg-color_palette_4 border-[white] text-[white] p-1 rounded mb-2 ">
-        Register
-      </button>
+        <div className="mb-2">
+        Already have an account? <Link to="/signin">Sign In</Link>
+      </div>
       <div className="mb-1">
         <input
           type="text"
@@ -79,9 +79,9 @@ export default function RegisterPage() {
           placeholder="Confirm Password"
         />
       </div>
-      <div>
-        Already have an account? <Link to="/signin">Sign In</Link>
-      </div>
+      <button onClick={register} type="button" className="mt-2 border hover:bg-color_palette_4 border-[white] text-[white] p-1 rounded mb-2 ">
+        Register
+      </button>
       </div>
     </div>
   );
