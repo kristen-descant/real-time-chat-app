@@ -83,9 +83,9 @@ export default function Navbar(props) {
             <div className="p-1 hover:bg-color_palette_1 rounded"><Link to="/about">About</Link></div>
             <div className="p-1 hover:bg-color_palette_1 rounded"><Link to='/message'>Inbox</Link></div>
             <div className="flex flex-row">
-                <div className="mr-1 overflow-hidden flex flex-nowrap">
-                    <button onClick={handleUserSearchToggle}  className={`h-3 md:h-auto overflow-hidden text-xs md:text-auto p-1 mr-1 rounded ${userSearch ? 'bg-[grey]' : 'bg-[white]'}`}>User</button>
-                    <button onClick={handleForumSearchToggle}  className={`h-3 md:h-auto text-xs md:text-auto overflow-hidden p-1 rounded ${forumSearch ? 'bg-[grey]' : 'bg-[white]'}`}>Forum</button>
+                <div className="mr-1 overflow-hidden flex flex-nowrap h-full">
+                    <button onClick={handleUserSearchToggle}  className={`h-full overflow-hidden text-xs md:text-auto p-1 mr-1 rounded ${userSearch ? 'bg-[grey]' : 'bg-[white]'}`}>User</button>
+                    <button onClick={handleForumSearchToggle}  className={`h-full text-xs md:text-auto overflow-hidden p-1 rounded ${forumSearch ? 'bg-[grey]' : 'bg-[white]'}`}>Forum</button>
                 </div>
                 <div className="relative">
                 <input

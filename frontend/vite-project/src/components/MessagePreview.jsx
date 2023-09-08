@@ -5,12 +5,12 @@ import { api } from '../pages/utility';
 
 // get all messages for user and show previews. onclick set userTomessage to that messages other user
 
-export default function MessagePreviews() {
+export default function MessagePreviews(props) {
 
     const {setUsertoMessage, user, userInfo} = useOutletContext();
     // const [messageList, setMessageList] = useState(messages);
     const [chatRooms, setChatRooms] = useState(null);
-    const [messageLength, setMessageLength] = useState(null);
+    const {setMessages} = props;
 
     const getChats = async() => {
         try {
@@ -40,7 +40,9 @@ export default function MessagePreviews() {
             {chatRooms &&
             (chatRooms.map((message, index) => (
                 message.messages.length > 0 && 
-                <li className='mb-2 border rounded flex flex-row' key={index} onClick={() => messageOnClick(message.users[0].id === userInfo.id ? message.users[1] : message.users[0])}>
+                <li className='mb-2 border rounded flex flex-row' key={index} onClick={() => 
+                messageOnClick(message.users[0].id === userInfo.id ? message.users[1] : message.users[0],
+                setMessages(message.messages))}>
                     <div>
                         {/* <img src={message.users[0].id === userInfo.id ? message.users[1].profile_pciture : message.users[0].profile_pciture} alt="" /> */}
                         <img className='h-8 md:h-12 rounded-full' src={tempPic} alt="" />

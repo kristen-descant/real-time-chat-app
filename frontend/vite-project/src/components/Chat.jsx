@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
-function Chat() {
+function Chat(props) {
 
     const {user, userToMessage, userInfo, setUsertoMessage} = useOutletContext();
     const [thisUserId, setThisUserId] = useState(null);
     const navigate = useNavigate();
+    const {messages} = props;
+
     console.log(user)
     const setUserId = () => {
         setThisUserId(userInfo.data.id)
@@ -93,13 +95,24 @@ function Chat() {
                 <div className="mb-4 flex flex-row items-center"> <img className='h-5 md:h-8 rounded-full mr-2' src={userToMessage.profile_picture} /> {userToMessage.display_name}</div>
                 <div className='h-[80%] w-full'>
                     <div className="h-[85%] overflow-x-hidden overflow-y-auto shadow-none w-full flex flex-col items-center">
-                    {state.messages.map((message, index) => (
-                    <div key={index} className='mb-4 mr-4 w-fit md:w-3/4 ' >
-                        <div  className={`  p-1 whitespace-normal overflow-x-hidden  rounded ${message.message[1] === userInfo.data.id ? 'bg-color_palette_2' : 'bg-[white]'}`} >
-                        {message.message[0]}
+                        <div className=' w-full'>
+                            {messages.map((message, index) => (
+                                <div key={index} className='mb-4 mr-4 w-fit md:w-3/4 ' >
+                                <div   >
+                                {message.content.split("'")[1].split("\\n")[0]}
+                                </div>
+                            </div>
+                            ))}
                         </div>
-                    </div>
-                    ))}
+                        <div className='h-full w-full'>
+                        {state.messages.map((message, index) => (
+                        <div key={index} className='mb-4 mr-4 w-fit md:w-3/4 ' >
+                            <div  className={`  p-1 whitespace-normal overflow-x-hidden  rounded ${message.message[1] === userInfo.data.id ? 'bg-color_palette_2' : 'bg-[white]'}`} >
+                            {message.message[0]}
+                            </div>
+                        </div>
+                        ))}
+                        </div>
                     </div>
                 </div>
                 <form className='flex flex-row items-center w-full md:w-3/4 h-[10%] ' onSubmit={onButtonClicked}>
