@@ -15,6 +15,7 @@ export default function Navbar(props) {
     const [forumSearch, setForumSearch] = useState(false);
     const [searchCriteria, setSearchCriteria] = useState(null);
     const [searchList, setSearchList] = useState(null);
+    // const [seeSearch, setSeeSearch] = useState(false);
 
     const handleLogOut = () => {
         localStorage.removeItem("token")
@@ -67,12 +68,12 @@ export default function Navbar(props) {
     }, [searchCriteria])
 
     const handleUserSearch = (id) => {
-        setSearchList(null);
+        setSearchCriteria(null);
         navigate(`/user/${id}`);
     }
 
     const handleForumSearch = (id) => {
-        setSearchList(null);
+        setSearchCriteria(null);
         navigate(`/forum/${id}`)
     }
     
@@ -97,8 +98,21 @@ export default function Navbar(props) {
                     {searchList && 
                     <ul className="absolute bottom--1 left-0 w-[12vw] max-h-[30vh] overflow-scroll">
                         {searchList.map((result) => 
-                            (<li onClick={() => (userSearch ? handleUserSearch(result.id) : handleForumSearch(result.id))} className="bg-[white] border border-[black]" key={result.id}>{result.title ? result.title : result.display_name}</li>
-                            )
+                            (<li
+                                onClick={() => {
+                                    
+                                    setSearchList(null);
+                                    if (userSearch) {
+                                        handleUserSearch(result.id);
+                                    } else {
+                                        handleForumSearch(result.id);
+                                    }
+                                }}
+                                className="bg-[white] border border-[black]"
+                                key={result.id}
+                            >
+                                {result.title ? result.title : result.display_name}
+                            </li>)
                         )}
                     </ul> }
                 </div>
