@@ -79,6 +79,7 @@ function Chat(props) {
     return (
         <div className="h-screen bg-gray-100 flex justify-center overflow-hidden">
         <div className='w-full flex justify-center relative h-[95%]'>
+            {console.log(userToMessage)}
              <div>
                 <button onClick={handleGoBack}>Back</button>
              </div>

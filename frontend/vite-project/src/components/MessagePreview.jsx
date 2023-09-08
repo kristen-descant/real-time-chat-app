@@ -50,6 +50,7 @@ export default function MessagePreviews(props) {
                     <div className='flex flex-col w-[75%] border border-[black] ml-3'>
                         <div className='mr-5 pl-3'>
                             {message.users[0].id === userInfo.id ? message.users[1].display_name : message.users[0].display_name}
+                            {console.log(message.users[0].id)}
                         </div>
                         <div className='flex flex-col'>
                             {message.messages[message.messages.length-1].content.split("'")[1]}

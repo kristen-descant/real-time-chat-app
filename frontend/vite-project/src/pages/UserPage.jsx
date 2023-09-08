@@ -73,7 +73,7 @@ export default function UserPage() {
           </button>)
         )}
         {!isCurrentUser && (
-          <button onClick={(e) => messageOnClick(e, userToView)}   className="absolute top-1 right-1 p-2 border-2 rounded bg-color_palette_4 hover:bg-color_palette_2 active:bg-color_palette_3">
+          <button onClick={(e) => messageOnClick(e, userToView.data)}   className="absolute top-1 right-1 p-2 border-2 rounded bg-color_palette_4 hover:bg-color_palette_2 active:bg-color_palette_3">
             Message
           </button>
         )}
