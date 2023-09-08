@@ -7,7 +7,7 @@ import image from '../media/pngwing.com (1).png'
 // This page needs to be refactored with data from API
 
 export default function UserPage() {
-  const {user, friendList, userInfo} = useOutletContext();
+  const {user, friendList, userInfo, setUsertoMessage} = useOutletContext();
   const navigate = useNavigate();
   const { user_id } = useParams();
   const [isCurrentUser, setIsCurrentUser] = useState();
@@ -54,6 +54,12 @@ export default function UserPage() {
     }
   };
 
+  const messageOnClick = (event, friend) => {
+    event.stopPropagation();
+    setUsertoMessage(friend)
+    navigate('/message')
+  }
+
   return (
     <div className="flex h-screen items-center justify-center overflow-hidden">
       {userToView && 
@@ -67,7 +73,7 @@ export default function UserPage() {
           </button>)
         )}
         {!isCurrentUser && (
-          <button  className="absolute top-1 right-1 p-2 border-2 rounded bg-color_palette_4 hover:bg-color_palette_2 active:bg-color_palette_3">
+          <button onClick={(e) => messageOnClick(e, userToView)}   className="absolute top-1 right-1 p-2 border-2 rounded bg-color_palette_4 hover:bg-color_palette_2 active:bg-color_palette_3">
             Message
           </button>
         )}

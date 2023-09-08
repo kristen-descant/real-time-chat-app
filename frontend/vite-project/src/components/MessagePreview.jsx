@@ -42,7 +42,7 @@ export default function MessagePreviews(props) {
                 message.messages.length > 0 && 
                 <li className='mb-2 border rounded flex flex-row' key={index} onClick={() => 
                 messageOnClick(message.users[0].id === userInfo.id ? message.users[1] : message.users[0],
-                setMessages(message.messages))}>
+                setMessages(message.messages.slice(-100)))}>
                     <div>
                         {/* <img src={message.users[0].id === userInfo.id ? message.users[1].profile_pciture : message.users[0].profile_pciture} alt="" /> */}
                         <img className='h-8 md:h-12 rounded-full' src={tempPic} alt="" />
