@@ -1,6 +1,4 @@
-import messages from '../data/messges.json'
-import chatRoom from '../data/chatRoom.json'
-import userList from '../data/users.json'
+import tempPic from '../media/pngwing.com (1).png'
 import { useEffect, useState } from 'react'
 import { useOutletContext } from 'react-router-dom';
 import { api } from '../pages/utility';
@@ -9,9 +7,10 @@ import { api } from '../pages/utility';
 
 export default function MessagePreviews() {
 
-    const {setUserToMessage, user, userInfo} = useOutletContext();
+    const {setUsertoMessage, user, userInfo} = useOutletContext();
     // const [messageList, setMessageList] = useState(messages);
     const [chatRooms, setChatRooms] = useState(null);
+    const [messageLength, setMessageLength] = useState(null);
 
     const getChats = async() => {
         try {
@@ -30,8 +29,9 @@ export default function MessagePreviews() {
         getChats();
     }, [user])
 
-    const handleOnClick = () => {
-        
+    const messageOnClick = (friend) => {
+        // event.stopPropagation();
+        setUsertoMessage(friend)
     }
 
   
@@ -39,15 +39,19 @@ export default function MessagePreviews() {
         <ul className='mt-8'>
             {chatRooms &&
             (chatRooms.map((message, index) => (
-                <li className='mb-2 border rounded flex flex-row' key={index} onClick={() => handleOnClick(message)}>
-                    <div className='mr-5 pl-3 flex items-center'>
-                        {message.users[0].id === userInfo.id ? message.users[1].display_name : message.users[0].display_name}
+                message.messages.length > 0 && 
+                <li className='mb-2 border rounded flex flex-row' key={index} onClick={() => messageOnClick(message.users[0].id === userInfo.id ? message.users[1] : message.users[0])}>
+                    <div>
+                        {/* <img src={message.users[0].id === userInfo.id ? message.users[1].profile_pciture : message.users[0].profile_pciture} alt="" /> */}
+                        <img className='h-8 md:h-12 rounded-full' src={tempPic} alt="" />
                     </div>
-                    <div className='flex flex-col'>
-                        
-                        {/* <div>
-                            {message.messages[messages.length - 1]}
-                        </div> */}
+                    <div className='flex flex-col w-[75%] border border-[black] ml-3'>
+                        <div className='mr-5 pl-3'>
+                            {message.users[0].id === userInfo.id ? message.users[1].display_name : message.users[0].display_name}
+                        </div>
+                        <div className='flex flex-col'>
+                            {message.messages[message.messages.length-1].content.split("'")[1]}
+                        </div>
                     </div>
                 </li>
             )))

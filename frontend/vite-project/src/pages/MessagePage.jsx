@@ -1,5 +1,5 @@
 import { useOutletContext, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Chat from "../components/Chat";
 import MessagePreviews from "../components/MessagePreview";
 import FriendsList from "../components/FriendsList";
@@ -7,6 +7,7 @@ import FriendsList from "../components/FriendsList";
 export default function MessagePage() {
 
   const {userToMessage, user} = useOutletContext();
+  const [messages, setMessages] = useState(null);
   const navigate = useNavigate();
 
   return (

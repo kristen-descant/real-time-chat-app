@@ -99,8 +99,7 @@ export default function Navbar(props) {
                     <ul className="absolute bottom--1 left-0 w-[12vw] max-h-[30vh] overflow-scroll">
                         {searchList.map((result) => 
                             (<li
-                                onClick={() => {
-                                    
+                                onClick={() => {     
                                     setSearchList(null);
                                     if (userSearch) {
                                         handleUserSearch(result.id);
