@@ -11,6 +11,7 @@ export default function MessagePreviews(props) {
     // const [messageList, setMessageList] = useState(messages);
     const [chatRooms, setChatRooms] = useState(null);
     const {setMessages} = props;
+    const [chatDeleted, setChatDeleted] = useState(false);
 
     const getChats = async() => {
         try {
@@ -27,7 +28,8 @@ export default function MessagePreviews(props) {
 
     useEffect(() => {
         getChats();
-    }, [user])
+        setChatDeleted(false);
+    }, [user, chatDeleted])
 
     const messageOnClick = (friend) => {
         // event.stopPropagation();
@@ -40,6 +42,7 @@ export default function MessagePreviews(props) {
             console.log(api.defaults.headers.common)
             const response = await api.delete(`chat/${room_id}`)
             console.log(response)
+            setChatDeleted(true);
         } catch(error) {
             console.log(error)
         }

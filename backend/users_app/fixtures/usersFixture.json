@@ -5,7 +5,7 @@
         "fields": {
             "email": "user1@example.com",
             "display_name": "User 1",
-            "profile_picture": null,
+            "profile_picture": "https://api.multiavatar.com/User 1.png",
             "last_login": "2023-08-21T00:00:00Z",
             "date_joined": "2023-08-21T00:00:00Z",
             "is_active": true,
@@ -19,7 +19,7 @@
         "fields": {
             "email": "user2@example.com",
             "display_name": "User 2",
-            "profile_picture": null,
+            "profile_picture": "https://api.multiavatar.com/User 2.png",
             "last_login": "2023-08-22T00:00:00Z",
             "date_joined": "2023-08-22T00:00:00Z",
             "is_active": true,
@@ -33,7 +33,7 @@
         "fields": {
             "email": "user3@example.com",
             "display_name": "User 3",
-            "profile_picture": null,
+            "profile_picture": "https://api.multiavatar.com/User 3.png",
             "last_login": "2023-08-23T00:00:00Z",
             "date_joined": "2023-08-23T00:00:00Z",
             "is_active": true,
@@ -47,7 +47,7 @@
         "fields": {
             "email": "user4@example.com",
             "display_name": "User 4",
-            "profile_picture": null,
+            "profile_picture": "https://api.multiavatar.com/User 4.png",
             "last_login": "2023-08-24T00:00:00Z",
             "date_joined": "2023-08-24T00:00:00Z",
             "is_active": true,
@@ -61,7 +61,7 @@
         "fields": {
             "email": "user5@example.com",
             "display_name": "User 5",
-            "profile_picture": null,
+            "profile_picture": "https://api.multiavatar.com/User 5.png",
             "last_login": "2023-08-25T00:00:00Z",
             "date_joined": "2023-08-25T00:00:00Z",
             "is_active": true,
@@ -75,7 +75,7 @@
         "fields": {
             "email": "user6@example.com",
             "display_name": "User 6",
-            "profile_picture": null,
+            "profile_picture": "https://api.multiavatar.com/User 6.png",
             "last_login": "2023-08-26T00:00:00Z",
             "date_joined": "2023-08-26T00:00:00Z",
             "is_active": true,
@@ -89,7 +89,7 @@
         "fields": {
             "email": "user7@example.com",
             "display_name": "User 7",
-            "profile_picture": null,
+            "profile_picture": "https://api.multiavatar.com/User 7.png",
             "last_login": "2023-08-27T00:00:00Z",
             "date_joined": "2023-08-27T00:00:00Z",
             "is_active": true,
@@ -103,7 +103,7 @@
         "fields": {
             "email": "user8@example.com",
             "display_name": "User 8",
-            "profile_picture": null,
+            "profile_picture": "https://api.multiavatar.com/User 8.png",
             "last_login": "2023-08-28T00:00:00Z",
             "date_joined": "2023-08-28T00:00:00Z",
             "is_active": true,
@@ -117,7 +117,7 @@
         "fields": {
             "email": "user9@example.com",
             "display_name": "User 9",
-            "profile_picture": null,
+            "profile_picture": "https://api.multiavatar.com/User 9.png",
             "last_login": "2023-08-29T00:00:00Z",
             "date_joined": "2023-08-29T00:00:00Z",
             "is_active": true,
@@ -130,44 +130,14 @@
         "pk": 10,
         "fields": {
             "email": "user10@example.com",
+            "password": "user10",
             "display_name": "User 10",
-            "profile_picture": null,
+            "profile_picture": "https://api.multiavatar.com/User 10.png",
             "last_login": "2023-08-30T00:00:00Z",
             "date_joined": "2023-08-30T00:00:00Z",
             "is_active": true,
             "is_staff": false,
             "friends": [1,2,3,4,5,6,7,8,9]
         }
-    },
-    {
-        "model": "users_app.user",
-        "pk": 11,
-        "fields": {
-            "email": "test4@test4.com",
-            "display_name": "test4",
-            "password":"pbkdf2_sha256$600000$1kwEw6wBVFMFH2Lu3er9oD$FCXoF7QiDFb6FR6sJrERldmOO0jgH3o7l3sWeLQLAbw=",
-            "profile_picture": null,
-            "last_login": "2023-08-30T00:00:00Z",
-            "date_joined": "2023-08-30T00:00:00Z",
-            "is_active": true,
-            "is_staff": false,
-            "friends": [12,2,3,4,5,6,7,8,9]
-        }
-    },
-    {
-        "model": "users_app.user",
-        "pk": 12,
-        "fields": {
-            "email": "test1@test1.com",
-            "display_name": "test1",
-            "password":"pbkdf2_sha256$600000$1kwEw6wBVFMFH2Lu3er9oD$FCXoF7QiDFb6FR6sJrERldmOO0jgH3o7l3sWeLQLAbw=",
-            "profile_picture": null,
-            "last_login": "2023-08-30T00:00:00Z",
-            "date_joined": "2023-08-30T00:00:00Z",
-            "is_active": true,
-            "is_staff": false,
-            "friends": [11,2,3,4,5,6,7,8,9]
-        }
     }
 ]
-

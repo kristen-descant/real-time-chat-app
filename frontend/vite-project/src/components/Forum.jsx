@@ -32,7 +32,7 @@ export default function Forum({forum}) {
         setCurrentForum(new_id)
       }
       getAllForums()
-    }, [])
+    }, [forum_id])
     
    
     // console.log(currentForum)
