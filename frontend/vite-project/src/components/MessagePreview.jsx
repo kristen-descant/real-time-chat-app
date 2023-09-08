@@ -34,6 +34,16 @@ export default function MessagePreviews(props) {
         setUsertoMessage(friend)
     }
 
+    const handleDeleteMessage = async(e, room_id) => {
+        e.stopPropagation();
+        try {
+            console.log(api.defaults.headers.common)
+            const response = await api.delete(`chat/${room_id}`)
+            console.log(response)
+        } catch(error) {
+            console.log(error)
+        }
+    }
   
     return (
         <ul className='mt-8'>
@@ -42,7 +52,7 @@ export default function MessagePreviews(props) {
                 message.messages.length > 0 && 
                 <li className='mb-2 border rounded flex flex-row' key={index} onClick={() => 
                 messageOnClick(message.users[0].id === userInfo.id ? message.users[1] : message.users[0],
-                setMessages(message.messages))}>
+                setMessages(message.messages.slice(-100)))}>
                     <div>
                         {/* <img src={message.users[0].id === userInfo.id ? message.users[1].profile_pciture : message.users[0].profile_pciture} alt="" /> */}
                         <img className='h-8 md:h-12 rounded-full' src={tempPic} alt="" />
@@ -50,10 +60,14 @@ export default function MessagePreviews(props) {
                     <div className='flex flex-col w-[75%] border border-[black] ml-3'>
                         <div className='mr-5 pl-3'>
                             {message.users[0].id === userInfo.id ? message.users[1].display_name : message.users[0].display_name}
+                            {console.log(message.users[0].id)}
                         </div>
                         <div className='flex flex-col'>
                             {message.messages[message.messages.length-1].content.split("'")[1]}
                         </div>
+                    </div>
+                    <div className='flex items-center justify-center'>
+                    <button onClick={(e) => handleDeleteMessage(e, message.room_id)}>Delete</button>
                     </div>
                 </li>
             )))

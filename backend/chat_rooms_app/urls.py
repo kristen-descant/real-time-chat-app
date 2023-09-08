@@ -10,5 +10,5 @@ urlpatterns = [
     path("<str:room_name>/messages/", views.updated_message_db, name="first_50"),
     path("<str:room_name>/messages/<int:oldest_message>", views.updated_message_db, name="message_history"),
     path("", Get_Chat_Rooms),
-    path("", Delete_Chat_Room)
+    path("<str:chat_room_room_id>/", Delete_Chat_Room)
 ]

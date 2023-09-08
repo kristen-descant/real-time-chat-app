@@ -79,6 +79,7 @@ function Chat(props) {
     return (
         <div className="h-screen bg-gray-100 flex justify-center overflow-hidden">
         <div className='w-full flex justify-center relative h-[95%]'>
+            {console.log(userToMessage)}
              <div>
                 <button onClick={handleGoBack}>Back</button>
              </div>
@@ -87,7 +88,7 @@ function Chat(props) {
                 <div className='h-[80%] w-full'>
                     <div className="h-[85%] overflow-x-hidden overflow-y-auto shadow-none w-full flex flex-col items-center">
                         <div className=' w-full'>
-                            {messages.map((message, index) => (
+                            {messages && messages.map((message, index) => (
                                 <div key={index} className='mb-4 mr-4 w-fit md:w-3/4 ' >
                                 <div className={`  p-1 whitespace-normal overflow-x-hidden  rounded ${message.sender === userInfo.data.id ? 'bg-color_palette_2' : 'bg-[white]'}`}  >
                                 {message.content.split("'")[1].split("\\n")[0]}
