@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Alert } from 'react-bootstrap';
 import { useNavigate, useOutletContext, Link } from 'react-router-dom';
 import { api } from './utility';
-
+import logo from '../media/ClearLogo.png'
 export default function SignInPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -45,7 +45,8 @@ export default function SignInPage() {
   return (
     <div className="min-h-screen flex justify-center items-center">
       <div className="flex flex-col items-center">
-      <div className="mb-2">
+      <div className="mb-2 text-center">
+        <img src={logo} />
         Need an account? <Link to="/register">Register</Link>
       </div>
       <div>
@@ -54,7 +55,7 @@ export default function SignInPage() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
-          className="mb-1"
+          className="mb-1 text-center"
         />
       </div>
       <div>
@@ -63,6 +64,7 @@ export default function SignInPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
+          className="text-center"
         />
       </div>
       {error && <Alert variant="danger">{error}</Alert>}

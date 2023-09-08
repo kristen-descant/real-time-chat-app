@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import { api } from './utility';
-
+import logo from "../media/ClearLogo.png"
 
 export default function RegisterPage() {
   const [email, setEmail] = useState('');
@@ -43,8 +43,11 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen flex justify-center items-center">
+      
       <div className="flex flex-col items-center">
-        <div className="mb-2">
+        
+        <div className="mb-2 text-center">
+        <img src={logo}/>
         Already have an account? <Link to="/signin">Sign In</Link>
       </div>
       <div className="mb-1">
@@ -53,6 +56,7 @@ export default function RegisterPage() {
           value={displayName}
           onChange={(e) => setDisplayName(e.target.value)}
           placeholder="Display Name"  
+          className="text-center"
         />
       </div>
       <div className="mb-1">
@@ -61,6 +65,7 @@ export default function RegisterPage() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
+         className="text-center"
         />
       </div>
       <div className="mb-1">
@@ -69,6 +74,7 @@ export default function RegisterPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
+          className="text-center"
         />
       </div>
       <div>
@@ -77,6 +83,7 @@ export default function RegisterPage() {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           placeholder="Confirm Password"
+          className="text-center"
         />
       </div>
       <button onClick={register} type="button" className="mt-2 border hover:bg-color_palette_4 border-[white] text-[white] p-1 rounded mb-2 ">
