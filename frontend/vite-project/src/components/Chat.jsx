@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
-function Chat() {
+function Chat(props) {
 
     const {user, userToMessage, userInfo, setUsertoMessage} = useOutletContext();
     const [thisUserId, setThisUserId] = useState(null);
     const navigate = useNavigate();
-    console.log(user)
+    const {messages} = props;
+
     const setUserId = () => {
         setThisUserId(userInfo.data.id)
     }
@@ -15,7 +16,7 @@ function Chat() {
     useEffect(() => {
         setUserId()
     }, [userInfo])
-    // const [userId, setUserId] = useState('');
+
     const [state, setState] = useState({
         filledForm: false,
         messages: [],
@@ -25,9 +26,6 @@ function Chat() {
         room: `user${userInfo.data.id}user${userToMessage.id}`
         // room: 'chat',
     });
-
-    console.log(userInfo)
-
 
     const client = new W3CWebSocket(
         'ws://127.0.0.1:8000/ws/' + state.room + '/'
@@ -77,12 +75,7 @@ function Chat() {
     const handleGoBack = () => {
         setUsertoMessage(null);
     }
-
-    console.log(state.messages)
-    
-    console.log(userInfo.data.id)
-    
-
+    console.log(messages)
     return (
         <div className="h-screen bg-gray-100 flex justify-center overflow-hidden">
         <div className='w-full flex justify-center relative h-[95%]'>
@@ -93,13 +86,24 @@ function Chat() {
                 <div className="mb-4 flex flex-row items-center"> <img className='h-5 md:h-8 rounded-full mr-2' src={userToMessage.profile_picture} /> {userToMessage.display_name}</div>
                 <div className='h-[80%] w-full'>
                     <div className="h-[85%] overflow-x-hidden overflow-y-auto shadow-none w-full flex flex-col items-center">
-                    {state.messages.map((message, index) => (
-                    <div key={index} className='mb-4 mr-4 w-fit md:w-3/4 ' >
-                        <div  className={`  p-1 whitespace-normal overflow-x-hidden  rounded ${message.message[1] === userInfo.data.id ? 'bg-color_palette_2' : 'bg-[white]'}`} >
-                        {message.message[0]}
+                        <div className=' w-full'>
+                            {messages.map((message, index) => (
+                                <div key={index} className='mb-4 mr-4 w-fit md:w-3/4 ' >
+                                <div className={`  p-1 whitespace-normal overflow-x-hidden  rounded ${message.sender === userInfo.data.id ? 'bg-color_palette_2' : 'bg-[white]'}`}  >
+                                {message.content.split("'")[1].split("\\n")[0]}
+                                </div>
+                            </div>
+                            ))}
                         </div>
-                    </div>
-                    ))}
+                        <div className='h-full w-full'>
+                        {state.messages.map((message, index) => (
+                        <div key={index} className='mb-4 mr-4 w-fit md:w-3/4 ' >
+                            <div  className={`  p-1 whitespace-normal overflow-x-hidden  rounded ${message.message[1] === userInfo.data.id ? 'bg-color_palette_2' : 'bg-[white]'}`} >
+                            {message.message[0]}
+                            </div>
+                        </div>
+                        ))}
+                        </div>
                     </div>
                 </div>
                 <form className='flex flex-row items-center w-full md:w-3/4 h-[10%] ' onSubmit={onButtonClicked}>
