@@ -31,6 +31,7 @@ export default function Navbar(props) {
                 setUserId(userInfo.data.id);
             }
             getUserId()
+            console.log(userInfo)
         }
     }, [userInfo])
 
@@ -68,12 +69,15 @@ export default function Navbar(props) {
     }, [searchCriteria])
 
     const handleUserSearch = (id) => {
-        setSearchCriteria(null);
+        setSearchCriteria("");
+        setSearchList(null);
         navigate(`/user/${id}`);
     }
 
     const handleForumSearch = (id) => {
+        setSearchCriteria("");
         setSearchCriteria(null);
+        setSearchList(null);
         navigate(`/forum/${id}`)
     }
     
@@ -87,7 +91,7 @@ export default function Navbar(props) {
                     <button onClick={handleUserSearchToggle}  className={`h-full overflow-hidden text-xs md:text-auto p-1 mr-1 rounded ${userSearch ? 'bg-[grey]' : 'bg-[white]'}`}>User</button>
                     <button onClick={handleForumSearchToggle}  className={`h-full text-xs md:text-auto overflow-hidden p-1 rounded ${forumSearch ? 'bg-[grey]' : 'bg-[white]'}`}>Forum</button>
                 </div>
-                <div className="relative">
+                <div className="relative z-10">
                 <input
                     className="w-[12vw]"
                     onChange={(e) => setSearchCriteria(e.target.value)}
@@ -100,10 +104,9 @@ export default function Navbar(props) {
                         {searchList.map((result) => 
                             (<li
                                 onClick={() => {     
-                                    setSearchList(null);
                                     if (userSearch) {
                                         handleUserSearch(result.id);
-                                    } else {
+                                    } else if (forumSearch) {
                                         handleForumSearch(result.id);
                                     }
                                 }}
@@ -117,7 +120,7 @@ export default function Navbar(props) {
                 </div>
             </div>
             <div className="p-1">
-                <Link to={`/user/${userId}`}><img className="rounded-full h-full w-[3vw]" src={image} alt="spongebob" /></Link>
+                <Link to={`/user/${userId}`}>{userInfo && <img className="rounded-full h-full w-[3vw]" src={userInfo.data.profile_picture} alt="spongebob" />}</Link>
 
                 
             </div>

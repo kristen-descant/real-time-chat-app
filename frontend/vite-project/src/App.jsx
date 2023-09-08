@@ -16,7 +16,7 @@ function App() {
   const [userToMessage, setUsertoMessage] = useState(null);
   const [friendList, setFriendsList] = useState(null);
   const navigate = useNavigate();
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(false);
   const lastVisited = useRef();
   const location = useLocation();
 

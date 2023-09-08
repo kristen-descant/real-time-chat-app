@@ -23,7 +23,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     display_name = models.CharField(max_length=100)
-    profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
+    profile_picture = models.URLField(max_length=255)
     friends = models.ManyToManyField("self", blank=True, related_name='friends_list')
     last_login = models.DateTimeField(auto_now_add=True)
     date_joined = models.DateTimeField(auto_now_add=True)

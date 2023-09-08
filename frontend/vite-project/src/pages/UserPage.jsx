@@ -14,6 +14,7 @@ export default function UserPage() {
   const [isFriend, setIsFriend] = useState();
   const [userToView, setUserToView] = useState(null);
   
+  
   const getUserToView = async() => {
     const response = await api.get(`users/profile/${user_id}`)
     setUserToView(response)
