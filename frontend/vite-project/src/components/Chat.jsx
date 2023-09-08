@@ -9,7 +9,6 @@ function Chat(props) {
     const navigate = useNavigate();
     const {messages} = props;
 
-    console.log(user)
     const setUserId = () => {
         setThisUserId(userInfo.data.id)
     }
@@ -17,7 +16,7 @@ function Chat(props) {
     useEffect(() => {
         setUserId()
     }, [userInfo])
-    // const [userId, setUserId] = useState('');
+
     const [state, setState] = useState({
         filledForm: false,
         messages: [],
@@ -27,9 +26,6 @@ function Chat(props) {
         room: `user${userInfo.data.id}user${userToMessage.id}`
         // room: 'chat',
     });
-
-    console.log(userInfo)
-
 
     const client = new W3CWebSocket(
         'ws://127.0.0.1:8000/ws/' + state.room + '/'
@@ -79,12 +75,7 @@ function Chat(props) {
     const handleGoBack = () => {
         setUsertoMessage(null);
     }
-
-    console.log(state.messages)
-    
-    console.log(userInfo.data.id)
-    
-
+    console.log(messages)
     return (
         <div className="h-screen bg-gray-100 flex justify-center overflow-hidden">
         <div className='w-full flex justify-center relative h-[95%]'>
@@ -98,7 +89,7 @@ function Chat(props) {
                         <div className=' w-full'>
                             {messages.map((message, index) => (
                                 <div key={index} className='mb-4 mr-4 w-fit md:w-3/4 ' >
-                                <div   >
+                                <div className={`  p-1 whitespace-normal overflow-x-hidden  rounded ${message.sender === userInfo.data.id ? 'bg-color_palette_2' : 'bg-[white]'}`}  >
                                 {message.content.split("'")[1].split("\\n")[0]}
                                 </div>
                             </div>
