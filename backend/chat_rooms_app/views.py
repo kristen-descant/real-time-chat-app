@@ -43,11 +43,12 @@ def Get_Chat_Rooms(request):
 @api_view(['DELETE'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def Delete_Chat_Room(request):
+def Delete_Chat_Room(request, chat_room_room_id):
     # user = request.user
-    chat_room_room_id = request.data.get("chat_room")
+    print(chat_room_room_id)
     try:
         chat_room = ChatRoom.objects.get(room_id=chat_room_room_id)
         chat_room.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
     except ChatRoom.DoesNotExist:
         print("Chatroom does not exist, cannot delete.")

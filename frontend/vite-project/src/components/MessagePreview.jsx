@@ -34,6 +34,16 @@ export default function MessagePreviews(props) {
         setUsertoMessage(friend)
     }
 
+    const handleDeleteMessage = async(e, room_id) => {
+        e.stopPropagation();
+        try {
+            console.log(api.defaults.headers.common)
+            const response = await api.delete(`chat/${room_id}`)
+            console.log(response)
+        } catch(error) {
+            console.log(error)
+        }
+    }
   
     return (
         <ul className='mt-8'>
@@ -55,6 +65,9 @@ export default function MessagePreviews(props) {
                         <div className='flex flex-col'>
                             {message.messages[message.messages.length-1].content.split("'")[1]}
                         </div>
+                    </div>
+                    <div className='flex items-center justify-center'>
+                    <button onClick={(e) => handleDeleteMessage(e, message.room_id)}>Delete</button>
                     </div>
                 </li>
             )))
