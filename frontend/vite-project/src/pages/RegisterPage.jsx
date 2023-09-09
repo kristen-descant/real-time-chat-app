@@ -42,53 +42,55 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center">
-      
-      <div className="flex flex-col items-center">
-        
-        <div className="mb-2 text-center">
-        <img src={logo}/>
-        Already have an account? <Link to="/signin">Sign In</Link>
-      </div>
-      <div className="mb-1">
-        <input
-          type="text"
-          value={displayName}
-          onChange={(e) => setDisplayName(e.target.value)}
-          placeholder="Display Name"  
-          className="text-center"
-        />
-      </div>
-      <div className="mb-1">
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-         className="text-center"
-        />
-      </div>
-      <div className="mb-1">
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          className="text-center"
-        />
-      </div>
-      <div>
-        <input
-          type="password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          placeholder="Confirm Password"
-          className="text-center"
-        />
-      </div>
-      <button onClick={register} type="button" className="mt-2 border hover:bg-color_palette_4 border-[white] text-[white] p-1 rounded mb-2 ">
-        Register
-      </button>
+    <div className="min-h-screen flex justify-center items-center relative"> 
+      <div className="flex flex-col items-center relative">  
+        <div>
+          <img src={logo}/>
+        </div> 
+        <div className="absolute bottom-[-8%] flex flex-col items-center">
+          <div className="mb-2 text-center">
+            Already have an account? <Link to="/signin">Sign In</Link>
+          </div>
+          <div className="mb-1">
+            <input
+              type="text"
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
+              placeholder="Display Name"  
+              className="text-center"
+            />
+          </div>
+          <div className="mb-1">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
+            className="text-center"
+            />
+          </div>
+          <div className="mb-1">
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              className="text-center"
+            />
+          </div>
+          <div>
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Confirm Password"
+              className="text-center"
+            />
+          </div>
+          <button onClick={register} type="button" className="mt-2 border hover:bg-color_palette_4 border-[white] text-[white] p-1 rounded mb-2 ">
+            Register
+          </button>
+        </div>
       </div>
     </div>
   );
