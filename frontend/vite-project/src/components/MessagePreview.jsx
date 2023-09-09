@@ -8,7 +8,6 @@ import { api } from '../pages/utility';
 export default function MessagePreviews(props) {
 
     const {setUsertoMessage, user, userInfo} = useOutletContext();
-    // const [messageList, setMessageList] = useState(messages);
     const [chatRooms, setChatRooms] = useState(null);
     const {setMessages} = props;
     const [chatDeleted, setChatDeleted] = useState(false);
@@ -49,32 +48,34 @@ export default function MessagePreviews(props) {
     }
   
     return (
-        <ul className='mt-8'>
-            {chatRooms &&
-            (chatRooms.map((message, index) => (
-                message.messages.length > 0 && 
-                <li className='mb-2 border rounded flex flex-row' key={index} onClick={() => 
-                messageOnClick(message.users[0].id === userInfo.id ? message.users[1] : message.users[0],
-                setMessages(message.messages.slice(-100)))}>
-                    <div>
-                        {/* <img src={message.users[0].id === userInfo.id ? message.users[1].profile_pciture : message.users[0].profile_pciture} alt="" /> */}
-                        <img className='h-8 md:h-12 rounded-full' src={tempPic} alt="" />
-                    </div>
-                    <div className='flex flex-col w-[75%] border border-[black] ml-3'>
-                        <div className='mr-5 pl-3'>
-                            {message.users[0].id === userInfo.id ? message.users[1].display_name : message.users[0].display_name}
-                            {console.log(message.users[0].id)}
+        <div className='w-full mt-8'>
+            <h2 className='text:xl md:text-2xl'>Chats</h2>
+            <ul className='w-full mt-2'>
+                {chatRooms &&
+                (chatRooms.map((message, index) => (
+                    message.messages.length > 0 && 
+                    <li className='mb-2 border rounded flex flex-row justify-between' key={index} onClick={() => 
+                    messageOnClick(message.users[0].id === userInfo.id ? message.users[1] : message.users[0],
+                    setMessages(message.messages.slice(-100)))}>
+                        <div className='ml-1 flex justify-center items-center'>
+                            {/* <img src={message.users[0].id === userInfo.id ? message.users[1].profile_pciture : message.users[0].profile_pciture} alt="" /> */}
+                            <img className='h-8 md:h-12 rounded-full' src={message.users[0].id === userInfo.id ? message.users[1].profile_picture : message.users[0].profile_picture} alt="" />
                         </div>
-                        <div className='flex flex-col'>
-                            {message.messages[message.messages.length-1].content.split("'")[1]}
+                        <div className='flex flex-col w-[85%] ml-3'>
+                            <div>
+                                {message.users[0].id === userInfo.id ? message.users[1].display_name : message.users[0].display_name}
+                            </div>
+                            <div >
+                                {message.messages[message.messages.length-1].content.split("'")[1]}
+                            </div>
                         </div>
-                    </div>
-                    <div className='flex items-center justify-center'>
-                    <button onClick={(e) => handleDeleteMessage(e, message.room_id)}>Delete</button>
-                    </div>
-                </li>
-            )))
-            }
-        </ul>
+                        <div className='flex items-center justify-center border'>
+                        <button onClick={(e) => handleDeleteMessage(e, message.room_id)}>Delete</button>
+                        </div>
+                    </li>
+                )))
+                }
+            </ul>
+        </div>
     );
 }

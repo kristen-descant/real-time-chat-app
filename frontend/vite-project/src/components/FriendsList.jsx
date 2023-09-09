@@ -22,7 +22,7 @@ export default function FriendsList() {
     }
 
     return (
-        <div className='h-screen w-[15%] text-center'>
+        <div className='h-screen w-[60%] text-center'>
             <div className='h-[70%] w-full mt-8'>
             <h2 className='text:xl md:text-2xl'>Friends</h2>
             {friendList && 
