@@ -40,6 +40,16 @@ def Get_Chat_Rooms(request):
     serializer = ChatRoomSerializer(chat_rooms, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def Get_Chat_Room(request,room_name):
+    user = request.user
+    print(user)
+    chat_room = ChatRoom.objects.get(room_id=room_name)
+    serializer = ChatRoomSerializer(chat_room)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
 @api_view(['DELETE'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
