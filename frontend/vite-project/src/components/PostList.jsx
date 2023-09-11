@@ -23,7 +23,7 @@ export default function PostList() {
     const getAllPosts = async () => {
       let response = await api.get(`posts/${forum_id}/posts/`);
       let postData = response.data;
-      setPostList(postData);
+      setPostList(postData.toReversed());
     };
     getAllPosts();
   }, [countPosts]);

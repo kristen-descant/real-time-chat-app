@@ -70,7 +70,7 @@ export default function Post({ post }) {
   return (
     <>
       {!post_id ? (
-        <div className="flex flex-col border-2 border-[black] w-[50%] items-center">
+        <div className="flex flex-col border-2 rounded border-[black] w-[50%] items-center hover:bg-color_palette_1">
           <div
             className="text-xl md:text-2xl"
             onClick={() => {

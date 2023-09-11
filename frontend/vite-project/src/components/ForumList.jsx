@@ -15,7 +15,7 @@ export default function ForumsList() {
         const getAllForums = async() => {
             let response = await api.get(`forum/`)
             let forumData = response.data 
-            setForumsList(forumData)
+            setForumsList(forumData.toReversed())
         }
         getAllForums() 
     }, [newForum, setTextBox])
