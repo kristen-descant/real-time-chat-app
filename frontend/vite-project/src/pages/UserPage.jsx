@@ -7,19 +7,26 @@ import image from '../media/pngwing.com (1).png'
 // This page needs to be refactored with data from API
 
 export default function UserPage() {
-  const {user, friendList, userInfo, setUsertoMessage, setFriendStatusChange, friendStatusChange} = useOutletContext();
+  const {user, friendList, userInfo, setUsertoMessage, setFriendStatusChange, friendStatusChange, setMessages} = useOutletContext();
   const navigate = useNavigate();
   const { user_id } = useParams();
   const [isCurrentUser, setIsCurrentUser] = useState();
   const [isFriend, setIsFriend] = useState();
   const [userToView, setUserToView] = useState(null);
   
+  useEffect(() => {
+    setMessages(null);
+  }, []);
   
   const getUserToView = async() => {
     const response = await api.get(`users/profile/${user_id}`)
     setUserToView(response)
     console.log(response)
   }
+
+  useEffect(() => {
+    setUsertoMessage(null);
+  }, [])
 
   useEffect(() => {
     getUserToView();
