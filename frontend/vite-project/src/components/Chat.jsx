@@ -83,14 +83,14 @@ function Chat(props) {
              <div>
                 <button onClick={handleGoBack}>Back</button>
              </div>
-            <div className="mt-8 h-[80%] w-[50%] flex flex-col items-center">
+            <div className="mt-8 h-[80%] w-[40%] flex flex-col items-center">
                 <div className="mb-4 flex flex-row items-center"> <img className='h-5 md:h-8 rounded-full mr-2' src={userToMessage.profile_picture} /> {userToMessage.display_name}</div>
                 <div className='h-[80%] w-full'>
                     <div className="h-[85%] overflow-x-hidden overflow-y-auto shadow-none w-full flex flex-col items-center">
                         <div className=' w-full'>
                             {messages && messages.map((message, index) => (
-                                <div key={index} className='mb-4 mr-4 w-fit md:w-3/4 ' >
-                                <div className={`  p-1 whitespace-normal overflow-x-hidden  rounded ${message.sender === userInfo.data.id ? 'bg-color_palette_2' : 'bg-[white]'}`}  >
+                                <div key={index} className={`mr-none mb-4 min-w-full md:w-3/4 flex flex-col ${message.sender === userInfo.data.id ? 'items-end' : 'items-start'}`} >
+                                <div className={`w-[60%] p-1 whitespace-normal overflow-x-hidden  rounded ${message.sender === userInfo.data.id ? 'bg-color_palette_2 mr-1 ' : 'bg-[white] ml-1'}`}  >
                                 {message.content.split("'")[1].split("\\n")[0]}
                                 </div>
                             </div>
@@ -98,8 +98,8 @@ function Chat(props) {
                         </div>
                         <div className='h-full w-full'>
                         {state.messages.map((message, index) => (
-                        <div key={index} className='mb-4 mr-4 w-fit md:w-3/4 ' >
-                            <div  className={`  p-1 whitespace-normal overflow-x-hidden  rounded ${message.message[1] === userInfo.data.id ? 'bg-color_palette_2' : 'bg-[white]'}`} >
+                        <div key={index} className={`mb-4 min-w-full md:w-3/4 flex flex-col ${message.message[1] === userInfo.data.id ? 'items-end' : 'items-start'}`} >
+                            <div  className={`w-[60%]  p-1 whitespace-normal overflow-x-hidden  rounded ${message.message[1] === userInfo.data.id ? 'bg-color_palette_2 mr-1' : 'bg-[white] ml-1'}`} >
                             {message.message[0]}
                             </div>
                         </div>

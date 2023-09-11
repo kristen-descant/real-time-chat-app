@@ -29,9 +29,13 @@ export default function FriendsList() {
             <div  className="h-full w-full border border-[black] flex flex-col overflow-y-scroll mt-2 rounded">
                 {friendList.map((friend) => (
                     <div onClick={() => handleOnClick(friend.id)}  key={friend.id} className='h-[10vh] border-b-[black] border flex flex-row justify-between bg-color_palette_3 hover:bg-color_palette_1 '>
-                        <img className='h-full border border-[black] rounded-full'  src={friend.profile_picture} alt="" />
-                        <div className='w-[50%]'>{friend.display_name}</div>
-                        <button onClick={(e) => messageOnClick(e, friend)}>Message</button>
+                        <div className='h-full w-[40%]'>
+                            <img className='h-full border border-[black] rounded-full'  src={friend.profile_picture} alt="" />
+                        </div>
+                        <div className='flex flex-col w-[55%] items-end mr-1 h-full overflow-hidden'>
+                            <div className=''>{friend.display_name}</div>
+                            <button onClick={(e) => messageOnClick(e, friend)}>Message</button>
+                        </div>
                     </div>
                 ))}            
             </div> }
