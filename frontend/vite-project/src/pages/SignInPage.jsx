@@ -36,7 +36,7 @@ export default function SignInPage() {
       }
     } catch (error) {
       console.error("Login error", error);
-      setError("Failed to log in. Please check your credentials.");
+      window.alert("Failed to log in. Please check your credentials.")
     } finally {
       setLoading(false);
     }
@@ -70,7 +70,6 @@ export default function SignInPage() {
               className="text-center"
             />
           </div>
-          {error && <Alert variant="danger">{error}</Alert>}
           <button onClick={logIn} disabled={loading} type="button" className="border mt-2 hover:bg-color_palette_4 border-[white] text-[white] p-1 rounded mb-2 ">
           <i class="fa-sharp fa-solid fa-user fa-lg"></i>  {loading ? "Signing in..." : " Sign In"}
           </button>

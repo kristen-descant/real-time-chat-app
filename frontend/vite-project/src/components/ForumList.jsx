@@ -8,7 +8,7 @@ import {api} from '../pages/utility.jsx'
 export default function ForumsList() {
     const navigate = useNavigate() 
     const [forumsList, setForumsList] = useState([]);
-    const [newForum, setNewForum] = useState([])
+    const [newForum, setNewForum] = useState('')
     const [textBox, setTextBox] = useState(false)
 
     useEffect(() => {
@@ -22,27 +22,29 @@ export default function ForumsList() {
 
     const addForum = async (e) => {
         e.preventDefault(); 
-        try {
-            let response = await api.post(`forum/`, {
-                title : newForum,
-                rating : '1'  
-            })
-            setTextBox(false) 
-            navigate(`forum/${response.data.id}`)
-        }
-        catch {
-            alert('Forum could not be added')
+        const trimmedForumName = newForum.trim();
 
-        }
+        if (!newForum || !trimmedForumName) {
+            window.alert('Please enter a forum name.')
+        } else {
+            try {
+                let response = await api.post(`forum/`, {
+                    title : newForum,
+                    rating : '1'  
+                })
+                setTextBox(false) 
+                navigate(`forum/${response.data.id}`)
+            }
+            catch {
+                alert('Forum could not be added')
 
+            }
+        }
     }
         
 
     return (
         <div className="min-h-screen w-[70%] flex flex-col items-center mt-8">
-            
-            
-
             {
                 textBox ? (
                 <form className="flex flex-col " onSubmit={(e) => addForum(e)}>

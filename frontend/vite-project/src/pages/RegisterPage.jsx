@@ -16,6 +16,15 @@ export default function RegisterPage() {
   const register = async (e) => {
     e.preventDefault();
 
+    if (email === '') {
+      window.alert("Email cannot be empty.")
+      return
+    }
+    if (password === '') {
+      window.alert("Password cannot be empty.")
+      return
+    }
+
     if (password !== confirmPassword) {
       console.error("Passwords do not match!");
       return;
@@ -41,6 +50,10 @@ export default function RegisterPage() {
       }
     } catch (error) {
       console.error("Registration error", error);
+      if (error.message === 
+        "Request failed with status code 500") {
+          window.alert("A user with that display name or email address already exist.")
+        }
     }
   };
 
