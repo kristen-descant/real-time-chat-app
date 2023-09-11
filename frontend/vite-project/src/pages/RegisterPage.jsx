@@ -50,6 +50,10 @@ export default function RegisterPage() {
       }
     } catch (error) {
       console.error("Registration error", error);
+      if (error.message === 
+        "Request failed with status code 500") {
+          window.alert("A user with that display name or email address already exist.")
+        }
     }
   };
 
