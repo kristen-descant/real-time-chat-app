@@ -26,6 +26,7 @@ function Chat(props) {
         room: `user${userInfo.data.id}user${userToMessage.id}`
         // room: 'chat',
     });
+    console.log(state.room)
 
     const client = new W3CWebSocket(
         'ws://127.0.0.1:8000/ws/' + state.room + '/'

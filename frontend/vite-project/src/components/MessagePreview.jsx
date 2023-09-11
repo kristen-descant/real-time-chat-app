@@ -55,22 +55,23 @@ export default function MessagePreviews(props) {
                 (chatRooms.map((message, index) => (
                     message.messages.length > 0 && 
                     <li className='mb-2 border rounded flex flex-row justify-between' key={index} onClick={() => 
-                    messageOnClick(message.users[0].id === userInfo.id ? message.users[1] : message.users[0],
+                    messageOnClick(message.users[0].id === userInfo.data.id ? message.users[1] : message.users[0],
                     setMessages(message.messages.slice(-100)))}>
                         <div className='ml-1 flex justify-center items-center'>
-                            {/* <img src={message.users[0].id === userInfo.id ? message.users[1].profile_pciture : message.users[0].profile_pciture} alt="" /> */}
-                            <img className='h-8 md:h-12 rounded-full' src={message.users[0].id === userInfo.id ? message.users[1].profile_picture : message.users[0].profile_picture} alt="" />
+                            {/* <img src={message.users[0].id === userInfo.data.id ? message.users[1].profile_pciture : message.users[0].profile_pciture} alt="" /> */}
+                            <img className='h-8 md:h-12 rounded-full' src={message.users[0].id == userInfo.data.id ? message.users[1].profile_picture : message.users[0].profile_picture} alt="" />
+                            {console.log(message.users[0].id, userInfo.data.id)}
                         </div>
                         <div className='flex flex-col w-[85%] ml-3'>
                             <div>
-                                {message.users[0].id === userInfo.id ? message.users[1].display_name : message.users[0].display_name}
+                                {message.users[0].id === userInfo.data.id ? message.users[1].display_name : message.users[0].display_name}
                             </div>
                             <div >
                                 {message.messages[message.messages.length-1].content.split("'")[1]}
                             </div>
                         </div>
-                        <div className='flex items-center justify-center border'>
-                        <button onClick={(e) => handleDeleteMessage(e, message.room_id)}>Delete</button>
+                        <div className='flex items-center justify-center w-[5%]'>
+                        <button onClick={(e) => handleDeleteMessage(e, message.room_id)}><i class="fa fa-trash" aria-hidden="true"></i></button>
                         </div>
                     </li>
                 )))
