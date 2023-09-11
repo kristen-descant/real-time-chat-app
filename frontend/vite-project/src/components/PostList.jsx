@@ -1,5 +1,5 @@
 import forumsListData from "../data/forums.json";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useOutletContext, Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Post from "./Post";
 import { api } from "../pages/utility.jsx";
@@ -13,6 +13,11 @@ export default function PostList() {
   const navigate = useNavigate();
   const [textBox, setTextBox] = useState(false);
   const [upReaction, setUpReaction] = useState(false);
+  const [countPosts, setCountPosts] = useState(0)
+  const {counter, setCounter} = useOutletContext() 
+
+
+  
 
   useEffect(() => {
     const getAllPosts = async () => {
@@ -21,8 +26,12 @@ export default function PostList() {
       setPostList(postData);
     };
     getAllPosts();
-  }, [textBox]);
+  }, [countPosts]);
 //   console.log(newPost)
+
+  useEffect(() => {
+    setCountPosts(countPosts+1)
+  }, [counter])
 
   const addPosts = async (e) => {
     e.preventDefault();
@@ -38,7 +47,7 @@ export default function PostList() {
       alert("Post not added!");
     }
   };
-
+  console.log("POST LSIT: ", postList)
   return (
     <div className="min-h-screen w-[70%] flex flex-col items-center mt-8">
       {textBox ? (
@@ -69,12 +78,17 @@ export default function PostList() {
           Add Post
         </button>
       )}
+      {postList && (
       <ul className="w-full flex flex-col items-center mt-8 space-y-1">
         {postList.map((post, index) => (
           <Post key={index} post={post} />
           // forum={forumsList[forum_id-1]
+        
         ))}
+      
       </ul>
+      )}
+
     </div>
   );
 }

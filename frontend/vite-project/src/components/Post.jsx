@@ -15,7 +15,7 @@ export default function Post({ post }) {
   // const [usersReactionUp, setUsersReactionUp] = useState([]);
   // const [upReaction, setUpReaction] = useState(false);
   // const [usersReactionDown, setUsersReactionDown] = useState([]);
-  const { userInfo } = useOutletContext();
+  const { userInfo, counter, setCounter } = useOutletContext();
   // console.log(forumsList[0])
   useEffect(() => {
     const getPost = async() => {
@@ -27,8 +27,9 @@ export default function Post({ post }) {
     }
     if(post_id) {
       getPost()
+
     }
-  }, []);
+  }, [currentPost]);
   
   
 // console.log(currentPost.title)
@@ -44,6 +45,8 @@ export default function Post({ post }) {
         up: userInfo.data.id,
       });
     }
+    setCounter(counter+1)
+
     // navigate(`/`)
     
   };
@@ -58,6 +61,7 @@ export default function Post({ post }) {
         down: userInfo.data.id,
       });
     }
+    setCounter(counter+1)
   };
   
   // useEffect(()=>{

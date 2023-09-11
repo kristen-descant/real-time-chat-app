@@ -23,6 +23,8 @@ function App() {
   const [chatDeleted, setChatDeleted] = useState(false)
   const [messages, setMessages] = useState(null);
   const [chatRooms, setChatRooms] = useState(null);
+  const [counter, setCounter] = useState(0)
+  
 
   const whoAmI = async () => {
     // Check if a token is stored in the localStorage
@@ -121,7 +123,10 @@ useEffect(() => {
         chatDeleted,
         setChatDeleted,
         chatRooms,
-        setChatRooms
+        setChatRooms,
+        counter,
+        setCounter 
+   
       }}
       />
     </div>
