@@ -91,7 +91,7 @@ function App() {
 useEffect(() => {
     getChats();
     setChatDeleted(false);
-}, [user, chatDeleted])
+}, [user, chatDeleted, userToMessage])
 
   useEffect(()=>{
     whoAmI()
