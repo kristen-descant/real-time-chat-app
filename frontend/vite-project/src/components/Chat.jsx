@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
@@ -6,7 +6,7 @@ function Chat(props) {
 
     const {user, userToMessage, userInfo, setUsertoMessage, messages} = useOutletContext();
     const [thisUserId, setThisUserId] = useState(null);
-    const navigate = useNavigate();
+    const bottomEl = useRef(null);
 
     const setUserId = () => {
         setThisUserId(userInfo.data.id)
@@ -75,18 +75,26 @@ function Chat(props) {
     const handleGoBack = () => {
         setUsertoMessage(null);
     }
-    console.log(messages)
+    
+    const scrollToBottom = () => {
+        bottomEl?.current?.scrollIntoView({behavior: 'smooth'});
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [state])
+
     return (
         <div className="h-screen bg-gray-100 flex justify-center overflow-hidden">
         <div className='w-full flex justify-center relative h-[95%]'>
             {console.log(userToMessage)}
              <div>
-                <button onClick={handleGoBack}>Back</button>
+                <button className='border rounded p-1 hover:bg-color_palette_1' onClick={handleGoBack}>Back</button>
              </div>
             <div className="mt-8 h-[80%] w-[40%] flex flex-col items-center">
                 <div className="mb-4 flex flex-row items-center"> <img className='h-5 md:h-8 rounded-full mr-2' src={userToMessage.profile_picture} /> {userToMessage.display_name}</div>
                 <div className='h-[80%] w-full'>
-                    <div className="h-[85%] overflow-x-hidden overflow-y-auto shadow-none w-full flex flex-col items-center">
+                    <div className="h-[85%] overflow-x-hidden overflow-y-auto shadow-none w-full flex flex-col items-center ">
                         <div className=' w-full'>
                             {messages && messages.map((message, index) => (
                                 <div key={index} className={`mr-none mb-4 min-w-full md:w-3/4 flex flex-col ${message.sender === userInfo.data.id ? 'items-end' : 'items-start'}`} >
@@ -97,13 +105,14 @@ function Chat(props) {
                             ))}
                         </div>
                         <div className='h-full w-full'>
-                        {state.messages.map((message, index) => (
-                        <div key={index} className={`mb-4 min-w-full md:w-3/4 flex flex-col ${message.message[1] === userInfo.data.id ? 'items-end' : 'items-start'}`} >
-                            <div  className={`w-[60%]  p-1 whitespace-normal overflow-x-hidden  rounded ${message.message[1] === userInfo.data.id ? 'bg-color_palette_2 mr-1' : 'bg-[white] ml-1'}`} >
-                            {message.message[0]}
+                            {state.messages.map((message, index) => (
+                            <div key={index} className={`mb-4 min-w-full md:w-3/4 flex flex-col ${message.message[1] === userInfo.data.id ? 'items-end' : 'items-start'}`} >
+                                <div  className={`w-[60%]  p-1 whitespace-normal overflow-x-hidden  rounded ${message.message[1] === userInfo.data.id ? 'bg-color_palette_2 mr-1' : 'bg-[white] ml-1'}`} >
+                                {message.message[0]}
+                                </div>
                             </div>
-                        </div>
-                        ))}
+                            ))}
+                            <div ref={bottomEl}></div>
                         </div>
                     </div>
                 </div>

@@ -29,6 +29,7 @@ export default function MessagePreviews() {
     return (
         <div className='w-full mt-8'>
             <h2 className='text:xl md:text-2xl'>Chats</h2>
+            {userInfo &&
             <ul className='w-full mt-2'>
                 {chatRooms &&
                 (chatRooms.map((message, index) => (
@@ -55,7 +56,7 @@ export default function MessagePreviews() {
                     </li>
                 )))
                 }
-            </ul>
+            </ul>}
         </div>
     );
 }
