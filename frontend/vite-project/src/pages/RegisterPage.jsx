@@ -16,6 +16,15 @@ export default function RegisterPage() {
   const register = async (e) => {
     e.preventDefault();
 
+    if (email === '') {
+      window.alert("Email cannot be empty.")
+      return
+    }
+    if (password === '') {
+      window.alert("Password cannot be empty.")
+      return
+    }
+
     if (password !== confirmPassword) {
       console.error("Passwords do not match!");
       return;
