@@ -43,21 +43,21 @@ export default function Forum({forum}) {
   return (
     <>
     {!forum_id ? (
-    <div onClick={() => {navigate(`/forum/${forum.id}`)}} className='flex flex-col border-2 border-[black] w-[50%] items-center active:bg-color_palette_4 hover:bg-color_palette_2'>
+    <div onClick={() => {navigate(`/forum/${forum.id}`)}} className='flex flex-col border-2 rounded border-[black] w-[50%] items-center active:bg-color_palette_4 hover:bg-color_palette_2'>
       <div className="text-xl md:text-2xl" >{forum.title}</div>
       <div className="flex flex-row justify-around w-1/3 mt-2">
         <div className="flex flex-row">
           <span className="mr-2 text-[green]">{forum.reaction}</span>
           <img className="h-3 md:h-5" src={thumbsUp} alt="thumbs up" />
         </div>
-        <div className="flex flex-row">
+        <div className="flex flex-row mb-1">
           <span className="mr-2 text-[red]">{forum.reaction}</span>
           <img className="h-3 md:h-5" src={thumbsDown} alt="thumbs down" />
         </div>
       </div>
     </div>
     ) : (
-        <div onClick={() => {navigate(`/forum/${currentForum.id}`)}} className='flex flex-col border-2 border-[black] w-[50%] items-center'>
+        <div onClick={() => {navigate(`/forum/${currentForum.id}`)}} className='flex flex-col rounded border-2 border-[black] w-[50%] items-center'>
           <div className="text-xl md:text-2xl" >{currentForum.title}</div>
           <div className="flex flex-row justify-around w-1/3 mt-2">
             <div className="flex flex-row">
