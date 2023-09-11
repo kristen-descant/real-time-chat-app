@@ -35,7 +35,7 @@ function Chat(props) {
             console.log(response)
             const messageData = response.data
             console.log(messageData.messages)
-            setMessages(messageData.messages)
+            setMessages(messageData.messages.slice(-100))
         } catch(error) {
             console.log(error)
         }
@@ -102,7 +102,7 @@ function Chat(props) {
 
     useEffect(() => {
         scrollToBottom();
-    }, [state])
+    }, [messages])
 
     return (
         <div className="h-screen bg-gray-100 flex justify-center overflow-hidden">
