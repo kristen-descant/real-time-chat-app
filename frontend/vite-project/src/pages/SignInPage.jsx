@@ -44,33 +44,37 @@ export default function SignInPage() {
 
   return (
     <div className="min-h-screen flex justify-center items-center">
-      <div className="flex flex-col items-center">
-      <div className="mb-2 text-center">
-        <img src={logo} />
-        Need an account? <Link to="/register">Register</Link>
-      </div>
-      <div>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          className="mb-1 text-center"
-        />
-      </div>
-      <div>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          className="text-center"
-        />
-      </div>
-      {error && <Alert variant="danger">{error}</Alert>}
-      <button onClick={logIn} disabled={loading} type="button" className="border mt-2 hover:bg-color_palette_4 border-[white] text-[white] p-1 rounded mb-2 ">
-        {loading ? "Signing in..." : "Sign In"}
-      </button>
+      <div className="flex flex-col items-center relative">
+        <div className="">
+          <img src={logo} />
+        </div>
+        <div className="absolute bottom-[3%] flex flex-col items-center">
+          <div className="mb-2 text-center">
+            Need an account? <Link to="/register">Register</Link>
+          </div>
+          <div>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
+              className="mb-1 text-center"
+            />
+          </div>
+          <div>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              className="text-center"
+            />
+          </div>
+          {error && <Alert variant="danger">{error}</Alert>}
+          <button onClick={logIn} disabled={loading} type="button" className="border mt-2 hover:bg-color_palette_4 border-[white] text-[white] p-1 rounded mb-2 ">
+            {loading ? "Signing in..." : "Sign In"}
+          </button>
+        </div>
       </div>
     </div>
   );

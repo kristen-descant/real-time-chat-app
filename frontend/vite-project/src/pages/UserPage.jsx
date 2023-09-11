@@ -7,7 +7,7 @@ import image from '../media/pngwing.com (1).png'
 // This page needs to be refactored with data from API
 
 export default function UserPage() {
-  const {user, friendList, userInfo, setUsertoMessage} = useOutletContext();
+  const {user, friendList, userInfo, setUsertoMessage, setFriendStatusChange, friendStatusChange} = useOutletContext();
   const navigate = useNavigate();
   const { user_id } = useParams();
   const [isCurrentUser, setIsCurrentUser] = useState();
@@ -35,12 +35,14 @@ export default function UserPage() {
     setIsFriend(!!foundFriend);
 
     }
-  }, [userToView])
+  }, [userToView, friendList, userInfo])
 
   const handleAddFriend = async() => {
     try {
       const response = await api.post(`/users/users/add/${user_id}`)
       setIsFriend(true)
+      setFriendStatusChange(!friendStatusChange)
+      console.log(friendStatusChange)
     } catch(error) {
       console.log(error)
     }
@@ -50,6 +52,7 @@ export default function UserPage() {
     try {
       const response = await api.post(`/users/users/remove/${user_id}`)
       setIsFriend(false)
+      setFriendStatusChange(!friendStatusChange)
     } catch(error) {
       console.log(error)
     }

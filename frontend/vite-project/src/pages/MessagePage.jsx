@@ -15,8 +15,10 @@ export default function MessagePage() {
     {userToMessage ?
       <Chat messages={messages}/> :
       <div className="flex flex-row ml-[5%]">
-        <FriendsList/> 
-        <div className="w-[60%] ml-[5%]">
+        <div className="w-[25%]">
+          <FriendsList/> 
+        </div>
+        <div className="w-[50%]">
           <MessagePreviews setMessages={setMessages}/>
         </div>
       </div>

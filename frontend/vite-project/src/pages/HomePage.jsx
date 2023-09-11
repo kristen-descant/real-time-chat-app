@@ -9,11 +9,13 @@ export default function HomePage() {
   const navigate = useNavigate();
   
   return (
-    <div className=" w-full">
+    <div className=" w-full ">
         {/* <h2>This is the Home page</h2> */}
-        <div className="flex flex-row justify-around">
-        <ForumsList/>
-        <FriendsList/>
+        <div className="flex flex-row justify-around w-full ">
+          <ForumsList/>
+          <div className="w-[25%] flex justify-end mr-[5%]">
+            <FriendsList/>
+          </div>
         </div>
     </div>
   

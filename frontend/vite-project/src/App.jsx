@@ -19,6 +19,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const lastVisited = useRef();
   const location = useLocation();
+  const [friendStatusChange, setFriendStatusChange] = useState(true);
 
   const whoAmI = async () => {
     // Check if a token is stored in the localStorage
@@ -75,7 +76,7 @@ function App() {
 
   useEffect(() => {
     getUserInfo();
-  }, [user])
+  }, [user, friendStatusChange])
   
 
   return (
@@ -91,7 +92,9 @@ function App() {
         setUsertoMessage,
         setLoggedIn,
         userInfo,
-        friendList
+        friendList,
+        friendStatusChange,
+        setFriendStatusChange
       }}
       />
     </div>
