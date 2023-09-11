@@ -93,7 +93,7 @@ export default function Navbar(props) {
                 </div>
                 <div className="relative z-10">
                 <input
-                    className="w-[12vw]"
+                    className="w-[12vw] rounded"
                     onChange={(e) => setSearchCriteria(e.target.value)}
                     value={searchCriteria}
                     type="text"
