@@ -107,7 +107,7 @@ export const Comment = ({comment}) => {
     return (
     <div className="flex justify-between gap-x-6 py-2">
         <div className="flex min-w-0 gap-x-4">
-            <img className="h-12 w-12 flex-none rounded-full bg-gray-50 ml-5"  src={user.profile_picture}/>
+            <img className="h-12 w-12 flex-none rounded-full bg-gray-50 ml-5" />
             <div className="min-w-0 flex-auto">
                 <h1 className="text-sm font-semibold leading-6 text-gray-900">{userInformation.display_name}</h1>
                 <h3 className="mt-1 truncate text-xs leading-5 text-gray-500">{comment.content}</h3>
