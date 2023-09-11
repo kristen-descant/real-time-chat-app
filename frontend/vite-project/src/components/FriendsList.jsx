@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { api } from '../pages/utility';
 import axios from 'axios';
+import {BsFillEnvelopeFill} from "react-icons/bs"
 
 
 export default function FriendsList() {
@@ -24,7 +25,7 @@ export default function FriendsList() {
     return (
         <div className='h-screen w-[60%] text-center'>
             <div className='h-[70%] w-full mt-8'>
-            <h2 className='text:xl md:text-2xl'> <i class="fa-sharp fa-solid fa-user-group fa-lg"></i>Friends</h2>
+            <h2 className='text:xl md:text-2xl'> <i class="fa-sharp fa-solid fa-user-group fa-lg"></i> Friends</h2>
             {friendList && 
             <div  className="h-full w-full border border-[black] flex flex-col overflow-y-scroll mt-2 rounded">
                 {friendList.map((friend) => (
@@ -34,8 +35,10 @@ export default function FriendsList() {
                             <img className='h-full border border-[black] rounded-full'  src={friend.profile_picture} alt="" />
                         </div>
                         <div className='flex flex-col w-[55%] items-end mr-1 h-full overflow-hidden'>
-                            <div className=''>{friend.display_name}</div>
-                            <button onClick={(e) => messageOnClick(e, friend)}>Message</button>
+                            <div className='h-[50%]'>{friend.display_name}</div>
+                            <div className='h-[50%] w-[50%]'>
+                            <button className='h-full min-w-full flex justify-center' onClick={(e) => messageOnClick(e, friend)}>< BsFillEnvelopeFill className='h-full w-3/4' style={{fontSize:'100%'}} /></button>
+                            </div>
                         </div>
                     </div>
                 ))}            
