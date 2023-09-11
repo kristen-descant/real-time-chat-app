@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
+import { api } from '../pages/utility';
 
 function Chat(props) {
 
-    const {user, userToMessage, userInfo, setUsertoMessage, messages} = useOutletContext();
+    const {user, userToMessage, userInfo, setUsertoMessage, setMessages, messages} = useOutletContext();
     const [thisUserId, setThisUserId] = useState(null);
     const bottomEl = useRef(null);
 
@@ -26,6 +27,25 @@ function Chat(props) {
         // room: 'chat',
     });
     console.log(state.room)
+
+    const getMessages = async() => {
+        try {
+            console.log(api.defaults.headers.common)
+            const response = await api.get(`chat/${state.room}/`)
+            console.log(response)
+            const messageData = response.data
+            console.log(messageData.messages)
+            setMessages(messageData.messages)
+        } catch(error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+    
+        getMessages();
+        
+    }, [userToMessage])
 
     const client = new W3CWebSocket(
         'ws://127.0.0.1:8000/ws/' + state.room + '/'
@@ -95,6 +115,8 @@ function Chat(props) {
                 <div className="mb-4 flex flex-row items-center"> <img className='h-5 md:h-8 rounded-full mr-2' src={userToMessage.profile_picture} /> {userToMessage.display_name}</div>
                 <div className='h-[80%] w-full'>
                     <div className="h-[85%] overflow-x-hidden overflow-y-auto shadow-none w-full flex flex-col items-center ">
+                        {console.log(messages)}
+                        {messages && 
                         <div className=' w-full'>
                             {messages && messages.map((message, index) => (
                                 <div key={index} className={`mr-none mb-4 min-w-full md:w-3/4 flex flex-col ${message.sender === userInfo.data.id ? 'items-end' : 'items-start'}`} >
@@ -103,7 +125,7 @@ function Chat(props) {
                                 </div>
                             </div>
                             ))}
-                        </div>
+                        </div>}
                         <div className='h-full w-full'>
                             {state.messages.map((message, index) => (
                             <div key={index} className={`mb-4 min-w-full md:w-3/4 flex flex-col ${message.message[1] === userInfo.data.id ? 'items-end' : 'items-start'}`} >
