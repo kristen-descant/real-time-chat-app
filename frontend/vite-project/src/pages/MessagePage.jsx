@@ -7,19 +7,19 @@ import FriendsList from "../components/FriendsList";
 export default function MessagePage() {
 
   const {userToMessage, user} = useOutletContext();
-  const [messages, setMessages] = useState(null);
+  // const [messages, setMessages] = useState(null);
   const navigate = useNavigate();
 
   return (
     <>
     {userToMessage ?
-      <Chat messages={messages}/> :
+      <Chat/> :
       <div className="flex flex-row ml-[5%] w-full">
         <div className="w-[25%]">
           <FriendsList/> 
         </div>
         <div className="w-[50%]">
-          <MessagePreviews setMessages={setMessages}/>
+          <MessagePreviews/>
         </div>
       </div>
     }

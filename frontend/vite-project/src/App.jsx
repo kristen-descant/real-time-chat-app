@@ -20,6 +20,9 @@ function App() {
   const lastVisited = useRef();
   const location = useLocation();
   const [friendStatusChange, setFriendStatusChange] = useState(true);
+  const [chatDeleted, setChatDeleted] = useState(false)
+  const [messages, setMessages] = useState(null);
+  const [chatRooms, setChatRooms] = useState(null);
 
   const whoAmI = async () => {
     // Check if a token is stored in the localStorage
@@ -70,6 +73,24 @@ function App() {
     }
   }
 
+  const getChats = async() => {
+    try {
+        console.log(api.defaults.headers.common)
+        const response = await api.get('chat/')
+        console.log(response)
+        const messages = response.data
+        console.log(messages)
+        setChatRooms(messages)
+    } catch(error) {
+        console.log(error)
+    }
+}
+
+useEffect(() => {
+    getChats();
+    setChatDeleted(false);
+}, [user, chatDeleted])
+
   useEffect(()=>{
     whoAmI()
   }, [])
@@ -94,7 +115,13 @@ function App() {
         userInfo,
         friendList,
         friendStatusChange,
-        setFriendStatusChange
+        setFriendStatusChange,
+        messages,
+        setMessages,
+        chatDeleted,
+        setChatDeleted,
+        chatRooms,
+        setChatRooms
       }}
       />
     </div>

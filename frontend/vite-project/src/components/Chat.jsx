@@ -4,10 +4,9 @@ import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
 function Chat(props) {
 
-    const {user, userToMessage, userInfo, setUsertoMessage} = useOutletContext();
+    const {user, userToMessage, userInfo, setUsertoMessage, messages} = useOutletContext();
     const [thisUserId, setThisUserId] = useState(null);
     const navigate = useNavigate();
-    const {messages} = props;
 
     const setUserId = () => {
         setThisUserId(userInfo.data.id)

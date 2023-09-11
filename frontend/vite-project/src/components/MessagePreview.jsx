@@ -5,30 +5,9 @@ import { api } from '../pages/utility';
 
 // get all messages for user and show previews. onclick set userTomessage to that messages other user
 
-export default function MessagePreviews(props) {
+export default function MessagePreviews() {
 
-    const {setUsertoMessage, user, userInfo} = useOutletContext();
-    const [chatRooms, setChatRooms] = useState(null);
-    const {setMessages} = props;
-    const [chatDeleted, setChatDeleted] = useState(false);
-
-    const getChats = async() => {
-        try {
-            console.log(api.defaults.headers.common)
-            const response = await api.get('chat/')
-            console.log(response)
-            const messages = response.data
-            console.log(messages)
-            setChatRooms(messages)
-        } catch(error) {
-            console.log(error)
-        }
-    }
-
-    useEffect(() => {
-        getChats();
-        setChatDeleted(false);
-    }, [user, chatDeleted])
+    const {setUsertoMessage, user, userInfo, setMessages, chatDeleted, setChatDeleted, chatRooms} = useOutletContext();
 
     const messageOnClick = (friend) => {
         // event.stopPropagation();
