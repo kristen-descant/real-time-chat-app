@@ -35,7 +35,7 @@ export const CommentsList = ({post_id}) =>{
 
     const likeComment = async (commentID) =>{
         try{
-            let response = await api.put(`comments/comment/${commentID}/`, {
+            let response = await api.put(`comments/comment/update/${commentID}/`, {
                 up : "update"
             })
         } catch (error){
@@ -44,7 +44,7 @@ export const CommentsList = ({post_id}) =>{
     }
     const dislikeComment = async (commentID) => {
         try{
-            let response = await api.put(`comments/comment/${commentID}/`, {
+            let response = await api.put(`comments/comment/update/${commentID}/`, {
                 down : "update"
             })
         } catch (error){
@@ -107,7 +107,7 @@ export const Comment = ({comment}) => {
     return (
     <div className="flex justify-between gap-x-6 py-2">
         <div className="flex min-w-0 gap-x-4">
-            <img className="h-12 w-12 flex-none rounded-full bg-gray-50 ml-5" />
+            <img className="h-12 w-12 flex-none rounded-full bg-gray-50 ml-5" src={userInformation.profile_picture}/>
             <div className="min-w-0 flex-auto">
                 <h1 className="text-sm font-semibold leading-6 text-gray-900">{userInformation.display_name}</h1>
                 <h3 className="mt-1 truncate text-xs leading-5 text-gray-500">{comment.content}</h3>
