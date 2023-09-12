@@ -14,7 +14,7 @@ class All_comments(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request, post_ID):
         post = get_object_or_404(Posts, id=post_ID)
-        comments = CommentsSerializer(Comments.objects.filter(post_id=post), many=True)
+        comments = CommentsSerializer(Comments.objects.filter(post_id=post).order_by('id'), many=True)
         return Response(comments.data, status=HTTP_200_OK)
     
     def post(self, request, post_ID):
@@ -42,36 +42,40 @@ class A_comment(APIView):
             comment.full_clean()
             comment.save()
             return Response("Comment Updated", HTTP_200_OK)
+
+    def delete(self,request,comment_id):
+        comment = get_object_or_404(Comments, id=comment_id, created_by=request.user.id)
+        comment.delete()
+        return Response(status=HTTP_204_NO_CONTENT)
+    
+class ReactionUpdate(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def put(self,request,comment_id):
+        comment = get_object_or_404(Comments, id=comment_id)
         if "up" in request.data:
             if request.data.get("up") == "update":
                 if request.user.id not in comment.up:
                     comment.up.append(request.user.id)
+                    if request.user.id in comment.down:
+                        comment.down.remove(request.user.id)
                     comment.full_clean()
                     comment.save()
                 else:
                     comment.up.remove(request.user.id)
                     comment.full_clean()
                     comment.save()
-                return Response("Up Votes has been updated")
-            # if request.data.get("up") == "sub":
-            #     if request.user.id not in comment.down:
-            #         comment.down.append(request.user.id)
-            #     else:
-            #         comment.down.remove(request.user.id)
-            #     return Response("Up Votes has been updated")
+            return Response("Up Votes has been updated")
         if "down" in request.data:
             if request.data.get("down") == "update":
                 if request.user.id not in comment.down:
                     comment.down.append(request.user.id)
+                    if request.user.id in comment.up:
+                        comment.up.remove(request.user.id)
                     comment.full_clean()
                     comment.save()
                 else:
                     comment.down.remove(request.user.id)
                     comment.full_clean()
                     comment.save()
-                return Response("Down Vote has been updated", status=HTTP_200_OK)
-
-    def delete(self,request,comment_id):
-        comment = get_object_or_404(Comments, id=comment_id)
-        comment.delete()
-        return Response(status=HTTP_204_NO_CONTENT)
+            return Response("Down Vote has been updated", status=HTTP_200_OK)
