@@ -43,12 +43,21 @@ def Get_Chat_Rooms(request):
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def Get_Chat_Room(request,room_name):
+def Get_Chat_Room(request, id):
     user = request.user
     print(user)
-    chat_room = ChatRoom.objects.get(room_id=room_name)
-    serializer = ChatRoomSerializer(chat_room)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    roomid = f"user{user.id}user{id}"
+    roomid2 = f"user{id}user{user.id}"
+    print("roomid:",roomid,"roomid2",roomid2)
+
+    from django.db.models import Q
+    try:
+        chat_room = ChatRoom.objects.get(Q(room_id=roomid) | Q(room_id=roomid2))
+        serializer = ChatRoomSerializer(chat_room)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+       
+    except ChatRoom.DoesNotExist:
+        print("Chatroom does not exist, cannot delete.")
 
 @api_view(['DELETE'])
 @authentication_classes([TokenAuthentication])
