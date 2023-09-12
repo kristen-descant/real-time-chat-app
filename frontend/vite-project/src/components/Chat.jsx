@@ -110,7 +110,7 @@ function Chat(props) {
         <div className='w-full flex justify-center relative h-[95%]'>
             {console.log(userToMessage)}
              <div>
-                <button className='border rounded p-1 hover:bg-color_palette_1' onClick={handleGoBack}>Back</button>
+                <button className='border rounded p-1 hover:bg-color_palette_1 mt-2' onClick={handleGoBack}>Back</button>
              </div>
             <div className="mt-8 h-[80%] w-[40%] flex flex-col items-center">
                 <div className="mb-4 flex flex-row items-center"> <img className='h-5 md:h-8 rounded-full mr-2' src={userToMessage.profile_picture} /> {userToMessage.display_name}</div>
