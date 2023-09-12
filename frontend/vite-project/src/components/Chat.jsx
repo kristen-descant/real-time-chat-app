@@ -27,11 +27,12 @@ function Chat(props) {
         // room: 'chat',
     });
     console.log(state.room)
+    console.log(messages)
 
     const getMessages = async() => {
         try {
             console.log(api.defaults.headers.common)
-            const response = await api.get(`chat/${state.room}/`)
+            const response = await api.get(`chat/${userToMessage.id}`)
             console.log(response)
             const messageData = response.data
             console.log(messageData.messages)
