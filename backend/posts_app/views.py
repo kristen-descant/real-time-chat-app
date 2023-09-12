@@ -23,6 +23,7 @@ class All_posts(APIView):
     
     def post(self, request, forum_id):
         forum = get_object_or_404(ForumTopics, id=forum_id)
+        print(request.data)
         posts = Posts(**request.data, topic_id=forum, created_by_id=request.user.id)
         posts.save()  
         posts = PostsSerializer(posts)
@@ -42,21 +43,29 @@ class Select_posts(APIView):
         if 'content' in request.data:
             post.content = request.data.get('content')        
         if 'edited' in request.data:
-            post.content = request.data.get('edited')
+            post.edited = request.data.get('edited')
         if 'title' in request.data:
             post.title = request.data.get('title')
         if 'up' in request.data:
             # print(request.data.get('up'), post.up)
-            if not str(request.data.get('up')) in post.up:
+            if not request.data.get('up') in post.up:
                 # print("stop")
-                post.up.append(request.data.get('up'))
+                if request.data.get('up') in post.down:
+                    post.down.remove(request.data.get('up'))
+                    post.up.append(request.data.get('up'))
+                else:
+                    post.up.append(request.data.get('up'))
             else:
-                post.up.remove(str(request.data.get('up')))
+                post.up.remove(request.data.get('up'))
         if 'down' in request.data:
-            if not str(request.data.get('down')) in post.down:
-                post.down.append(request.data.get('down'))
+            if not request.data.get('down') in post.down:
+                if request.data.get('down') in post.up:
+                    post.up.remove(request.data.get('down'))
+                    post.down.append(request.data.get('down'))
+                else:
+                    post.down.append(request.data.get('down'))
             else:
-                post.down.remove(str(request.data.get('down')))
+                post.down.remove(request.data.get('down'))
         post.full_clean() 
         post.save()
 
@@ -66,3 +75,34 @@ class Select_posts(APIView):
         post = get_object_or_404(Posts, id=post_id, topic_id=forum_id, created_by=request.user.id)
         post.delete() 
         return Response(status=HTTP_204_NO_CONTENT)
+    
+
+class React(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, forum_id, post_id):
+        post = get_object_or_404(Posts, id=post_id, topic_id=forum_id)
+        if 'up' in request.data:
+            # print(request.data.get('up'), post.up)
+            if not request.data.get('up') in post.up:
+                # print("stop")
+                if request.data.get('up') in post.down:
+                    post.down.remove(request.data.get('up'))
+                    post.up.append(request.data.get('up'))
+                else:
+                    post.up.append(request.data.get('up'))
+            else:
+                post.up.remove(request.data.get('up'))
+        if 'down' in request.data:
+            if not request.data.get('down') in post.down:
+                if request.data.get('down') in post.up:
+                    post.up.remove(request.data.get('down'))
+                    post.down.append(request.data.get('down'))
+                else:
+                    post.down.append(request.data.get('down'))
+            else:
+                post.down.remove(request.data.get('down'))
+        post.full_clean() 
+        post.save()
+        return Response("Post was updated.", HTTP_201_CREATED)

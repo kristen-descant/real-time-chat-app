@@ -104,7 +104,7 @@ export default function RegisterPage() {
             />
           </div>
           <button onClick={register} type="button" className="mt-2 border hover:bg-color_palette_4 border-[white] text-[white] p-1 rounded mb-2 ">
-          <i class="fa-sharp fa-solid fa-user fa-lg"></i> Register
+          <i className="fa-sharp fa-solid fa-user fa-lg"></i> Register
           </button>
         </div>
       </div>

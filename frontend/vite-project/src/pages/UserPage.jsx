@@ -74,7 +74,7 @@ export default function UserPage() {
   return (
     <div className="flex h-screen items-center justify-center overflow-hidden">
       {userToView && 
-      <div className="bg-color_palette_1 border-2 border-color_palette_5 w-1/2 h-fit relative">
+      <div className="bg-color_palette_1 border-2 border-color_palette_5 w-1/2 h-fit relative rounded">
         {!isCurrentUser && (!isFriend ? (
           <button onClick={handleAddFriend}  className="absolute top-1 left-1 p-2 border-2 rounded bg-color_palette_4 hover:bg-color_palette_2 active:bg-color_palette_3">
             Add Friend

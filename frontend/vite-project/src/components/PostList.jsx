@@ -6,6 +6,7 @@ import { api } from "../pages/utility.jsx";
 
 export default function PostList() {
   const { forum_id } = useParams();
+  // console.log(forum_id)
   const [forumsList, setForumsList] = useState([]);
   const [postList, setPostList] = useState([]);
   const [newPost, setNewPost] = useState("");
@@ -23,14 +24,14 @@ export default function PostList() {
     const getAllPosts = async () => {
       let response = await api.get(`posts/${forum_id}/posts/`);
       let postData = response.data;
+      console.log(postData)
       setPostList(postData.toReversed());
     };
     getAllPosts();
   }, [countPosts]);
-//   console.log(newPost)
 
   useEffect(() => {
-    setCountPosts(countPosts+1)
+    setCountPosts(countPosts +1)
   }, [counter])
 
   const addPosts = async (e) => {
@@ -43,11 +44,12 @@ export default function PostList() {
       setTextBox(false);
       setNewPost("");
       setTitle("");
+      setCounter(counter+1)
     } catch {
       alert("Post not added!");
     }
   };
-  console.log("POST LSIT: ", postList)
+  // console.log("POST LSIT: ", postList)
   return (
     <div className="min-h-screen w-[70%] flex flex-col items-center mt-8">
       {textBox ? (

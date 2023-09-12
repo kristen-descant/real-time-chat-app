@@ -25,7 +25,7 @@ export default function FriendsList() {
     return (
         <div className='h-screen w-[60%] text-center'>
             <div className='h-[70%] w-full mt-8'>
-            <h2 className='text:xl md:text-2xl'> <i class="fa-sharp fa-solid fa-user-group fa-lg"></i> Friends</h2>
+            <h2 className='text:xl md:text-2xl'> <i className="fa-sharp fa-solid fa-user-group fa-lg"></i> Friends</h2>
             {friendList && 
             <div  className="h-full w-full border border-[black] flex flex-col overflow-y-scroll mt-2 rounded">
                 {friendList.map((friend) => (
