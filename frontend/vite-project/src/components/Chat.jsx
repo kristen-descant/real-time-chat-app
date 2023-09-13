@@ -103,7 +103,7 @@ function Chat(props) {
 
     useEffect(() => {
         scrollToBottom();
-    }, [messages])
+    }, [messages, state])
 
     return (
         <div className="h-screen bg-gray-100 flex justify-center overflow-hidden">
