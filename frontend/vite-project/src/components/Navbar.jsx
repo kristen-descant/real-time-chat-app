@@ -31,7 +31,6 @@ export default function Navbar(props) {
                 setUserId(userInfo.data.id);
             }
             getUserId()
-            console.log(userInfo)
         }
     }, [userInfo])
 

@@ -5,8 +5,7 @@ import { CommentsList } from "../components/Comments";
 
 export default function PostPage() {
   const { forum_id ,post_id} = useParams();
-  const {user} = useOutletContext();
-  // const navigate = useNavigate();
+
   return (
     <>
       <Post />

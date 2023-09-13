@@ -22,7 +22,7 @@ export default function Post({ post }) {
       let token = localStorage.getItem("token");
       api.defaults.headers.common["Authorization"] = `Token ${token}`
       let response = await api.get(`posts/${forum_id}/posts/${post_id}/`)
-      console.log(response.data)
+      // console.log(response.data)
       setCurrentPost(response.data)
     }
     if(post_id) {
